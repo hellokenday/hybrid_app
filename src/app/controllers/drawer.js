@@ -1,33 +1,54 @@
-  // Listen for window.postMessage() messages that drawer sends us
-
-  window.addEventListener("message", function(msg) {
-    var elem = document.querySelector("#selectedInDrawer");
-    elem.textContent = msg.data.selection;
-  });
-
   // Initialize the left drawer
 
-  var leftDrawer = new steroids.views.WebView("/views/drawer/drawer.html");
+//function showCamera() {
+//  var webView = new steroids.views.WebView("views/camera/index.html");
+//  steroids.layers.push(webView);
+//}
 
-  leftDrawer.preload({},{
-    onSuccess: initGesture  // When the view has loaded, enable finger tracking
-  });
-
-  function initGesture() {
-    steroids.drawers.enableGesture(leftDrawer);
+  var cameraView = new steroids.views.WebView("views/camera/index.html");
+  cameraView.preload();
+  
+  function showCamera() {
+    steroids.layers.push(cameraView);
   }
 
-  // Helper functions
 
-  function openDrawer() {
-    steroids.drawers.show(leftDrawer);
+//function showFirebase() {
+//  var webView = new steroids.views.WebView("views/firebase/index.html");
+//  steroids.layers.push(webView);
+//}
+
+// preload firebase web view and show
+  var firebaseView = new steroids.views.WebView("views/firebase/index.html");
+  firebaseView.preload();
+  
+  function showFirebase() {
+    steroids.layers.push(firebaseView);
   }
 
-  // Sends message for the main view that listens with addEventListener()
 
-  function closeDrawerAndSendMessage(selection) {
-    var msg = { selection: selection };
-    window.postMessage(msg, "*");
+//function showGPS() {
+//  var webView = new steroids.views.WebView("views/gps/index.html");
+//  steroids.layers.push(webView);
+//}
 
-    steroids.drawers.hideAll();
+// preload GPS web view and show
+  var gpsView = new steroids.views.WebView("views/gps/index.html");
+  gpsView.preload();
+  
+  function showGPS() {
+    steroids.layers.push(gpsView);
+  }
+
+//function showSettings() {
+//  var webView = new steroids.views.WebView("views/settings/index.html");
+//  steroids.layers.push(webView);
+//}
+
+// preload settings web view and show
+  var settingsView = new steroids.views.WebView("views/settings/index.html");
+  settingsView.preload();
+  
+  function showSettings() {
+    steroids.layers.push(settingsView);
   }
