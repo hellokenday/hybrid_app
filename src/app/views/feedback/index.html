@@ -1,0 +1,58 @@
+ <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+ <script src="/vendor/chui/chui-3.0.6.js"></script>
+ <script>
+    // chui switches
+    $(function() {
+         // Set response to last checked switch:
+         $('.switch').each(function(ctx, idx) {
+            if (window && window.jQuery) ctx = idx;
+            if (ctx.classList.contains('on')) {
+               $('#response').html($(ctx).find('input').val());
+            }
+         });
+
+         $('.switch').on('singletap swipeleft swiperight', function() {
+            if (this.classList.contains('on')) {
+               $('#response').html($(this).find('input').val());
+            } else {
+               $('#response').empty();
+            }
+         });
+      });
+ </script>
+
+ <section>
+    <ul class='list'>
+        <li class='comp'>
+           <div>
+              <h3>Beep</h3>
+           </div>
+           <aside>
+              <span class="switch on" id="sleepSwitch">
+                  <input type="checkbox" value="Sleep" name="sleepSwitch">
+              </span>
+           </aside>
+        </li>
+        <li class='comp'>
+           <div>
+              <h3>Voice</h3>
+           </div>
+           <aside>
+              <span class="switch" id="vacationSwitch">
+                 <input type="checkbox" value="Vacation" name="vacationSwitch">
+              </span>
+           </aside>
+        </li>
+        <li class='comp'>
+           <div>
+              <h3>High Tone</h3>
+           </div>
+           <aside>
+              <span class="switch" id="breakfastSwitch">
+                 <input type="checkbox" value="Breakfast" name="breakfastSwitch">
+              </span>
+           </aside>
+        </li>
+     </ul>
+     <p><span><strong>Interval feedback is set to: </strong></span><span id="response"></span></p>
+ </section>
