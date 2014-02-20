@@ -1,0 +1,33 @@
+* {
+  -webkit-user-select: none;  /* Disable selection/copy of elements when tapping for a long time */
+  -webkit-touch-callout: none; /* Disable touch callouts */
+}
+
+input, textarea, [contenteditable] * {
+  -webkit-user-select: auto;  /* Allow selection for input elements and those with contenteditable attribute */
+}
+
+.content-padded {
+  padding: 10px;
+}
+
+/*** CAMERA ***/
+img#photo {
+    width:100%;
+  }
+
+  /* Spinner styles */
+  @-webkit-keyframes rotate {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+  }
+
+  img#spinner {
+    width:36px;
+    -webkit-animation-name:            rotate;
+    -webkit-animation-duration:        1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    margin: auto;
+    display: none;
+  }
