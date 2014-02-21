@@ -1,4 +1,4 @@
-  // Initialize the left drawer
+// Initialize the left drawer
 
 //function showCamera() {
 //  var webView = new steroids.views.WebView("views/camera/index.html");
