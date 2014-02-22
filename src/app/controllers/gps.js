@@ -47,7 +47,7 @@ function startTracking_stop(){
  
 }
 
-// --- Current gps position --- //
+// --- Map --- //
 
 // Wait for device API libraries to load
 
@@ -66,6 +66,7 @@ function onDeviceReady() {
 // onSuccess Geolocation
 //
 function onSuccess() {
+    // function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
     var win = function(position) {
         var lat = position.coords.latitude;
         var long = position.coords.longitude;
@@ -73,11 +74,18 @@ function onSuccess() {
 
         var myOptions = {
             center: myLatlng,
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.HYBRID
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true
         };
         map_element = document.getElementById("map_canvas");
         map = new google.maps.Map(map_element, myOptions);
+        
+        var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title:"You are here"
+      });
     };
 
     var fail = function(e) {
