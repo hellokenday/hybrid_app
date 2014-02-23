@@ -24,49 +24,28 @@
   <section>
      <div id='segmentedPanel' class='horizontal centered'></div>
      <div id="toggle-panels">
-        <div><!-- panel 1 -->
-           <ul class='list'>
-              <li class='comp'>
-                 <div data-role="content"> 
-                    <p id="startTracking_status"></p>
-                    <div data-role="fieldcontain" class="ui-hide-label">
-                        <label for="track_id">Track ID/Name:</label>
-                        <input type="text" name="track_id" id="track_id" placeholder="Workout ID/Name"/>
-                    </div>
-                    <br><br><br><br>
-                    <button class="topcoat-button" ontouchend="startTracking_start()">Start Tracking</button>
-                    <button class="topcoat-button" ontouchend="startTracking_stop()">Stop Tracking</button>  
+        <div data-role="content" class="content-padded"><!-- panel 1 -->
+            <p id="startTracking_status"></p>
+            <div data-role="fieldcontain" class="ui-hide-label">
+                <label for="track_id">Track ID/Name:</label>
+                <input type="text" name="track_id" id="track_id" placeholder="Workout ID/Name"/>
+            </div>
+            <br><br><br><br>
+            <button class="topcoat-button" ontouchend="startTracking_start()">Start Tracking</button>
+            <button class="topcoat-button" ontouchend="startTracking_stop();loadMap();">Stop Tracking</button>  
 
-                    <p id="startTracking_debug"></p>
-                 </div>
-              </li>
-           </ul>   
+            <p id="startTracking_debug"></p>
         </div>
-         <div data-role="content"> 
+         <div data-role="content"><!-- panel 2 --> 
              <!-- map canvas-->
-             <div id="map_canvas" style="position:absolute;bottom:0;left:0;width:100%;height:457px;"></div>
+             <div id="map_canvas"></div>
              <!-- <p id="geolocation">Watching geolocation...</p>-->
         </div>
-        <div><!-- panel 3 -->
-           <ul class='list'>
-              <li class='comp'>
-           <aside>
-              <img title='Willy Moon' src="../images/music/Willy Moon.png" height="80px">
-           </aside>
-           <div>
-              <h3>Willy Moon</h3>
-              <h4>Yeah Yeah</h4>
-                 <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint.</p>
-                 </div>
-              </li>
-           </ul>   
+        <div data-role="content"><!-- panel 3 --> 
+             <p id="track_info_info"></p>
+             <!-- map canvas-->
+             <div id="map_canvas2"></div>
+             <!-- <p id="geolocation">Watching geolocation...</p>-->
         </div>
      </div>
-<!--
-     <ul class='list' id='output'>
-        <li>
-           <h3>You selected panel: <span></span>.</h3>
-        </li>
-     </ul>
--->
   </section>
