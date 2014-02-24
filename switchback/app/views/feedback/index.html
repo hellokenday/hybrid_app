@@ -20,51 +20,7 @@
          });
       });
  </script>
- <script>
- // chui selectable list
-   $(function() {
-      $('.tick').UISelectList({
-         selected: 2,
-         callback: function() {
-            $("#response").html($(this).text());
-         }
-      });
-      if (window.jQuery) {
-        $('.select').each(function(idx, ctx) {
-           if ($(ctx).hasClass('selected')) {
-              $("#response").html($(ctx).text());
-           }
-        });
-      } else {
-        $("#response").html($('li').hasClass('selected').text());
-      }
-  });
- </script>
 
- <section>
-    <ul class='list'>
-        <li class='comp'>
-           <div>
-              <h3>Audio Feedback</h3>
-           </div>
-           <aside>
-              <span class="switch on" id="beepSwitch">
-                  <input type="checkbox" value="Beep" name="beepSwitch">
-              </span>
-           </aside>
-        </li>
-    </u>
- </section>
- <section>
-     <ul class='list tick select'>
-        <li>
-           <h3>Male</h3>
-        </li>
-        <li>
-           <h3>Female</h3>
-        </li>
-     </ul>
- </section>
  <section>
     <ul class='list'>
         <li class='comp'>
@@ -74,6 +30,16 @@
            <aside>
               <span class="switch on" id="beepSwitch">
                   <input type="checkbox" value="Beep" name="beepSwitch">
+              </span>
+           </aside>
+        </li>
+        <li class='comp'>
+           <div>
+              <h3>Voice</h3>
+           </div>
+           <aside>
+              <span class="switch" id="voiceSwitch">
+                 <input type="checkbox" value="Voice" name="voiceSwitch">
               </span>
            </aside>
         </li>
