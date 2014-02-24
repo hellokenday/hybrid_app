@@ -1,0 +1,1 @@
+steroids.navigationBar.show("App");

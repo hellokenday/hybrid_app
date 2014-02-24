@@ -4,7 +4,7 @@
 steroids.config.name = "App"
 
 # -- Initial Location --
-steroids.config.location = "http://localhost/index.html"
+steroids.config.location = "http://localhost/views/start/index.html"
 
 # -- Tab Bar --
 # steroids.config.tabBar.enabled = true

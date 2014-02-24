@@ -1,3 +1,4 @@
+steroids.navigationBar.show("GPS");
 // --- Map Panel --- //
 
 // Wait for device API libraries to load

@@ -1,4 +1,3 @@
-steroids.navigationBar.show("App");
 var leftDrawer = new steroids.views.WebView("/views/drawer/drawer.html");
 
 leftDrawer.preload({},{
