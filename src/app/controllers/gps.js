@@ -1,3 +1,4 @@
+steroids.navigationBar.show("GPS");
 // --- Map Panel --- //
 
 // Wait for device API libraries to load
@@ -115,11 +116,15 @@ function startTracking_start(){
 
 
 function startTracking_stop(){
+    
 	// Stop tracking the user
 	navigator.geolocation.clearWatch(watch_id);
 	
 	// Save the tracking data
 	window.localStorage.setItem(track_id, JSON.stringify(tracking_data));
+    
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    window.localStorage.setItem("last_track", track_id);
 
 	// Reset watch_id and tracking_data 
 	var watch_id = null;
@@ -163,7 +168,7 @@ function startTracking_stop(){
 // When the user views the Track Info page
 function loadMap(){
 	// Find the track_id of the workout they are viewing
-	var key = $(this).attr("track_id");
+    var key =  window.localStorage.getItem("last_track");
 	// Get all the GPS data for the specific workout
 	var data = window.localStorage.getItem(key);
 	// Turn the stringified GPS data back into a JS object
