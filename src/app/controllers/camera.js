@@ -1,4 +1,3 @@
-steroids.navigationBar.show("Profile");
 checkForLocalhost();
 
     // Define our image and spinner elements and latest image URI

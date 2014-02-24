@@ -1,2 +1,2 @@
-steroids.navigationBar.show("Chat");
+
 
