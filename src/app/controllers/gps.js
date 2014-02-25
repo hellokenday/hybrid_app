@@ -171,6 +171,7 @@ function loadMap(){
     var key =  window.localStorage.getItem("last_track");
 	// Get all the GPS data for the specific workout
 	var data = window.localStorage.getItem(key);
+
 	// Turn the stringified GPS data back into a JS object
 	data = JSON.parse(data);
 
