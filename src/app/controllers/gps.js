@@ -1,5 +1,6 @@
 steroids.navigationBar.show("GPS");
-// --- Map Panel --- //
+
+/*** --- Map Panel --- ***/
 
 // Wait for device API libraries to load
 
@@ -16,9 +17,11 @@ function onDeviceReady() {
 }
 
 // onSuccess Geolocation
-//
+
+/**
+ * function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
+ */
 function onSuccess() {
-    // function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
     var win = function(position) {
         var lat = position.coords.latitude;
         var long = position.coords.longitude;
@@ -56,8 +59,12 @@ function onSuccess() {
     }
 
 
-// --- Stats and History --- //
-// Code built on gps tutorial: http://code.tutsplus.com/tutorials/build-an-exercise-tracking-app-geolocation-tracking--mobile-11070
+/** --- Stats and History --- **/
+
+/**
+ * Code built on gps tutorial: http://code.tutsplus.com/tutorials/build-an-exercise-tracking-app-geolocation-tracking--mobile-11070
+ */
+
 function gps_distance(lat1, lon1, lat2, lon2) {
 	// http://www.movable-type.co.uk/scripts/latlong.html
     var R = 6371; // km
