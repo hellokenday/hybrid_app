@@ -2,61 +2,41 @@ steroids.navigationBar.show("GPS");
 
 /*** --- Map Panel --- ***/
 
-// Wait for device API libraries to load
-
 document.addEventListener("deviceready", onDeviceReady, false);
 
 var watchID = null;
 
-// device APIs are available
-//
 function onDeviceReady() {
-    // Throw an error if no update is received every 30 seconds
     var options = { timeout: 30000 };
-    watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+    watchID = navigator.geolocation.getCurrentPosition(onCurrentPositionSuccess, onCurrentPositionError, options);
 }
 
-// onSuccess Geolocation
-
 /**
- * function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
+ * function snippet edited from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
+ * condensed the tracking into one function removing the need for win and fail functions used in tutorial
  */
-function onSuccess() {
-    var win = function(position) {
-        var lat = position.coords.latitude;
-        var long = position.coords.longitude;
-        var myLatlng = new google.maps.LatLng(lat, long);
 
-        var myOptions = {
-            center: myLatlng,
-            zoom: 17,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI: true
-        };
-        map_element = document.getElementById("map_canvas");
-        map = new google.maps.Map(map_element, myOptions);
-        
-        var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title:"You are here"
-      });
-    };
-
-    var fail = function(e) {
-        $.mobile.hidePageLoadingMsg();
-        alert('Can\'t retrieve position.\nError: ' + e);
-    };
-
-    watchID = navigator.geolocation.getCurrentPosition(win, fail);
+function onCurrentPositionSuccess(position) {
+ 	var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	var myOptions = {
+		center: latlng,
+		zoom: 17,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		disableDefaultUI: true
+	};
+	var map_element = document.getElementById("map_canvas");
+	var map = new google.maps.Map(map_element, myOptions);
+	var marker = new google.maps.Marker({
+		position: latlng,
+		map: map,
+		title:"You are here"
+	});
 } 
 
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
+function onCurrentPositionError(error) {
+	alert('Can\'t retrieve position: code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+	$.mobile.hidePageLoadingMsg();
+}
 
 
 /** --- Stats and History --- **/
@@ -181,7 +161,7 @@ function loadMap(){
 
 	// Turn the stringified GPS data back into a JS object
 	data = JSON.parse(data);
-
+    alert(data);
 	// Calculate the total distance travelled
 	total_km = 0;
 
