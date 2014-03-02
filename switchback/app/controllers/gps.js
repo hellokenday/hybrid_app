@@ -2,228 +2,115 @@ steroids.navigationBar.show("GPS");
 // --- Map Panel --- //
 
 // Wait for device API libraries to load
-
 document.addEventListener("deviceready", onDeviceReady, false);
 
-var watchID = null;
+// vars
+var track_count = "track_count";
+var $output = $("#output");
+var positions = [];
+var watchID;
+var options = { 
+    enableHighAccuracy: true, 
+    timeout           : 20000
+};
 
-// device APIs are available
-//
-function onDeviceReady() {
+function _initCurrentLocation() {
+    
+    console.log('_initCurrentLocation');
+    
     // Throw an error if no update is received every 30 seconds
-    var options = { timeout: 30000 };
     watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
 }
 
-// onSuccess Geolocation
-//
-function onSuccess() {
-    // function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
-    var win = function(position) {
-        var lat = position.coords.latitude;
-        var long = position.coords.longitude;
-        var myLatlng = new google.maps.LatLng(lat, long);
+function _initButtons(){
 
-        var myOptions = {
-            center: myLatlng,
-            zoom: 17,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI: true
-        };
-        map_element = document.getElementById("map_canvas");
-        map = new google.maps.Map(map_element, myOptions);
+	$('.start').click(_startTracking);
+	$('.stop').click(_stopTracking);
+}
+
+function _startTracking(){
+
+    console.log('_startTracking');
+
+    _resetTrackData();
+
+    watchID = navigator.geolocation.watchPosition(function(position) {
+
+        var time = new Date(position.timestamp);
+
+        $output.append("<li>long: " + position.coords.longitude + "lat: " + position.coords.latitude + " at " + time.toTimeString() + "</li>")
         
-        var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title:"You are here"
-      });
-    };
+        positions.push(position);
+    }, 
+    function(){ console.log('onLocationError: ' + error.code + ": " + error.message);
+    }, options);
+}
 
-    var fail = function(e) {
-        $.mobile.hidePageLoadingMsg();
-        alert('Can\'t retrieve position.\nError: ' + e);
-    };
+function _stopTracking(){
 
-    watchID = navigator.geolocation.getCurrentPosition(win, fail);
-} 
+    console.log('_stopTracking');
 
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
+    navigator.geolocation.clearWatch(watchID);
+    watchID = null;
+
+    // gets the number of track stored in variable
+    var trackCount = parseInt(window.localStorage.getItem(track_count));
+        
+    // if trackCount is a number, set trackID to the next element.
+    var trackID = (!isNaN(trackCount)) ? trackCount+1 : 1;
+
+    // turn position object in positions array into a string
+    window.localStorage.setItem(trackID, JSON.stringify(positions));
+    // append and update trackCount in local storage
+    window.localStorage.setItem(track_count, trackID);
+
+    // clears output in HTML and empties position array
+    _resetTrackData();
+
+    _drawMap();
+}
+
+function _drawMap() {
+
+    console.log('_drawMap');
+    
+    // get the number of tracks stored in local storage and convert into integer
+    var lastID = parseInt(window.localStorage.getItem(track_count));
+    var data = JSON.parse(window.localStorage.getItem(lastID));
+    var trackCoords = [];
+    var $mapDiv = document.getElementById("map_canvas2");
+    
+    // get the last track in the array
+    console.log(lastID + ": " + window.localStorage.getItem(lastID));
+    
+    // convert the data into a format google maps can use
+    for(var i = 0; i < data.length; i++){   
+        var currCoords = data[i].coords;
+        trackCoords.push(new google.maps.LatLng(currCoords.latitude, currCoords.longitude));
+        //trackCoords.push(new google.maps.LatLng(data[i].coords.latitude, data[i].coords.longitude));
     }
-
-
-// --- Stats and History --- //
-// Code built on gps tutorial: http://code.tutsplus.com/tutorials/build-an-exercise-tracking-app-geolocation-tracking--mobile-11070
-function gps_distance(lat1, lon1, lat2, lon2) {
-	// http://www.movable-type.co.uk/scripts/latlong.html
-    var R = 6371; // km
-    var dLat = (lat2-lat1) * (Math.PI / 180);
-    var dLon = (lon2-lon1) * (Math.PI / 180);
-    var lat1 = lat1 * (Math.PI / 180);
-    var lat2 = lat2 * (Math.PI / 180);
-
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-    var d = R * c;
     
-    return d;
-}
-
-//document.addEventListener("deviceready", function(){
-//	
-//	if(navigator.network.connection.type == Connection.NONE){
-//		$("#home_network_button").text('No Internet Access')
-//								 .attr("data-icon", "delete")
-//								 .button('refresh');
-//	}
-//
-//});
-
-
-var track_id = '';      // Name/ID of the exercise
-var watch_id = null;    // ID of the geolocation
-var tracking_data = []; // Array containing GPS position objects
-
-function onTrackingSuccess(position){
-
-//    alert(position);
-    tracking_data.push(position);
-}
-
-function onTrackingError(error){
-
-    alert(error);
-}
-
-function startTracking_start(){
-
-    alert('startTracking_start');
-
-    // Start tracking the User
-    var options = { frequency: 3000, enableHighAccuracy: true };
-    watch_id = navigator.geolocation.watchPosition(onTrackingSuccess, onTrackingError, options);
-    
-    // Tidy up the UI
-    track_id = $("#track_id").val();
-    
-    $("#track_id").hide();
-    
-    $("#startTracking_status").html("Tracking workout: <strong>" + track_id + "</strong>");
-}
-
-function startTracking_stop(){
-    
-	// Stop tracking the user
-	navigator.geolocation.clearWatch(watch_id);
-	
-	// Save the tracking data
-	window.localStorage.setItem(track_id, JSON.stringify(tracking_data));
-
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    window.localStorage.setItem("last_track", track_id);
-
-	// Reset watch_id and tracking_data 
-	var watch_id = null;
-	var tracking_data = null;
-
-	// Tidy up the UI
-	$("#track_id").val("").show();
-	
-	$("#startTracking_status").html("Stopped tracking workout: <strong>" + track_id + "</strong>");
-
-}
-
-//// When the user views the history page
-//$('#history').live('pageshow', function () {
-//	
-//	// Count the number of entries in localStorage and display this information to the user
-//	tracks_recorded = window.localStorage.length;
-//	$("#tracks_recorded").html("<strong>" + tracks_recorded + "</strong> workout(s) recorded");
-//	
-//	// Empty the list of recorded tracks
-//	$("#history_tracklist").empty();
-//	
-//	// Iterate over all of the recorded tracks, populating the list
-//	for(i=0; i<tracks_recorded; i++){
-//		$("#history_tracklist").append("<li><a href='#track_info' data-ajax='false'>" + window.localStorage.key(i) + "</a></li>");
-//	}
-//	
-//	// Tell jQueryMobile to refresh the list
-//	$("#history_tracklist").listview('refresh');
-//
-//});
-//
-//// When the user clicks a link to view track info, set/change the track_id attribute on the track_info page.
-//$("#history_tracklist li a").live('click', function(){
-//
-//	$("#track_info").attr("track_id", $(this).text());
-//	
-//});
-
-
-// When the user views the Track Info page
-function loadMap(){
-	// Find the track_id of the workout they are viewing
-    var key =  window.localStorage.getItem("last_track");
-	// Get all the GPS data for the specific workout
-	var data = window.localStorage.getItem(key);
-    alert(key);
-	// Turn the stringified GPS data back into a JS object
-
-	data = JSON.parse(data);
-
-	// Calculate the total distance travelled
-	total_km = 0;
-
-	for(i = 0; i < data.length; i++){
-	    
-	    if(i == (data.length - 1)){
-	        break;
-	    }
-	    
-	    total_km += gps_distance(data[i].coords.latitude, data[i].coords.longitude, data[i+1].coords.latitude, data[i+1].coords.longitude);
-	}
-	
-	total_km_rounded = total_km.toFixed(2);
-	
-	// Calculate the total time taken for the track
-	start_time = new Date(data[0].timestamp).getTime();
-	end_time = new Date(data[data.length-1].timestamp).getTime();
-
-	total_time_ms = end_time - start_time;
-	total_time_s = total_time_ms / 1000;
-	
-	final_time_m = Math.floor(total_time_s / 60);
-	final_time_s = total_time_s - (final_time_m * 60);
-
-	// Display total distance and time
-	$("#track_info_info").html('Travelled <strong>' + total_km_rounded + '</strong> km in <strong>' + final_time_m + 'm</strong> and <strong>' + final_time_s + 's</strong>');
-	
-	// Set the initial Lat and Long of the Google Map
-	var myLatLng = new google.maps.LatLng(data[0].coords.latitude, data[0].coords.longitude);
-
-	// Google Map options
-	var myOptions = {
-      zoom: 15,
-      center: myLatLng,
+    // Google Map options
+    var mapOptions = {
+      zoom: 17,
+      center: trackCoords[0],
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
     };
-
-    // Create the Google Map, set options
-    var map = new google.maps.Map(document.getElementById("map_canvas2"), myOptions);
-
-    var trackCoords = [];
     
-    // Add each GPS entry to an array
-    for(i=0; i<data.length; i++){
-    	trackCoords.push(new google.maps.LatLng(data[i].coords.latitude, data[i].coords.longitude));
-    }
+    // Create the Google Map, set options
+    var map = new google.maps.Map($mapDiv, mapOptions);
+    
+    var startMarker = new google.maps.Marker({
+        position: trackCoords[0],
+        map: map,
+        title: "Track start"
+    });
+    var endMarker = new google.maps.Marker({
+        position: trackCoords[trackCoords.length-1],
+        map: map,
+        title: "Track end"
+    });
     
     // Plot the GPS entries as a line on the Google Map
     var trackPath = new google.maps.Polyline({
@@ -235,6 +122,59 @@ function loadMap(){
 
     // Apply the line to the map
     trackPath.setMap(map);
-   
-		
+}
+    
+function _resetTrackData(){
+
+    positions = [];
+    $output.html('');
+}
+
+// device APIs are available
+function onDeviceReady() {
+    
+    console.log('onDeviceReady');
+    
+    _initCurrentLocation();
+    _initButtons();
+}
+
+// onSuccess Geolocation
+function onSuccess() {
+
+    // function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
+    var win = function(position) {
+
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        var latlng = new google.maps.LatLng(lat, long);
+
+        var mapOptions = {
+            center: latlng,
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true
+        };
+
+        var map_element = document.getElementById("map_canvas");
+        var map = new google.maps.Map(map_element, mapOptions);
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title:"You are here"
+        });
+    };
+
+    var fail = function(e) {
+
+        $.mobile.hidePageLoadingMsg();
+        alert('Can\'t retrieve position.\nError: ' + e);
+    };
+
+    watchID = navigator.geolocation.getCurrentPosition(win, fail);
+}
+
+// onError Callback receives a PositionError object
+function onError(e) {
+    console.log('code: '    + e.code    + '\n' + 'message: ' + e.message + '\n');
 }

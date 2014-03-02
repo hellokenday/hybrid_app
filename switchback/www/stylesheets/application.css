@@ -60,8 +60,7 @@ img#photo {
 #GMapsID div div a div img{
     display:none;
 }
-#map_canvas, 
-#map_canvas2 {
+.map {
     position:absolute;
     bottom:0;
     left:0;

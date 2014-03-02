@@ -31,20 +31,20 @@
                 <input type="text" name="track_id" id="track_id" placeholder="Workout ID/Name"/>
             </div>
             <br><br><br><br>
-            <button class="topcoat-button" ontouchend="startTracking_start()">Start Tracking</button>
-            <button class="topcoat-button" ontouchend="startTracking_stop();loadMap();">Stop Tracking</button>  
+            <button class="topcoat-button start">Start Tracking</button>
+            <button class="topcoat-button stop">Stop Tracking</button>  
 
             <p id="startTracking_debug"></p>
         </div>
          <div data-role="content"><!-- panel 2 --> 
              <!-- map canvas-->
-             <div id="map_canvas"></div>
+             <div id="map_canvas" class="map"></div>
              <!-- <p id="geolocation">Watching geolocation...</p>-->
         </div>
         <div data-role="content"><!-- panel 3 --> 
              <p id="track_info_info"></p>
              <!-- map canvas-->
-             <div id="map_canvas2"></div>
+             <div id="map_canvas2" class="map"></div>
              <!-- <p id="geolocation">Watching geolocation...</p>-->
         </div>
      </div>
