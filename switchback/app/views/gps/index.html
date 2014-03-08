@@ -1,26 +1,5 @@
  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
  <script src="/vendor/chui/chui-3.0.6.js"></script>
- <script>
-    // chui segmented list
-      $(function() {
-         var segmentedOptions = {
-            id: 'mySegmented',
-            labels : ['Stats','Map','History'],
-            selected: 0
-         };
-         var segmentedResponse = function(e) {
-            e.stopPropagation();
-            $('#output').find('h3 > span').html(($(this).index() + 1));
-         };
-         var newSegmented = $.UICreateSegmented(segmentedOptions);
-         $('#segmentedPanel').append(newSegmented);
-         $('.segmented').UISegmented({callback:segmentedResponse});
-         $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
-         var selectedPanel = $('.segmented').find('.selected').index();
-         $('#output').find('span').html(selectedPanel + 1);
-      });
-  </script>
-
   <section>
      <div id='segmentedPanel' class='horizontal centered'></div>
      <div id="toggle-panels">

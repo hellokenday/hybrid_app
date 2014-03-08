@@ -22,6 +22,24 @@ function _initCurrentLocation() {
     watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
 }
 
+function _initUI() {
+         var segmentedOptions = {
+            id: 'mySegmented',
+            labels : ['Stats','Map','History'],
+            selected: 0
+         };
+         var segmentedResponse = function(e) {
+            e.stopPropagation();
+            $('#output').find('h3 > span').html(($(this).index() + 1));
+         };
+         var newSegmented = $.UICreateSegmented(segmentedOptions);
+         $('#segmentedPanel').append(newSegmented);
+         $('.segmented').UISegmented({callback:segmentedResponse});
+         $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
+         var selectedPanel = $('.segmented').find('.selected').index();
+         $('#output').find('span').html(selectedPanel + 1);
+}
+
 function _initButtons(){
 
 	$('.start').click(_startTracking);
@@ -137,6 +155,7 @@ function onDeviceReady() {
     
     _initCurrentLocation();
     _initButtons();
+    _initUI()
 }
 
 // onSuccess Geolocation
@@ -149,20 +168,23 @@ function onSuccess() {
         var long = position.coords.longitude;
         var latlng = new google.maps.LatLng(lat, long);
 
-        var mapOptions = {
+        /*var mapOptions = {
             center: latlng,
             zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true
         };
 
-        var map_element = document.getElementById("map_canvas");
-        var map = new google.maps.Map(map_element, mapOptions);
-        var marker = new google.maps.Marker({
+        var map_element = document.getElementById("map_canvas");*/
+        
+        //var map = new google.maps.Map(map_element, mapOptions);
+        $('#map_canvas').gmap({'center': latLng});
+        
+        /*var marker = new google.maps.Marker({
             position: latlng,
             map: map,
             title:"You are here"
-        });
+        });*/
     };
 
     var fail = function(e) {
