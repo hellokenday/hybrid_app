@@ -46,7 +46,9 @@ function initCurrentLocationMap () {
 
 function initHistoryMap () {
 
-    initMap("map_canvas2", historyMap);
+    console.log('initHistoryMap');
+
+    historyMap = createMap("map_canvas2", historyMap);
     tab3Inited = true;
 }
 
@@ -75,7 +77,7 @@ function initSegmented (argument) {
 function updateCurrentLocation() {
         
     if(tab2Inited === false) initCurrentLocationMap();
-    else watchID = navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
+    else navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
 /**
@@ -92,20 +94,19 @@ function onTabClicked(tabIndex) {
     switch(tabIndex)
     {
         case 0:
-            console.log('1');
+            // do nothing
             break;
         case 1:
             updateCurrentLocation();
             break;
         case 2:
-            console.log('3');
+            if(!tab3Inited) initHistoryMap();
             break;
         default:
             console.log('onTabClicked: unknown tab index: ' + tabIndex);
     }
 }
 
-// onSuccess Geolocation
 function onGetCurrentLocationSuccess(position) {
 
     console.log('onGetCurrentLocationSuccess');
@@ -122,4 +123,11 @@ function onGetCurrentLocationSuccess(position) {
     currentLocationMap.panTo(latlng);
 }
 function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
+
+function onLocationUpdatedSuccess(position) {
+
+    console.log('onLocationUpdatedSuccess');
+}
+function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
+
 
