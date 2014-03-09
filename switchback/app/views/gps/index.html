@@ -1,30 +1,21 @@
  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
  <script src="/vendor/chui/chui-3.0.6.js"></script>
+
   <section>
      <div id='segmentedPanel' class='horizontal centered'></div>
      <div id="toggle-panels">
-        <div data-role="content" class="content-padded"><!-- panel 1 -->
-            <p id="startTracking_status"></p>
-            <div data-role="fieldcontain" class="ui-hide-label">
-                <label for="track_id">Track ID/Name:</label>
-                <input type="text" name="track_id" id="track_id" placeholder="Workout ID/Name"/>
+        <div data-role="content" class="content-padded content">
+            <div class="buttonContainer">
+                <button class="topcoat-button start">Start Tracking</button>
+                <button class="topcoat-button stop">Stop Tracking</button>  
             </div>
-            <br><br><br><br>
-            <button class="topcoat-button start">Start Tracking</button>
-            <button class="topcoat-button stop">Stop Tracking</button>  
-
-            <p id="startTracking_debug"></p>
         </div>
-         <div data-role="content"><!-- panel 2 --> 
-             <!-- map canvas-->
+         <div data-role="content" class="content">
              <div id="map_canvas" class="map"></div>
-             <!-- <p id="geolocation">Watching geolocation...</p>-->
         </div>
-        <div data-role="content"><!-- panel 3 --> 
-             <p id="track_info_info"></p>
-             <!-- map canvas-->
+        <div data-role="content" class="content">
              <div id="map_canvas2" class="map"></div>
-             <!-- <p id="geolocation">Watching geolocation...</p>-->
         </div>
      </div>
   </section>
+  
