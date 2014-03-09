@@ -6,44 +6,52 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 // vars
 var track_count = "track_count";
-var $output = $("#output");
 var positions = [];
 var watchID;
-var options = { 
+
+var defaultLocationOptions = { 
     enableHighAccuracy: true, 
     timeout           : 20000
 };
 
 var currentLocationMap;
+var currentLocationMarker;
 var historyMap;
+var historyMarkers = [];
 
 var tab1Inited = false;
 var tab2Inited = false;
 var tab3Inited = false;
 
-function initCurrentLocationMap () {
+function createMap (divID){
 
-    console.log('initCurrentLocationMap');
-
-    // give a random centrepoint for now (brighton pier)
-    var centre = new google.maps.LatLng(50.815514, -0.137089);
-
-    var mapOptions = {
-        center: centre,
+    var defaultMapOptions = {
         zoom: 17,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
     };
 
-    currentLocationMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-    //watchID = navigator.geolocation.watchPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, options);
+    return new google.maps.Map(document.getElementById(divID), defaultMapOptions);
+}
 
+function initCurrentLocationMap () {
+
+    currentLocationMap = createMap("map_canvas");
+    
     tab2Inited = true;
+
+    // call again now the map's initialised
+    updateCurrentLocation();
+}
+
+function initHistoryMap () {
+
+    initMap("map_canvas2", historyMap);
+    tab3Inited = true;
 }
 
 function initSegmented (argument) {
 
-    console.log('initSegmented');
     var segmentedOptions = {
         id: 'mySegmented',
         labels : ['Stats','Map','History'],
@@ -60,12 +68,14 @@ function initSegmented (argument) {
      var selectedPanel = $('.segmented').find('.selected').index();
 }
 
-function getCurrentLocation() {
-    
-    console.log('getCurrentLocation');
-    
+/**
+ * Note: getCurrentPosition() tries to answer as fast as 
+ * possible with a low accuracy result
+ */
+function updateCurrentLocation() {
+        
     if(tab2Inited === false) initCurrentLocationMap();
-    else watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+    else watchID = navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
 /**
@@ -73,6 +83,7 @@ function getCurrentLocation() {
  */
 
 function onDeviceReady () {
+
     initSegmented();
 }
 
@@ -84,7 +95,7 @@ function onTabClicked(tabIndex) {
             console.log('1');
             break;
         case 1:
-            getCurrentLocation();
+            updateCurrentLocation();
             break;
         case 2:
             console.log('3');
@@ -95,20 +106,20 @@ function onTabClicked(tabIndex) {
 }
 
 // onSuccess Geolocation
-function onGetCurrentLocationSuccess() {
+function onGetCurrentLocationSuccess(position) {
 
-    var success = function(position) {
+    console.log('onGetCurrentLocationSuccess');
 
-        var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        var marker = new google.maps.Marker({
-            position: latlng,
-            map: currentLocationMap,
-            title:"Current location"
-        });
-    };
-    var failure = function(e) { $.noop(); };
+    if(currentLocationMarker) currentLocationMarker.setMap(null);
 
-    watchID = navigator.geolocation.getCurrentPosition(success, failure);
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    currentLocationMarker = new google.maps.Marker({
+        position: latlng,
+        map: currentLocationMap,
+        title:"Current location"
+    });
+
+    currentLocationMap.panTo(latlng);
 }
 function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
