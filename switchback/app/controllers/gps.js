@@ -1,5 +1,8 @@
+/**
+ * The map panel
+ */
+
 steroids.navigationBar.show("GPS");
-// --- Map Panel --- //
 
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -8,24 +11,27 @@ document.addEventListener("deviceready", onDeviceReady, false);
 var track_count = "track_count";
 var positions = [];
 var watchID;
-
-var defaultLocationOptions = { 
-    enableHighAccuracy: true, 
-    timeout           : 20000
-};
-
 var currentLocationMap;
 var currentLocationMarker;
 var historyMap;
 var historyMarkers = [];
+var historyTrackPath;
 
 var tab1Inited = false;
 var tab2Inited = false;
 var tab3Inited = false;
+var tracking = false;
 
-function createMap (divID){
+var defaultLocationOptions = { 
+    
+    enableHighAccuracy: true, 
+    timeout           : 20000
+};
+
+function createMap (divID) {
 
     var defaultMapOptions = {
+
         zoom: 17,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
@@ -55,29 +61,92 @@ function initHistoryMap () {
 function initSegmented (argument) {
 
     var segmentedOptions = {
+
         id: 'mySegmented',
         labels : ['Stats','Map','History'],
         selected: 0
      };
      var segmentedResponse = function(e) {
+
         e.stopPropagation();
         onTabClicked($('.segmented').find('.selected').index());
      };
      var newSegmented = $.UICreateSegmented(segmentedOptions);
+
      $('#segmentedPanel').append(newSegmented);
      $('.segmented').UISegmented({callback:segmentedResponse});
      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
-     var selectedPanel = $('.segmented').find('.selected').index();
+     
+     //var selectedPanel = $('.segmented').find('.selected').index();
+}
+
+function initStats () {
+
+    $('.start').click(startTracking);
+    $('.stop').click(stopTracking);
+
+    tab1Inited = true;
+}
+
+function startTracking () {
+
+    if(tracking === true) return;
+    console.log('startTracking');
+
+    resetHistoryMarkers();
+
+    positions = [];
+    tracking = true;
+
+    watchID = navigator.geolocation.watchPosition(onLocationUpdatedSuccess, onLocationUpdatedError, defaultLocationOptions);
+}
+
+function stopTracking () {
+
+    if(tracking === false) return;
+    console.log('stopTracking');
+
+    navigator.geolocation.clearWatch(watchID);
+    watchID = null;
+
+    tracking = false;
+
+    saveTrackData();
+}
+
+function saveTrackData () {
+
+    var trackCount = parseInt(window.localStorage.getItem(track_count));
+    var trackID = (!isNaN(trackCount)) ? trackCount+1 : 1;
+
+    window.localStorage.setItem(trackID, JSON.stringify(positions));
+    window.localStorage.setItem(track_count, trackID);
 }
 
 /**
  * Note: getCurrentPosition() tries to answer as fast as 
  * possible with a low accuracy result
  */
-function updateCurrentLocation() {
+function updateCurrentLocation () {
         
     if(tab2Inited === false) initCurrentLocationMap();
     else navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
+}
+
+function resetCurrentLocationMarker () {
+
+    if(currentLocationMarker) currentLocationMarker.setMap(null);
+}
+
+function resetHistoryMarkers () {
+
+    if(historyMarkers.length > 0) {
+
+        for (var i = 0; i < historyMarkers.length; i++) {
+
+            historyMarkers[i].setMap(null);
+        }
+    }
 }
 
 /**
@@ -87,14 +156,14 @@ function updateCurrentLocation() {
 function onDeviceReady () {
 
     initSegmented();
+    initStats();
 }
 
 function onTabClicked(tabIndex) {
         
-    switch(tabIndex)
-    {
-        case 0:
-            // do nothing
+    switch(tabIndex) {
+
+        case 0: // nothing to do
             break;
         case 1:
             updateCurrentLocation();
@@ -109,9 +178,7 @@ function onTabClicked(tabIndex) {
 
 function onGetCurrentLocationSuccess(position) {
 
-    console.log('onGetCurrentLocationSuccess');
-
-    if(currentLocationMarker) currentLocationMarker.setMap(null);
+    if(currentLocationMarker) resetCurrentLocationMarker();
 
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     currentLocationMarker = new google.maps.Marker({
@@ -127,7 +194,28 @@ function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: 
 function onLocationUpdatedSuccess(position) {
 
     console.log('onLocationUpdatedSuccess');
+
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: historyMap
+    });
+
+    historyMap.panTo(latlng)
+
+    historyMarkers.push(marker);
+    positions.push(position);
+
+    /*historyTrackPath.setMap(null);
+    historyTrackPath = new google.maps.Polyline({
+      path: positions,
+      strokeColor: "#00d8ff",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    trackPath.setMap(historyMap);*/
 }
-function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
+
+function onLocationUpdatedError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
 
