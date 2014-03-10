@@ -12,11 +12,9 @@ var track_count = "track_count";
 var positions = [];
 var latLngPositions = [];
 var watchID;
-var currentLocationMap;
-var currentLocationMarker;
-var historyMap;
-var historyMarkers = [];
-var historyTrackPath;
+var trackMap;
+var trackMarkers = [];
+var trackPath;
 
 var tab1Inited = false;
 var tab2Inited = false;
@@ -28,34 +26,6 @@ var defaultLocationOptions = {
     enableHighAccuracy: true, 
     timeout           : 20000
 };
-
-function createMap (divID) {
-
-    var defaultMapOptions = {
-
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        disableDefaultUI: true
-    };
-
-    return new google.maps.Map(document.getElementById(divID), defaultMapOptions);
-}
-
-function initCurrentLocationMap () {
-
-    currentLocationMap = createMap("map_canvas");
-    
-    tab2Inited = true;
-
-    // call again now the map's initialised
-    updateCurrentLocation();
-}
-
-function initHistoryMap () {
-
-    historyMap = createMap("map_canvas2", historyMap);
-    tab3Inited = true;
-}
 
 function initSegmented () {
 
@@ -80,27 +50,53 @@ function initStats () {
     tab1Inited = true;
 }
 
-function addHistoryMarker (latlng) {
+function initMap () {
 
-    if(historyMarkers.length > 1) removeLastHistoryMarker();
+    trackMap = createMap("map_canvas");
+    setCurrentLocation();
+
+    tab2Inited = true;
+}
+
+function initHistory() {
+
+    // do nothing...
+}
+
+function createMap (divID) {
+
+    var defaultMapOptions = {
+
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
+    };
+
+    return new google.maps.Map(document.getElementById(divID), defaultMapOptions);
+}
+
+function addMarker (latlng) {
+
+    if(positions.length > 1) removeLastMarker();
 
     var marker = new google.maps.Marker({
         position: latlng,
-        map: historyMap
+        map: trackMap,
+        title: "Current location"
     });
 
-    historyMarkers.push(marker);
+    trackMarkers.push(marker);
 }
 
-function removeLastHistoryMarker () {
+function removeLastMarker () {
 
-    removeHistoryMarkerAtIndex(historyMarkers.length-1);
+    removeMarkerAtIndex(trackMarkers.length-1);
 
 }
 
-function removeHistoryMarkerAtIndex () {
+function removeMarkerAtIndex (index) {
 
-    historyMarkers[historyMarkers.length-1].setMap(null);
+    trackMarkers[index].setMap(null);
 
 }
 
@@ -108,7 +104,7 @@ function startTracking () {
 
     if(tracking === true) return;
 
-    resetHistoryMarkers();
+    resetMarkers();
 
     positions = [];
     latLngPositions = [];
@@ -143,10 +139,9 @@ function saveTrackData () {
  * Note: getCurrentPosition() tries to answer as fast as 
  * possible with a low accuracy result
  */
-function updateCurrentLocation () {
+function setCurrentLocation () {
         
-    if(tab2Inited === false) initCurrentLocationMap();
-    else navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
+    navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
 function updateStats () {
@@ -154,41 +149,32 @@ function updateStats () {
     // nothing to do...
 }
 
-function updateHistoryPath () {
+function updatePath () {
 
     // no point carrying on if...
     if(positions.length < 2) return;
 
-    if(historyTrackPath) historyTrackPath.setMap(null);
+    if(trackPath) trackPath.setMap(null);
 
-    historyTrackPath = new google.maps.Polyline({
+    trackPath = new google.maps.Polyline({
       path: latLngPositions,
       strokeColor: "#00d8ff",
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
-    historyTrackPath.setMap(historyMap);
+    trackPath.setMap(trackMap);
 }
 
-function resetCurrentLocationMarker () {
+function resetMarkers () {
 
-    if(currentLocationMarker) {
+    if(trackMarkers.length > 0) {
 
-        currentLocationMarker.setMap(null);
-        currentLocationMarker = null;
-    }
-}
+        for (var i = 0; i < trackMarkers.length; i++) {
 
-function resetHistoryMarkers () {
-
-    if(historyMarkers.length > 0) {
-
-        for (var i = 0; i < historyMarkers.length; i++) {
-
-            historyMarkers[i].setMap(null);
+            trackMarkers[i].setMap(null);
         }
 
-        historyMarkers = [];
+        trackMarkers = [];
     }
 }
 
@@ -204,30 +190,29 @@ function onDeviceReady () {
 
 function onGetCurrentLocationSuccess(position) {
 
-    if(currentLocationMarker) resetCurrentLocationMarker();
-
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    currentLocationMarker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
         position: latlng,
-        map: currentLocationMap,
-        title:"Current location"
+        map: trackMap,
+        title: "Start"
     });
+    trackMarkers.push(marker);
 
-    currentLocationMap.panTo(latlng);
+    trackMap.panTo(latlng);
 }
 function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
 function onLocationUpdatedSuccess(position) {
 
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    historyMap.panTo(latlng)
+    trackMap.panTo(latlng)
     
-    addHistoryMarker(latlng);
+    addMarker(latlng);
 
     positions.push(position);
     latLngPositions.push(latlng);
 
-    updateHistoryPath();
+    updatePath();
 }
 function onLocationUpdatedError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
@@ -248,10 +233,10 @@ function onSegmentSelected(e) {
             updateStats();
             break;
         case 1:
-            updateCurrentLocation();
+            if(!tab2Inited) initMap();
             break;
         case 2:
-            if(!tab3Inited) initHistoryMap();
+            initHistory();
             break;
         default:
             console.log('onTabClicked: unknown tab index: ' + tabIndex);
