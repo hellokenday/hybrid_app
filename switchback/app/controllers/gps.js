@@ -52,13 +52,11 @@ function initCurrentLocationMap () {
 
 function initHistoryMap () {
 
-    console.log('initHistoryMap');
-
     historyMap = createMap("map_canvas2", historyMap);
     tab3Inited = true;
 }
 
-function initSegmented (argument) {
+function initSegmented () {
 
     var segmentedOptions = {
 
@@ -66,18 +64,11 @@ function initSegmented (argument) {
         labels : ['Stats','Map','History'],
         selected: 0
      };
-     var segmentedResponse = function(e) {
+     var segmentedComponent = $.UICreateSegmented(segmentedOptions);
 
-        e.stopPropagation();
-        onTabClicked($('.segmented').find('.selected').index());
-     };
-     var newSegmented = $.UICreateSegmented(segmentedOptions);
-
-     $('#segmentedPanel').append(newSegmented);
-     $('.segmented').UISegmented({callback:segmentedResponse});
-     $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
-     
-     //var selectedPanel = $('.segmented').find('.selected').index();
+     $('#segmentedPanel').append(segmentedComponent);
+     $('.segmented').UISegmented({callback:onSegmentSelected});
+     $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
 }
 
 function initStats () {
@@ -133,9 +124,29 @@ function updateCurrentLocation () {
     else navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
+function updateHistoryPath () {
+
+    // no point carrying on if...
+    if(positions.length === 0) return;
+
+    if(historyTrackPath) historyTrackPath.setMap(null);
+
+    historyTrackPath = new google.maps.Polyline({
+      path: positions,
+      strokeColor: "#00d8ff",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    historyTrackPath.setMap(historyMap);
+}
+
 function resetCurrentLocationMarker () {
 
-    if(currentLocationMarker) currentLocationMarker.setMap(null);
+    if(currentLocationMarker) {
+
+        currentLocationMarker.setMap(null);
+        currentLocationMarker = null;
+    }
 }
 
 function resetHistoryMarkers () {
@@ -146,6 +157,8 @@ function resetHistoryMarkers () {
 
             historyMarkers[i].setMap(null);
         }
+
+        historyMarkers = [];
     }
 }
 
@@ -206,16 +219,17 @@ function onLocationUpdatedSuccess(position) {
     historyMarkers.push(marker);
     positions.push(position);
 
-    /*historyTrackPath.setMap(null);
-    historyTrackPath = new google.maps.Polyline({
-      path: positions,
-      strokeColor: "#00d8ff",
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
-    trackPath.setMap(historyMap);*/
+    //updateHistoryPath();
 }
 
 function onLocationUpdatedError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
+function onSegmentSelected(e) {
+
+    // stop any events/weird stuff happening
+    e.stopPropagation();
+
+    //call onTabClicked, we'll decide what to do from there
+    onTabClicked($('.segmented').find('.selected').index());
+ }
 
