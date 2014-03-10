@@ -10,6 +10,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 // vars
 var track_count = "track_count";
 var positions = [];
+var latLngPositions = [];
 var watchID;
 var currentLocationMap;
 var currentLocationMarker;
@@ -79,14 +80,39 @@ function initStats () {
     tab1Inited = true;
 }
 
+function addHistoryMarker (latlng) {
+
+    if(historyMarkers.length > 1) removeLastHistoryMarker();
+
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: historyMap
+    });
+
+    historyMarkers.push(marker);
+}
+
+function removeLastHistoryMarker () {
+
+    removeHistoryMarkerAtIndex(historyMarkers.length-1);
+
+}
+
+function removeHistoryMarkerAtIndex () {
+
+    historyMarkers[historyMarkers.length-1].setMap(null);
+
+}
+
 function startTracking () {
 
     if(tracking === true) return;
-    console.log('startTracking');
 
     resetHistoryMarkers();
 
     positions = [];
+    latLngPositions = [];
+
     tracking = true;
 
     watchID = navigator.geolocation.watchPosition(onLocationUpdatedSuccess, onLocationUpdatedError, defaultLocationOptions);
@@ -95,7 +121,6 @@ function startTracking () {
 function stopTracking () {
 
     if(tracking === false) return;
-    console.log('stopTracking');
 
     navigator.geolocation.clearWatch(watchID);
     watchID = null;
@@ -124,15 +149,20 @@ function updateCurrentLocation () {
     else navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
+function updateStats () {
+
+    // nothing to do...
+}
+
 function updateHistoryPath () {
 
     // no point carrying on if...
-    if(positions.length === 0) return;
+    if(positions.length < 2) return;
 
     if(historyTrackPath) historyTrackPath.setMap(null);
 
     historyTrackPath = new google.maps.Polyline({
-      path: positions,
+      path: latLngPositions,
       strokeColor: "#00d8ff",
       strokeOpacity: 1.0,
       strokeWeight: 2
@@ -172,23 +202,6 @@ function onDeviceReady () {
     initStats();
 }
 
-function onTabClicked(tabIndex) {
-        
-    switch(tabIndex) {
-
-        case 0: // nothing to do
-            break;
-        case 1:
-            updateCurrentLocation();
-            break;
-        case 2:
-            if(!tab3Inited) initHistoryMap();
-            break;
-        default:
-            console.log('onTabClicked: unknown tab index: ' + tabIndex);
-    }
-}
-
 function onGetCurrentLocationSuccess(position) {
 
     if(currentLocationMarker) resetCurrentLocationMarker();
@@ -206,22 +219,16 @@ function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: 
 
 function onLocationUpdatedSuccess(position) {
 
-    console.log('onLocationUpdatedSuccess');
-
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: historyMap
-    });
-
     historyMap.panTo(latlng)
+    
+    addHistoryMarker(latlng);
 
-    historyMarkers.push(marker);
     positions.push(position);
+    latLngPositions.push(latlng);
 
-    //updateHistoryPath();
+    updateHistoryPath();
 }
-
 function onLocationUpdatedError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
 function onSegmentSelected(e) {
@@ -232,4 +239,22 @@ function onSegmentSelected(e) {
     //call onTabClicked, we'll decide what to do from there
     onTabClicked($('.segmented').find('.selected').index());
  }
+
+ function onTabClicked(tabIndex) {
+        
+    switch(tabIndex) {
+
+        case 0:
+            updateStats();
+            break;
+        case 1:
+            updateCurrentLocation();
+            break;
+        case 2:
+            if(!tab3Inited) initHistoryMap();
+            break;
+        default:
+            console.log('onTabClicked: unknown tab index: ' + tabIndex);
+    }
+}
 
