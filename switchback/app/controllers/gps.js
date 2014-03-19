@@ -1,13 +1,13 @@
 /**
  * The map panel
  */
-
+console.log('hey');
 steroids.navigationBar.show("GPS");
 
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
-// vars
+// gps vars
 var track_count = "track_count";
 var positions = [];
 var latLngPositions = [];
@@ -27,6 +27,14 @@ var defaultLocationOptions = {
     timeout           : 20000
 };
 
+// timer gui vars
+//var sec = 00,
+//    min = 00,
+//    hour = 0,
+//    intervalId,
+//    totalTime = "0 : 00 : 00",
+//    theTime = document.getElementById("timer");
+
 function initSegmented () {
 
     var segmentedOptions = {
@@ -42,10 +50,69 @@ function initSegmented () {
      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
 }
 
+function initGUI() {
+    var sec = 00,
+    min = 00,
+    hour = 0,
+    intervalId,
+    totalTime = "0 : 00 : 00",
+    theTime = document.getElementById("timer");
+    
+    console.log('2');
+    $('.socket').on('click', function(){
+        $('.timer_btn').toggleClass('active');
+        var active = $('.timer_btn').hasClass('active');
+        console.log('here');
+        (active) ? play() : pause();
+    })
+
+    $('.socket').on('click', test);
+
+    function test(){
+        $( ".socket2" ).show('fast');
+    }
+
+    function pause() {
+      window.clearInterval(intervalId);
+      stopTracking();
+        console.log('pause');
+    }
+
+    function play(){
+      clearInterval(intervalId);
+      intervalId = setInterval(startCounting, 1000);
+      startTracking();
+            console.log('play');
+    }
+
+    $('.socket2').on('click', function(){
+      window.clearInterval(intervalId);
+      totalTime = "00:00:00";
+      theTime.innerHTML = ( totalTime );  
+      sec = 00;
+      min = 00;
+      hour = 00;
+    });
+
+    function startCounting() {
+      sec ++;
+      if( sec == 60 ) {
+        sec = 00;
+        min += 1;
+      }
+      if( min == 60) {
+        min = 00;
+        hour += 1;
+      }
+      totalTime = ((hour<=9) ? "0" + hour : hour) + ":" + ((min<=9) ? "0" + min : min) + ":" + ((sec<=9) ? "0" + sec : sec);
+      theTime.innerHTML = ( totalTime );
+    }
+}
+
 function initStats () {
 
-    $('.start').click(startTracking);
-    $('.stop').click(stopTracking);
+//    $('.start').click(startTracking);
+//    $('.stop').click(stopTracking);
 
     tab1Inited = true;
 }
@@ -186,6 +253,7 @@ function onDeviceReady () {
 
     initSegmented();
     initStats();
+    initGUI();
 }
 
 function onGetCurrentLocationSuccess(position) {

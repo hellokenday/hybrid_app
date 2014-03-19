@@ -1,13 +1,16 @@
- <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
- <script src="/vendor/chui/chui-3.0.6.js"></script>
+<script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+<script src="/vendor/chui/chui-3.0.6.js"></script>
 
-  <section>
-     <div id='segmentedPanel' class='horizontal centered'></div>
-     <div id="toggle-panels">
-        <div data-role="content" class="content-padded content">
-            <div class="buttonContainer">
-                <button class="topcoat-button start">Start Tracking</button>
-                <button class="topcoat-button stop">Stop Tracking</button>  
+<section>
+    <div id='segmentedPanel' class='horizontal centered'></div>
+    <div id="toggle-panels">
+        <div class="timer-ui">
+            <div id="timer">00:00:00</div>
+            <div class="socket">
+              <div class="timer_btn"></div>
+            </div>
+            <div class="socket2 hide">
+              <span class="fin_txt">finish</span>
             </div>
         </div>
          <div data-role="content" class="content">
@@ -16,6 +19,5 @@
         <div data-role="content" class="content">
              <div id="map_canvas2" class="map"></div>
         </div>
-     </div>
-  </section>
-  
+    </div>
+</section>

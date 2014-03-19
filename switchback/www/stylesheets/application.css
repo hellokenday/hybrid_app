@@ -40,6 +40,94 @@ img#photo {
 
 /*=========== GPS ============*/
 
+/* Timer GUI */
+
+.timer-ui {
+    background: #1e1e1e;
+    margin: 50px 0px; 
+    padding: 0px;
+    text-align: center;
+    z-index: 100;
+}
+.socket {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    border: 4px solid #f3f3f3;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 50%;
+    margin-top: -60px;
+}
+
+.socket2 {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    border: 4px solid #f3f3f3;
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    margin-top: 150px;
+    position: relative;
+}
+
+.timer_btn {
+    width: 30%;
+    height: 30%;
+    background: red;
+    border-radius: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 42px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    transition-timing-function: cubic-bezier(.05,.58,.32,1.35);
+    -webkit-transition-timing-function: cubic-bezier(.05,.58,.32,1.35);  
+} 
+
+.fin_btn {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0.
+    margin: 0 auto;
+}
+
+.active {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    top: 45px;
+}
+
+.timer-ui {
+    padding: 2em;
+    font-family: sans-serif;
+    color: #fff;
+    margin: 1em auto;
+}
+
+.timer-ui p {
+    display: inline;
+}
+
+#timer {
+    font-size: 80px;
+    margin: 0px auto;
+    padding-bottom: 20px;
+}
+
+.hide {display:none;}
+
+.fin_txt {
+    top:30px;
+}
+
 /* Map Styling */
 .gmnoprint a, .gmnoprint span {
     display:none;
