@@ -11,6 +11,12 @@ input, textarea, [contenteditable] * {
   padding: 10px;
 }
 
+/*  */
+body {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
 /*=========== CAMERA ============*/
 img#photo {
     width:100%;
@@ -162,3 +168,4 @@ img#photo {
 #track_info_info {
     z-index: 100;
 }
+

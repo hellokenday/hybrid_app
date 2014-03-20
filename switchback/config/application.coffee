@@ -10,9 +10,14 @@ steroids.config.name = "App"
 steroids.config.tabBar.enabled = true
 steroids.config.tabBar.tabs = [
    {
-     title: "Profile"
+     title: "GPS"
      icon: "icons/pill@2x.png"
-     location: "http://localhost/views/camera/index.html"
+     location: "http://localhost/views/gps/index.html"
+   },
+   {
+     title: "People"
+     icon: "icons/pill@2x.png"
+     location: "http://localhost/views/people/index.html"
    },
    {
      title: "Chat"
@@ -20,9 +25,9 @@ steroids.config.tabBar.tabs = [
      location: "http://localhost/views/firebase/index.html"
    },
    {
-     title: "GPS"
+     title: "Profile"
      icon: "icons/pill@2x.png"
-     location: "http://localhost/views/gps/index.html"
+     location: "http://localhost/views/camera/index.html"
    },
    {
      title: "Settings"

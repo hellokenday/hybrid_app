@@ -1,7 +1,7 @@
 /**
  * The map panel
  */
-console.log('hey');
+
 steroids.navigationBar.show("GPS");
 
 // Wait for device API libraries to load
@@ -254,6 +254,7 @@ function onDeviceReady () {
     initSegmented();
     initStats();
     initGUI();
+    initNav();
 }
 
 function onGetCurrentLocationSuccess(position) {
@@ -311,3 +312,10 @@ function onSegmentSelected(e) {
     }
 }
 
+// Nav - preload views ! BROKEN !
+var rideOneView = new steroids.views.WebView("views/ride_one/index.html");   
+
+function showRideOne() {
+    rideOneView.preload();
+    steroids.layers.push(rideOneView);
+}
