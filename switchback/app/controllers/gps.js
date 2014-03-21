@@ -27,14 +27,6 @@ var defaultLocationOptions = {
     timeout           : 20000
 };
 
-// timer gui vars
-//var sec = 00,
-//    min = 00,
-//    hour = 0,
-//    intervalId,
-//    totalTime = "0 : 00 : 00",
-//    theTime = document.getElementById("timer");
-
 function initSegmented () {
 
     var segmentedOptions = {

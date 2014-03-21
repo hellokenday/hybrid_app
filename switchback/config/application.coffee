@@ -19,15 +19,15 @@ steroids.config.tabBar.tabs = [
      icon: "icons/pill@2x.png"
      location: "http://localhost/views/people/index.html"
    },
-   {
-     title: "Chat"
-     icon: "icons/telescope@2x.png"
-     location: "http://localhost/views/firebase/index.html"
-   },
+#  {
+#    title: "Chat"
+#    icon: "icons/telescope@2x.png"
+#    location: "http://localhost/views/firebase/index.html"
+#  },
    {
      title: "Profile"
      icon: "icons/pill@2x.png"
-     location: "http://localhost/views/camera/index.html"
+     location: "http://localhost/views/profile/index.html"
    },
    {
      title: "Settings"

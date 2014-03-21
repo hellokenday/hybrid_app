@@ -1,3 +1,7 @@
+/**
+ * Global
+ */
+
 * {
   -webkit-user-select: none;  /* Disable selection/copy of elements when tapping for a long time */
   -webkit-touch-callout: none; /* Disable touch callouts */
@@ -11,40 +15,31 @@ input, textarea, [contenteditable] * {
   padding: 10px;
 }
 
-/*  */
+/* Quote me */
 body {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
 
-/*=========== CAMERA ============*/
-img#photo {
-    width:100%;
-  }
+/**
+ * GPS
+ */
 
-  /* Spinner styles */
-  @-webkit-keyframes rotate {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-  }
+.people .list img {
+	height: 50px;
+	border-radius: 5px;
+}
 
-  img#spinner {
-    width:36px;
-    -webkit-animation-name:            rotate;
-    -webkit-animation-duration:        1s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    margin: auto;
-    display: none;
-  }
+.people div li.comp > aside,
+.people div li.comp > div,
+.people div li.comp:last-child {
+	border-bottom: 0px;
+}
 
- #response {
-         color: #0099e3;
-         font-weight: bold;
-         text-transform: capitalize;
-        }
-
-/*=========== GPS ============*/
+.people div > ul > li {
+	-webkit-box-flex: 1;
+	border-bottom: solid 1px #c8c8c8;
+}
 
 /* Timer GUI */
 
@@ -136,7 +131,13 @@ img#photo {
 	right: -6px;
 }
 
-/* Map Styling */
+/*-- Map Styling --*/
+
+/* Remove Google maps api terms-0f-use
+
+Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-premier-terms-of-use-logo-etc-links
+
+*/
 .gmnoprint a, .gmnoprint span {
     display:none;
 }
@@ -146,16 +147,7 @@ img#photo {
 #GMapsID div div a div img{
     display:none;
 }
-/* Map Styling */
-.gmnoprint a, .gmnoprint span {
-    display:none;
-}
-.gmnoprint div {
-    background:none !important;
-}
-#GMapsID div div a div img{
-    display:none;
-}
+
 .map {
     position:absolute;
     bottom:0;
@@ -169,3 +161,43 @@ img#photo {
     z-index: 100;
 }
 
+/**
+ * People
+ * /
+
+
+
+/**
+ * Profile
+ */
+
+.profile .main {
+	
+}
+
+/* Camera */
+img#photo {
+    width:100%;
+  }
+
+  /* Spinner styles */
+  @-webkit-keyframes rotate {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+  }
+
+  img#spinner {
+    width:36px;
+    -webkit-animation-name:            rotate;
+    -webkit-animation-duration:        1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    margin: auto;
+    display: none;
+  }
+
+ #response {
+         color: #0099e3;
+         font-weight: bold;
+         text-transform: capitalize;
+        }

@@ -1,7 +1,7 @@
 <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
 <script src="/vendor/chui/chui-3.0.6.js"></script>
 
-<section>
+<section class="people">
     <div id='segmentedPanel' class='horizontal centered'></div>
     <div id="toggle-panels">
         <!-- Friends -->
@@ -9,11 +9,35 @@
             <ul class='list'>
                 <li class='comp' data-goto>
                    <aside>
-                      <img title='Imagine Dragons' src="../images/music/Imagine Dragons.png" height="80px">
+                      <img title='Imagine Dragons' src="/images/music/Imagine Dragons.png" height="80px">
                    </aside>
                    <div>
-                      <h3>1</h3>
-                      <h4>Radioactive</h4>
+                      <h3>Name</h3>
+                      <h4>Riding Style</h4>
+                   </div>
+                   <aside>
+                      <span class='show-detail'></span>
+                   </aside>
+                </li>
+                <li class='comp' data-goto>
+                   <aside>
+                      <img title='Imagine Dragons' src="/images/music/Hurry and Harm.png" height="80px">
+                   </aside>
+                   <div>
+                      <h3>Name</h3>
+                      <h4>Riding Style</h4>
+                   </div>
+                   <aside>
+                      <span class='show-detail'></span>
+                   </aside>
+                </li>
+                <li class='comp' data-goto>
+                   <aside>
+                      <img title='Imagine Dragons' src="/images/music/Kiss.png" height="80px">
+                   </aside>
+                   <div>
+                      <h3>Name</h3>
+                      <h4>Riding Style</h4>
                    </div>
                    <aside>
                       <span class='show-detail'></span>
@@ -21,12 +45,12 @@
                 </li>
              </ul>     
         </div>
-        <!-- People -->
+        <!-- Groups -->
         <div data-role="content" class="">
             <ul class='list'>
                 <li class='comp' data-goto>
                    <aside>
-                      <img title='Willy Moon' src="../images/music/Willy Moon.png" height="80px">
+                      <img title='Willy Moon' src="/images/music/Willy Moon.png" height="80px">
                    </aside>
                    <div>
                       <h3>10</h3>
@@ -36,7 +60,8 @@
                       <span class='show-detail'></span>
                    </aside>
                 </li>
-             </ul>  
+             </ul>
+            <div class="topcoat-button full center" ontouchend="createGroup()">Create New Group</div>
         </div>
     </div>
 </section>

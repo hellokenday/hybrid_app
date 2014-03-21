@@ -4,7 +4,8 @@ steroids.navigationBar.show("People");
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function initSegmented () {
-    
+
+    // chocloate-chip UI - segmented list
     var segmentedOptions = {
 
         id: 'mySegmented',
@@ -22,3 +23,12 @@ function onDeviceReady () {
 
     initSegmented();
 }
+
+function onSegmentSelected(e) {
+
+    // stop any events/weird stuff happening
+    e.stopPropagation();
+
+    //call onTabClicked, we'll decide what to do from there
+    onTabClicked($('.segmented').find('.selected').index());
+ }
