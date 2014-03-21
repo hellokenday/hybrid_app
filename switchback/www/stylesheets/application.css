@@ -171,22 +171,63 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
  * Profile
  */
 
-.profile .main {
-	
+/* .profile .main {
+	background: url(/images/profile/background.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+} */
+
+.profile .body {
+	text-align: center;
+	margin: 0px auto;
 }
+
+.profile ul {
+	padding: 0;
+}
+
+.profile .body li {
+	text-align: left;
+	list-style: none;
+	display: inline-block;
+	margin-left: 4px;
+}
+
+.profile span {
+	display: block;
+	font-size: 12px;
+}
+
+.profile .body img:first-child {
+	margin-top: 30px;
+	height: 100px;
+	width:100px;
+	border-radius: 100%;
+}
+
+.profile .location {
+	background-image: url('/images/icons/location.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: 25px;
+	width: 25px;
+	position: absolute;
+	left: 100px
+}
+
+.activity {display: none;}
 
 /* Camera */
 img#photo {
     width:100%;
-  }
+}
 
-  /* Spinner styles */
-  @-webkit-keyframes rotate {
+/* Spinner styles */
+@-webkit-keyframes rotate {
     from { -webkit-transform: rotate(0deg); }
     to { -webkit-transform: rotate(360deg); }
-  }
+}
 
-  img#spinner {
+img#spinner {
     width:36px;
     -webkit-animation-name:            rotate;
     -webkit-animation-duration:        1s;
@@ -194,10 +235,10 @@ img#photo {
     -webkit-animation-timing-function: linear;
     margin: auto;
     display: none;
-  }
+}
 
  #response {
-         color: #0099e3;
-         font-weight: bold;
-         text-transform: capitalize;
-        }
+     color: #0099e3;
+     font-weight: bold;
+     text-transform: capitalize;
+}
