@@ -16,6 +16,8 @@ var trackMap;
 var trackMarkers = [];
 var trackPath;
 
+var rideOneView;
+
 var tab1Inited = false;
 var tab2Inited = false;
 var tab3Inited = false;
@@ -42,7 +44,7 @@ function initSegmented () {
      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
 }
 
-function initGUI() {
+function initTimer() {
     var sec = 00,
     min = 00,
     hour = 0,
@@ -50,67 +52,57 @@ function initGUI() {
     totalTime = "0 : 00 : 00",
     theTime = document.getElementById("timer");
     
-    console.log('2');
     $('.socket').on('click', function(){
         $('.timer_btn').toggleClass('active');
         var active = $('.timer_btn').hasClass('active');
-        console.log('here');
         (active) ? play() : pause();
     })
 
-    $('.socket').on('click', test);
+    $('.socket').on('click', showFinButton);
 
-    function test(){
+    function showFinButton(){
         $( ".socket2" ).show('fast');
     }
 
     function pause() {
-      window.clearInterval(intervalId);
-      stopTracking();
-        console.log('pause');
+        window.clearInterval(intervalId);
+        stopTracking();
     }
 
     function play(){
-      clearInterval(intervalId);
-      intervalId = setInterval(startCounting, 1000);
-      startTracking();
-            console.log('play');
+        clearInterval(intervalId);
+        intervalId = setInterval(startCounting, 1000);
+        startTracking();
     }
 
     $('.socket2').on('click', function(){
-      window.clearInterval(intervalId);
-      totalTime = "00:00:00";
-      theTime.innerHTML = ( totalTime );  
-      sec = 00;
-      min = 00;
-      hour = 00;
+        window.clearInterval(intervalId);
+        totalTime = "00:00:00";
+        theTime.innerHTML = ( totalTime );  
+        sec = 00;
+        min = 00;
+        hour = 00;
     });
 
     function startCounting() {
-      sec ++;
-      if( sec == 60 ) {
-        sec = 00;
-        min += 1;
-      }
-      if( min == 60) {
-        min = 00;
-        hour += 1;
-      }
-      totalTime = ((hour<=9) ? "0" + hour : hour) + ":" + ((min<=9) ? "0" + min : min) + ":" + ((sec<=9) ? "0" + sec : sec);
-      theTime.innerHTML = ( totalTime );
+        sec ++;
+        if( sec == 60 ) {
+            sec = 00;
+            min += 1;
+        }
+        if( min == 60) {
+            min = 00;
+            hour += 1;
+        }
+        totalTime = ((hour<=9) ? "0" + hour : hour) + ":" + ((min<=9) ? "0" + min : min) + ":" + ((sec<=9) ? "0" + sec : sec);
+        theTime.innerHTML = ( totalTime );
     }
-}
-
-function initStats () {
-
-//    $('.start').click(startTracking);
-//    $('.stop').click(stopTracking);
-
-    tab1Inited = true;
 }
 
 function initMap () {
 
+    console.log('initMap');
+    
     trackMap = createMap("map_canvas");
     setCurrentLocation();
 
@@ -120,6 +112,8 @@ function initMap () {
 function initHistory() {
 
     // do nothing...
+    
+    tab3Inited = true;
 }
 
 function createMap (divID) {
@@ -200,6 +194,7 @@ function saveTrackData () {
  */
 function setCurrentLocation () {
         
+    console.log('setCurrentLocation');
     navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
@@ -242,11 +237,10 @@ function resetMarkers () {
  */
 
 function onDeviceReady () {
-
+    
     initSegmented();
-    initStats();
-    initGUI();
     initNav();
+
 }
 
 function onGetCurrentLocationSuccess(position) {
@@ -291,23 +285,15 @@ function onSegmentSelected(e) {
     switch(tabIndex) {
 
         case 0:
-            updateStats();
+            if(!tab1Inited) initTimer();
             break;
         case 1:
             if(!tab2Inited) initMap();
             break;
         case 2:
-            initHistory();
+            if(!tab3Inited) initHistory();
             break;
         default:
             console.log('onTabClicked: unknown tab index: ' + tabIndex);
     }
-}
-
-// Nav - preload views ! BROKEN !
-var rideOneView = new steroids.views.WebView("views/ride_one/index.html");   
-
-function showRideOne() {
-    rideOneView.preload();
-    steroids.layers.push(rideOneView);
 }
