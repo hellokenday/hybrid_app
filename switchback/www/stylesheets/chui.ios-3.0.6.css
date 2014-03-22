@@ -26,7 +26,9 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  overflow: hidden;
+  /*  overflow: scroll;*/
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 body {
   background-color: #efeff4;
@@ -309,12 +311,10 @@ li.comp > aside.vertical {
    ============================== */
 #global-nav {
   background-color: #f7f7f7;
-  border-bottom: solid 1px #a7a7aa;
+/*  border-bottom: solid 1px #a7a7aa;*/
   overflow: hidden;
-  display: none;
 }
-
-nav {
+/*nav {
   height: 45px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -339,8 +339,7 @@ nav {
   transition: all 0.15s ease-out;
   padding: 0 15px;
   vertical-align: middle;
-}
-
+}*/
 nav > h1 {
   text-align: center;
   display: inline-block;
@@ -1758,40 +1757,3 @@ textarea {
   box-shadow: none;
   border: none;
 }
-
-/* ==============================
-   AppGyver Styles
-   ============================== */
-* {
-  -webkit-user-select: none;  /* Disable selection/copy of elements when tapping for a long time */
-  -webkit-touch-callout: none; /* Disable touch callouts */
-}
-
-input, textarea, [contenteditable] * {
-  -webkit-user-select: auto;  /* Allow selection for input elements and those with contenteditable attribute */
-}
-
-.content-padded {
-  padding: 10px;
-}
-
-/*** CAMERA ***/
-img#photo {
-    width:100%;
-  }
-
-  /* Spinner styles */
-  @-webkit-keyframes rotate {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-  }
-
-  img#spinner {
-    width:36px;
-    -webkit-animation-name:            rotate;
-    -webkit-animation-duration:        1s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    margin: auto;
-    display: none;
-  }

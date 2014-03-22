@@ -1,180 +1,244 @@
+/**
+ * The map panel
+ */
+
 steroids.navigationBar.show("GPS");
-// --- Map Panel --- //
 
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
 // vars
 var track_count = "track_count";
-var $output = $("#output");
 var positions = [];
+var latLngPositions = [];
 var watchID;
-var options = { 
+var trackMap;
+var trackMarkers = [];
+var trackPath;
+
+var tab1Inited = false;
+var tab2Inited = false;
+var tab3Inited = false;
+var tracking = false;
+
+var defaultLocationOptions = { 
+    
     enableHighAccuracy: true, 
     timeout           : 20000
 };
 
-function _initCurrentLocation() {
-    
-    console.log('_initCurrentLocation');
-    
-    // Throw an error if no update is received every 30 seconds
-    watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+function initSegmented () {
+
+    var segmentedOptions = {
+
+        id: 'mySegmented',
+        labels : ['Stats','Map','History'],
+        selected: 0
+     };
+     var segmentedComponent = $.UICreateSegmented(segmentedOptions);
+
+     $('#segmentedPanel').append(segmentedComponent);
+     $('.segmented').UISegmented({callback:onSegmentSelected});
+     $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
 }
 
-function _initButtons(){
+function initStats () {
 
-	$('.start').click(_startTracking);
-	$('.stop').click(_stopTracking);
+    $('.start').click(startTracking);
+    $('.stop').click(stopTracking);
+
+    tab1Inited = true;
 }
 
-function _startTracking(){
+function initMap () {
 
-    console.log('_startTracking');
+    trackMap = createMap("map_canvas");
+    setCurrentLocation();
 
-    _resetTrackData();
-
-    watchID = navigator.geolocation.watchPosition(function(position) {
-
-        var time = new Date(position.timestamp);
-
-        $output.append("<li>long: " + position.coords.longitude + "lat: " + position.coords.latitude + " at " + time.toTimeString() + "</li>")
-        
-        positions.push(position);
-    }, 
-    function(){ console.log('onLocationError: ' + error.code + ": " + error.message);
-    }, options);
+    tab2Inited = true;
 }
 
-function _stopTracking(){
+function initHistory() {
 
-    console.log('_stopTracking');
+    // do nothing...
+}
+
+function createMap (divID) {
+
+    var defaultMapOptions = {
+
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
+    };
+
+    return new google.maps.Map(document.getElementById(divID), defaultMapOptions);
+}
+
+function addMarker (latlng) {
+
+    if(positions.length > 1) removeLastMarker();
+
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: trackMap,
+        title: "Current location"
+    });
+
+    trackMarkers.push(marker);
+}
+
+function removeLastMarker () {
+
+    removeMarkerAtIndex(trackMarkers.length-1);
+
+}
+
+function removeMarkerAtIndex (index) {
+
+    trackMarkers[index].setMap(null);
+
+}
+
+function startTracking () {
+
+    if(tracking === true) return;
+
+    resetMarkers();
+
+    positions = [];
+    latLngPositions = [];
+
+    tracking = true;
+
+    watchID = navigator.geolocation.watchPosition(onLocationUpdatedSuccess, onLocationUpdatedError, defaultLocationOptions);
+}
+
+function stopTracking () {
+
+    if(tracking === false) return;
 
     navigator.geolocation.clearWatch(watchID);
     watchID = null;
 
-    // gets the number of track stored in variable
-    var trackCount = parseInt(window.localStorage.getItem(track_count));
-        
-    // if trackCount is a number, set trackID to the next element.
-    var trackID = (!isNaN(trackCount)) ? trackCount+1 : 1;
+    tracking = false;
 
-    // turn position object in positions array into a string
-    window.localStorage.setItem(trackID, JSON.stringify(positions));
-    // append and update trackCount in local storage
-    window.localStorage.setItem(track_count, trackID);
-
-    // clears output in HTML and empties position array
-    _resetTrackData();
-
-    _drawMap();
+    saveTrackData();
 }
 
-function _drawMap() {
+function saveTrackData () {
 
-    console.log('_drawMap');
-    
-    // get the number of tracks stored in local storage and convert into integer
-    var lastID = parseInt(window.localStorage.getItem(track_count));
-    var data = JSON.parse(window.localStorage.getItem(lastID));
-    var trackCoords = [];
-    var $mapDiv = document.getElementById("map_canvas2");
-    
-    // get the last track in the array
-    console.log(lastID + ": " + window.localStorage.getItem(lastID));
-    
-    // convert the data into a format google maps can use
-    for(var i = 0; i < data.length; i++){   
-        var currCoords = data[i].coords;
-        trackCoords.push(new google.maps.LatLng(currCoords.latitude, currCoords.longitude));
-        //trackCoords.push(new google.maps.LatLng(data[i].coords.latitude, data[i].coords.longitude));
-    }
-    
-    // Google Map options
-    var mapOptions = {
-      zoom: 17,
-      center: trackCoords[0],
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
-    };
-    
-    // Create the Google Map, set options
-    var map = new google.maps.Map($mapDiv, mapOptions);
-    
-    var startMarker = new google.maps.Marker({
-        position: trackCoords[0],
-        map: map,
-        title: "Track start"
-    });
-    var endMarker = new google.maps.Marker({
-        position: trackCoords[trackCoords.length-1],
-        map: map,
-        title: "Track end"
-    });
-    
-    // Plot the GPS entries as a line on the Google Map
-    var trackPath = new google.maps.Polyline({
-      path: trackCoords,
+    var trackCount = parseInt(window.localStorage.getItem(track_count));
+    var trackID = (!isNaN(trackCount)) ? trackCount+1 : 1;
+
+    window.localStorage.setItem(trackID, JSON.stringify(positions));
+    window.localStorage.setItem(track_count, trackID);
+}
+
+/**
+ * Note: getCurrentPosition() tries to answer as fast as 
+ * possible with a low accuracy result
+ */
+function setCurrentLocation () {
+        
+    navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
+}
+
+function updateStats () {
+
+    // nothing to do...
+}
+
+function updatePath () {
+
+    // no point carrying on if...
+    if(positions.length < 2) return;
+
+    if(trackPath) trackPath.setMap(null);
+
+    trackPath = new google.maps.Polyline({
+      path: latLngPositions,
       strokeColor: "#00d8ff",
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
-
-    // Apply the line to the map
-    trackPath.setMap(map);
+    trackPath.setMap(trackMap);
 }
+
+function resetMarkers () {
+
+    if(trackMarkers.length > 0) {
+
+        for (var i = 0; i < trackMarkers.length; i++) {
+
+            trackMarkers[i].setMap(null);
+        }
+
+        trackMarkers = [];
+    }
+}
+
+/**
+ * Event handling
+ */
+
+function onDeviceReady () {
+
+    initSegmented();
+    initStats();
+}
+
+function onGetCurrentLocationSuccess(position) {
+
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: trackMap,
+        title: "Start"
+    });
+    trackMarkers.push(marker);
+
+    trackMap.panTo(latlng);
+}
+function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
+
+function onLocationUpdatedSuccess(position) {
+
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    trackMap.panTo(latlng)
     
-function _resetTrackData(){
+    addMarker(latlng);
 
-    positions = [];
-    $output.html('');
+    positions.push(position);
+    latLngPositions.push(latlng);
+
+    updatePath();
 }
+function onLocationUpdatedError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
-// device APIs are available
-function onDeviceReady() {
-    
-    console.log('onDeviceReady');
-    
-    _initCurrentLocation();
-    _initButtons();
-}
+function onSegmentSelected(e) {
 
-// onSuccess Geolocation
-function onSuccess() {
+    // stop any events/weird stuff happening
+    e.stopPropagation();
 
-    // function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
-    var win = function(position) {
+    //call onTabClicked, we'll decide what to do from there
+    onTabClicked($('.segmented').find('.selected').index());
+ }
 
-        var lat = position.coords.latitude;
-        var long = position.coords.longitude;
-        var latlng = new google.maps.LatLng(lat, long);
+ function onTabClicked(tabIndex) {
+        
+    switch(tabIndex) {
 
-        var mapOptions = {
-            center: latlng,
-            zoom: 17,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI: true
-        };
-
-        var map_element = document.getElementById("map_canvas");
-        var map = new google.maps.Map(map_element, mapOptions);
-        var marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            title:"You are here"
-        });
-    };
-
-    var fail = function(e) {
-
-        $.mobile.hidePageLoadingMsg();
-        alert('Can\'t retrieve position.\nError: ' + e);
-    };
-
-    watchID = navigator.geolocation.getCurrentPosition(win, fail);
-}
-
-// onError Callback receives a PositionError object
-function onError(e) {
-    console.log('code: '    + e.code    + '\n' + 'message: ' + e.message + '\n');
+        case 0:
+            updateStats();
+            break;
+        case 1:
+            if(!tab2Inited) initMap();
+            break;
+        case 2:
+            initHistory();
+            break;
+        default:
+            console.log('onTabClicked: unknown tab index: ' + tabIndex);
+    }
 }

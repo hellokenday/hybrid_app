@@ -1,51 +1,117 @@
- <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
- <script src="/vendor/chui/chui-3.0.6.js"></script>
- <script>
-    // chui segmented list
-      $(function() {
-         var segmentedOptions = {
-            id: 'mySegmented',
-            labels : ['Stats','Map','History'],
-            selected: 0
-         };
-         var segmentedResponse = function(e) {
-            e.stopPropagation();
-            $('#output').find('h3 > span').html(($(this).index() + 1));
-         };
-         var newSegmented = $.UICreateSegmented(segmentedOptions);
-         $('#segmentedPanel').append(newSegmented);
-         $('.segmented').UISegmented({callback:segmentedResponse});
-         $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
-         var selectedPanel = $('.segmented').find('.selected').index();
-         $('#output').find('span').html(selectedPanel + 1);
-      });
-  </script>
+<script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+<script src="/vendor/chui/chui-3.0.6.js"></script>
 
-  <section>
-     <div id='segmentedPanel' class='horizontal centered'></div>
-     <div id="toggle-panels">
-        <div data-role="content" class="content-padded"><!-- panel 1 -->
-            <p id="startTracking_status"></p>
-            <div data-role="fieldcontain" class="ui-hide-label">
-                <label for="track_id">Track ID/Name:</label>
-                <input type="text" name="track_id" id="track_id" placeholder="Workout ID/Name"/>
+<section>
+    <div id='segmentedPanel' class='horizontal centered'></div>
+    <div id="toggle-panels">
+        <!-- Stats -->
+        <div class="timer-ui">
+            <div id="timer"><span class='timer-icon'></span>00:00:00</div>
+            <div class="socket">
+              <div class="timer_btn"></div>
             </div>
-            <br><br><br><br>
-            <button class="topcoat-button start">Start Tracking</button>
-            <button class="topcoat-button stop">Stop Tracking</button>  
-
-            <p id="startTracking_debug"></p>
+            <div class="socket2 hide">
+              <span class="fin_txt">Finish</span>
+            </div>
         </div>
-         <div data-role="content"><!-- panel 2 --> 
-             <!-- map canvas-->
+        <!-- Map -->
+        <div data-role="content" class="content">
              <div id="map_canvas" class="map"></div>
-             <!-- <p id="geolocation">Watching geolocation...</p>-->
         </div>
-        <div data-role="content"><!-- panel 3 --> 
-             <p id="track_info_info"></p>
-             <!-- map canvas-->
-             <div id="map_canvas2" class="map"></div>
-             <!-- <p id="geolocation">Watching geolocation...</p>-->
+        <!-- History  -->
+        <div data-role="content" class="content">
+        <h2>Today</h2>
+        <ul class='list '>
+            <li class='comp ride_one_btn'>
+               <aside>
+                  <img title='' src="/images/music/Hurry and Harm.png" height='80px'>
+               </aside>
+               <div>
+                  <h3>Downhill Run</h3>
+                  <h4>Steyning</h4>
+                  <p><span class='dist_icon'></span>2km <span class='avgspeed_icon'></span>15km/h</p>
+               </div>
+               <aside>
+                  <span class='show-detail'></span>
+               </aside>
+            </li>
+        </ul>
+        <h2>Yesterday</h2>
+        <ul class='list'>
+            <li class='comp' ontouchend='showRideTwo()'>
+               <aside>
+                  <img title='' src="/images/music/Imagine Dragons.png" height='80px'>
+               </aside>
+               <div>
+                  <h3>Freeride Session</h3>
+                  <h4>New Forest</h4>
+                  <p><span class='dist_icon'></span>3km <span class='avgspeed_icon'></span>13km/h</p>
+               </div>
+               <aside>
+                  <span class='show-detail'></span>
+               </aside>
+            </li>
+            <li class='comp' ontouchend='showRideThree()'>
+               <aside>
+                  <img title='' src="/images/music/Kiss.png" height='80px'>
+               </aside>
+               <div>
+                  <h3>Cycle Home</h3>
+                  <h4>New Forest</h4>
+                  <p><span class='dist_icon'></span>15km <span class='avgspeed_icon'></span>10km/h</p>
+               </div>
+               <aside>
+                  <span class='show-detail'></span>
+               </aside>
+            </li>
+        </ul>
+        <h2>7<span>th</span> March</h2>
+        <ul class='list '>
+            <li class='comp to'>
+               <aside>
+                  <img title='' src="/images/music/Hurry and Harm.png" height='80px'>
+               </aside>
+               <div>
+                  <h3>Practice</h3>
+                  <h4>Steyning</h4>
+                  <p><span class='dist_icon'></span>1km <span class='avgspeed_icon'></span>15km/h</p>
+               </div>
+               <aside>
+                  <span class='show-detail'></span>
+               </aside>
+            </li>
+        </ul>
+<!--
+        <h2>Date</h2>
+        <ul class='list'>
+            <li class='comp'>
+               <aside>
+                  <img title='Hurry and Harm' src="../images/music/Hurry and Harm.png" height="80px">
+               </aside>
+               <div>
+                  <h3>The Hurry and the Harm</h3>
+                  <h4>Hurt</h4>
+                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+               </div>
+               <aside>
+                  <span class='show-detail'></span>
+               </aside>
+            </li>
+            <li class='comp'>
+               <aside>
+                  <img title='Permanent' src="../images/music/Permanent.png" height="80px">
+               </aside>
+               <div>
+                  <h3>David Cook</h3>
+                  <h4>Permanent</h4>
+                  <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</p>
+               </div>
+               <aside>
+                  <span class='show-detail'></span>
+               </aside>
+            </li>
+         </ul>
+-->
         </div>
-     </div>
-  </section>
+    </div>
+</section>

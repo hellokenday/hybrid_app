@@ -1,180 +1,360 @@
+/**
+ * The map panel
+ */
+
 steroids.navigationBar.show("GPS");
-// --- Map Panel --- //
 
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
-// vars
+// gps vars
 var track_count = "track_count";
-var $output = $("#output");
 var positions = [];
+var latLngPositions = [];
 var watchID;
-var options = { 
+var trackMap;
+var trackMarkers = [];
+var trackPath;
+
+var rideOneView;
+
+var tab1Inited = false;
+var tab2Inited = false;
+var tab3Inited = false;
+var tracking = false;
+
+// timer vars
+var sec = 00;
+var min = 00;
+var hour = 0;
+var intervalId;
+var totalTime = "0 : 00 : 00";
+var theTime;
+
+var defaultLocationOptions = { 
+    
     enableHighAccuracy: true, 
     timeout           : 20000
 };
 
-function _initCurrentLocation() {
+function initSegmented () {
+
+    var segmentedOptions = {
+
+        id: 'mySegmented',
+        labels : ['Stats','Map','History'],
+        selected: 0
+     };
+     var segmentedComponent = $.UICreateSegmented(segmentedOptions);
+
+     $('#segmentedPanel').append(segmentedComponent);
+     $('.segmented').UISegmented({callback:onSegmentSelected});
+     $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
+}
+
+
+/* 
+var timerInterval;
+var secondsCount = 0;
+
+play()
+{
+    stop(true);
+    intervalId = setInterval(onTimerInterval, 1000);
+}
+
+stop(hardReset)
+{
+    clearInterval(timerInterval);
+    if(hardReset !== false) secondsCount = 0;
+}
+
+getTimeString()
+{
+    var timeString = "";
     
-    console.log('_initCurrentLocation');
+    // http://stackoverflow.com/questions/6312993/javascript-seconds-to-time-with-format-hhmmss
+    var sec_num = parseInt(this, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+    timeString = hours + ':' + minutes + ':' + seconds;
     
-    // Throw an error if no update is received every 30 seconds
-    watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+    var minutes = secondsCount%60;
+
+    return timeString;
 }
 
-function _initButtons(){
+onTimerInterval()
+{
+    secondsCount++;
+}
+*/
 
-	$('.start').click(_startTracking);
-	$('.stop').click(_stopTracking);
+function initTimer() {
+    
+    console.log('initTimer');
+    alert('gjfkldjgkfdsgjklf');
+    
+    $('.socket').on('click', onTimerPlayClicked)
+    $('.socket2').on('click', onTimerFinishClicked);
+    
+    theTime = document.getElementById("timer");
+    
+    tab1Inited = true;
 }
 
-function _startTracking(){
+function initMap () {
 
-    console.log('_startTracking');
+    console.log('initMap');
+    
+    trackMap = createMap("map_canvas");
+    setCurrentLocation();
 
-    _resetTrackData();
-
-    watchID = navigator.geolocation.watchPosition(function(position) {
-
-        var time = new Date(position.timestamp);
-
-        $output.append("<li>long: " + position.coords.longitude + "lat: " + position.coords.latitude + " at " + time.toTimeString() + "</li>")
-        
-        positions.push(position);
-    }, 
-    function(){ console.log('onLocationError: ' + error.code + ": " + error.message);
-    }, options);
+    tab2Inited = true;
 }
 
-function _stopTracking(){
+function initHistory() {
 
-    console.log('_stopTracking');
+    // do nothing...
+    
+    tab3Inited = true;
+}
+
+function createMap (divID) {
+
+    var defaultMapOptions = {
+
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
+    };
+
+    return new google.maps.Map(document.getElementById(divID), defaultMapOptions);
+}
+
+function addMarker (latlng) {
+
+    if(positions.length > 1) removeLastMarker();
+
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: trackMap,
+        title: "Current location"
+    });
+
+    trackMarkers.push(marker);
+}
+
+function removeLastMarker () {
+
+    removeMarkerAtIndex(trackMarkers.length-1);
+}
+
+function removeMarkerAtIndex (index) {
+
+    trackMarkers[index].setMap(null);
+}
+
+function startTracking () {
+
+    if(tracking === true) return;
+
+    resetMarkers();
+
+    positions = [];
+    latLngPositions = [];
+
+    tracking = true;
+
+    watchID = navigator.geolocation.watchPosition(onLocationUpdatedSuccess, onLocationUpdatedError, defaultLocationOptions);
+}
+
+function stopTracking () {
+
+    if(tracking === false) return;
 
     navigator.geolocation.clearWatch(watchID);
     watchID = null;
 
-    // gets the number of track stored in variable
-    var trackCount = parseInt(window.localStorage.getItem(track_count));
-        
-    // if trackCount is a number, set trackID to the next element.
-    var trackID = (!isNaN(trackCount)) ? trackCount+1 : 1;
+    tracking = false;
 
-    // turn position object in positions array into a string
-    window.localStorage.setItem(trackID, JSON.stringify(positions));
-    // append and update trackCount in local storage
-    window.localStorage.setItem(track_count, trackID);
-
-    // clears output in HTML and empties position array
-    _resetTrackData();
-
-    _drawMap();
+    saveTrackData();
 }
 
-function _drawMap() {
+function saveTrackData () {
 
-    console.log('_drawMap');
-    
-    // get the number of tracks stored in local storage and convert into integer
-    var lastID = parseInt(window.localStorage.getItem(track_count));
-    var data = JSON.parse(window.localStorage.getItem(lastID));
-    var trackCoords = [];
-    var $mapDiv = document.getElementById("map_canvas2");
-    
-    // get the last track in the array
-    console.log(lastID + ": " + window.localStorage.getItem(lastID));
-    
-    // convert the data into a format google maps can use
-    for(var i = 0; i < data.length; i++){   
-        var currCoords = data[i].coords;
-        trackCoords.push(new google.maps.LatLng(currCoords.latitude, currCoords.longitude));
-        //trackCoords.push(new google.maps.LatLng(data[i].coords.latitude, data[i].coords.longitude));
-    }
-    
-    // Google Map options
-    var mapOptions = {
-      zoom: 17,
-      center: trackCoords[0],
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
-    };
-    
-    // Create the Google Map, set options
-    var map = new google.maps.Map($mapDiv, mapOptions);
-    
-    var startMarker = new google.maps.Marker({
-        position: trackCoords[0],
-        map: map,
-        title: "Track start"
-    });
-    var endMarker = new google.maps.Marker({
-        position: trackCoords[trackCoords.length-1],
-        map: map,
-        title: "Track end"
-    });
-    
-    // Plot the GPS entries as a line on the Google Map
-    var trackPath = new google.maps.Polyline({
-      path: trackCoords,
+    var trackCount = parseInt(window.localStorage.getItem(track_count));
+    var trackID = (!isNaN(trackCount)) ? trackCount+1 : 1;
+
+    window.localStorage.setItem(trackID, JSON.stringify(positions));
+    window.localStorage.setItem(track_count, trackID);
+}
+
+/**
+ * Note: getCurrentPosition() tries to answer as fast as 
+ * possible with a low accuracy result
+ */
+function setCurrentLocation () {
+        
+    console.log('setCurrentLocation');
+    navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
+}
+
+function playTimer(){
+    clearInterval(intervalId);
+    intervalId = setInterval(onTimerTick, 1000);
+    startTracking();
+}
+
+function pauseTimer() {
+    clearInterval(intervalId);
+    stopTracking();
+}
+
+function showFinButton(){
+    $( ".socket2" ).show('fast');
+}
+
+function resetTimer() {
+    $('.timer_btn').removeClass('active');
+    clearInterval(intervalId);
+    totalTime = "00:00:00";
+    theTime.innerHTML = ( totalTime );  
+    sec = 00;
+    min = 00;
+    hour = 00;
+}
+
+function updateStats () {
+
+    // nothing to do...
+}
+
+function updatePath () {
+
+    // no point carrying on if...
+    if(positions.length < 2) return;
+
+    if(trackPath) trackPath.setMap(null);
+
+    trackPath = new google.maps.Polyline({
+      path: latLngPositions,
       strokeColor: "#00d8ff",
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
-
-    // Apply the line to the map
-    trackPath.setMap(map);
+    trackPath.setMap(trackMap);
 }
+
+function resetMarkers () {
+
+    if(trackMarkers.length > 0) {
+
+        for (var i = 0; i < trackMarkers.length; i++) {
+
+            trackMarkers[i].setMap(null);
+        }
+
+        trackMarkers = [];
+    }
+}
+
+/**
+ * Event handling
+ */
+
+function onDeviceReady () {
     
-function _resetTrackData(){
-
-    positions = [];
-    $output.html('');
+    initTimer();
+    initSegmented();
+    initNav();
 }
 
-// device APIs are available
-function onDeviceReady() {
+function onGetCurrentLocationSuccess(position) {
+
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: trackMap,
+        title: "Start"
+    });
+    trackMarkers.push(marker);
+
+    trackMap.panTo(latlng);
+}
+function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
+
+function onLocationUpdatedSuccess(position) {
+
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    trackMap.panTo(latlng)
     
-    console.log('onDeviceReady');
+    addMarker(latlng);
+
+    positions.push(position);
+    latLngPositions.push(latlng);
+
+    updatePath();
+}
+function onLocationUpdatedError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
+
+function onSegmentSelected(e) {
+
+    // stop any events/weird stuff happening
+    e.stopPropagation();
+
+    //call onTabClicked, we'll decide what to do from there
+    onTabClicked($('.segmented').find('.selected').index());
+ }
+
+ function onTabClicked(tabIndex) {
+        
+    switch(tabIndex) {
+
+        case 0:
+//            if(!tab1Inited) initTimer();
+            break;
+        case 1:
+            if(!tab2Inited) initMap();
+            break;
+        case 2:
+            if(!tab3Inited) initHistory();
+            break;
+        default:
+            console.log('onTabClicked: unknown tab index: ' + tabIndex);
+    }
+}
+
+function onTimerPlayClicked(){
     
-    _initCurrentLocation();
-    _initButtons();
+    console.log('play');
+    $('.timer_btn').toggleClass('active');
+    var active = $('.timer_btn').hasClass('active');
+    (active) ? playTimer() : pauseTimer();
+    showFinButton();
 }
 
-// onSuccess Geolocation
-function onSuccess() {
-
-    // function snippet from: http://zsprawl.com/iOS/2012/03/using-phonegap-with-google-maps/
-    var win = function(position) {
-
-        var lat = position.coords.latitude;
-        var long = position.coords.longitude;
-        var latlng = new google.maps.LatLng(lat, long);
-
-        var mapOptions = {
-            center: latlng,
-            zoom: 17,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI: true
-        };
-
-        var map_element = document.getElementById("map_canvas");
-        var map = new google.maps.Map(map_element, mapOptions);
-        var marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            title:"You are here"
-        });
-    };
-
-    var fail = function(e) {
-
-        $.mobile.hidePageLoadingMsg();
-        alert('Can\'t retrieve position.\nError: ' + e);
-    };
-
-    watchID = navigator.geolocation.getCurrentPosition(win, fail);
+function onTimerFinishClicked(){
+    console.log('fin');
+    stopTracking();
+    resetTimer();
 }
 
-// onError Callback receives a PositionError object
-function onError(e) {
-    console.log('code: '    + e.code    + '\n' + 'message: ' + e.message + '\n');
+function onTimerTick() {
+    sec++;
+    if(sec === 60) {
+        sec = 00;
+        min++;
+    }
+    if(min === 60) {
+        min = 00;
+        hour++;
+    }
+    totalTime = ((hour < 10) ? "0" + hour : hour) + ":" + ((min < 10) ? "0" + min : min) + ":" + ((sec < 10) ? "0" + sec : sec);
+    theTime.innerHTML = ( totalTime );
 }
