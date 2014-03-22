@@ -23,6 +23,14 @@ var tab2Inited = false;
 var tab3Inited = false;
 var tracking = false;
 
+// timer vars
+var sec = 00;
+var min = 00;
+var hour = 0;
+var intervalId;
+var totalTime = "0 : 00 : 00";
+var theTime;
+
 var defaultLocationOptions = { 
     
     enableHighAccuracy: true, 
@@ -44,59 +52,60 @@ function initSegmented () {
      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
 }
 
+
+/* 
+var timerInterval;
+var secondsCount = 0;
+
+play()
+{
+    stop(true);
+    intervalId = setInterval(onTimerInterval, 1000);
+}
+
+stop(hardReset)
+{
+    clearInterval(timerInterval);
+    if(hardReset !== false) secondsCount = 0;
+}
+
+getTimeString()
+{
+    var timeString = "";
+    
+    // http://stackoverflow.com/questions/6312993/javascript-seconds-to-time-with-format-hhmmss
+    var sec_num = parseInt(this, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+    timeString = hours + ':' + minutes + ':' + seconds;
+    
+    var minutes = secondsCount%60;
+
+    return timeString;
+}
+
+onTimerInterval()
+{
+    secondsCount++;
+}
+*/
+
 function initTimer() {
-    var sec = 00,
-    min = 00,
-    hour = 0,
-    intervalId,
-    totalTime = "0 : 00 : 00",
+    
+    console.log('initTimer');
+    alert('gjfkldjgkfdsgjklf');
+    
+    $('.socket').on('click', onTimerPlayClicked)
+    $('.socket2').on('click', onTimerFinishClicked);
+    
     theTime = document.getElementById("timer");
     
-    $('.socket').on('click', function(){
-        $('.timer_btn').toggleClass('active');
-        var active = $('.timer_btn').hasClass('active');
-        (active) ? play() : pause();
-    })
-
-    $('.socket').on('click', showFinButton);
-
-    function showFinButton(){
-        $( ".socket2" ).show('fast');
-    }
-
-    function pause() {
-        window.clearInterval(intervalId);
-        stopTracking();
-    }
-
-    function play(){
-        clearInterval(intervalId);
-        intervalId = setInterval(startCounting, 1000);
-        startTracking();
-    }
-
-    $('.socket2').on('click', function(){
-        window.clearInterval(intervalId);
-        totalTime = "00:00:00";
-        theTime.innerHTML = ( totalTime );  
-        sec = 00;
-        min = 00;
-        hour = 00;
-    });
-
-    function startCounting() {
-        sec ++;
-        if( sec == 60 ) {
-            sec = 00;
-            min += 1;
-        }
-        if( min == 60) {
-            min = 00;
-            hour += 1;
-        }
-        totalTime = ((hour<=9) ? "0" + hour : hour) + ":" + ((min<=9) ? "0" + min : min) + ":" + ((sec<=9) ? "0" + sec : sec);
-        theTime.innerHTML = ( totalTime );
-    }
+    tab1Inited = true;
 }
 
 function initMap () {
@@ -144,13 +153,11 @@ function addMarker (latlng) {
 function removeLastMarker () {
 
     removeMarkerAtIndex(trackMarkers.length-1);
-
 }
 
 function removeMarkerAtIndex (index) {
 
     trackMarkers[index].setMap(null);
-
 }
 
 function startTracking () {
@@ -198,6 +205,31 @@ function setCurrentLocation () {
     navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
+function playTimer(){
+    clearInterval(intervalId);
+    intervalId = setInterval(onTimerTick, 1000);
+    startTracking();
+}
+
+function pauseTimer() {
+    clearInterval(intervalId);
+    stopTracking();
+}
+
+function showFinButton(){
+    $( ".socket2" ).show('fast');
+}
+
+function resetTimer() {
+    $('.timer_btn').removeClass('active');
+    clearInterval(intervalId);
+    totalTime = "00:00:00";
+    theTime.innerHTML = ( totalTime );  
+    sec = 00;
+    min = 00;
+    hour = 00;
+}
+
 function updateStats () {
 
     // nothing to do...
@@ -238,9 +270,9 @@ function resetMarkers () {
 
 function onDeviceReady () {
     
+    initTimer();
     initSegmented();
     initNav();
-
 }
 
 function onGetCurrentLocationSuccess(position) {
@@ -285,7 +317,7 @@ function onSegmentSelected(e) {
     switch(tabIndex) {
 
         case 0:
-            if(!tab1Inited) initTimer();
+//            if(!tab1Inited) initTimer();
             break;
         case 1:
             if(!tab2Inited) initMap();
@@ -296,4 +328,33 @@ function onSegmentSelected(e) {
         default:
             console.log('onTabClicked: unknown tab index: ' + tabIndex);
     }
+}
+
+function onTimerPlayClicked(){
+    
+    console.log('play');
+    $('.timer_btn').toggleClass('active');
+    var active = $('.timer_btn').hasClass('active');
+    (active) ? playTimer() : pauseTimer();
+    showFinButton();
+}
+
+function onTimerFinishClicked(){
+    console.log('fin');
+    stopTracking();
+    resetTimer();
+}
+
+function onTimerTick() {
+    sec++;
+    if(sec === 60) {
+        sec = 00;
+        min++;
+    }
+    if(min === 60) {
+        min = 00;
+        hour++;
+    }
+    totalTime = ((hour < 10) ? "0" + hour : hour) + ":" + ((min < 10) ? "0" + min : min) + ":" + ((sec < 10) ? "0" + sec : sec);
+    theTime.innerHTML = ( totalTime );
 }
