@@ -16,16 +16,15 @@ var logOutButton = new steroids.buttons.NavigationBarButton();
 logOutButton.title = "Log Out";
 
 editButton.onTap = function() {
-    
     // open modal view
     performAnimation();
 };
 
 saveButton.onTap = function() {
 //  loginText.textContent = "Please log in.";
-  steroids.view.navigationBar.setButtons({
-    right: [editButton]
-  });
+    steroids.view.navigationBar.setButtons({
+        right: [editButton]
+    });
 }
 
 // Initially display the login button
@@ -36,24 +35,22 @@ steroids.view.navigationBar.setButtons({
     
 });
 
-    var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
-    editProfileView.preload();
+var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
+editProfileView.preload();
 
 function performAnimation() {
     var anim = new steroids.Animation({
         transition: "slideFromBottom",
-        duration: 0.3,
-    
+        duration: 0.3
+        
     });
-
-
   
-  steroids.layers.push( {
-    view: editProfileView,
-    animation: anim,
-    tabBar: false 
-    
-  } );
+    steroids.layers.push({
+        view: editProfileView,
+        animation: anim,
+        tabBar: false 
+
+    });
   
 }
 

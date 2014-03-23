@@ -1,5 +1,42 @@
 steroids.navigationBar.show("People");
 
+var notificationsButton = new steroids.buttons.NavigationBarButton();
+notificationsButton.imagePath = "/icons/pill@2x.png";
+
+notificationsButton.onTap = function() {
+    // open drawer
+    openDrawer();
+};
+
+// Initially display the login button
+
+steroids.view.navigationBar.setButtons({
+    left: [notificationsButton]
+    
+});
+
+// Initialize the left drawer
+
+var notificationsDrawer = new steroids.views.WebView("views/notifications/index.html");
+
+notificationsDrawer.preload({},{
+    onSuccess: initGesture  // When the view has loaded, enable finger tracking
+});
+
+function initGesture() {
+    steroids.drawers.enableGesture({
+        view: notificationsDrawer,
+        edge: steroids.screen.edges.RIGHT,
+    });
+}
+
+
+// Helper functions
+
+function openDrawer() {
+    steroids.drawers.show(notificationsDrawer);
+}
+
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
