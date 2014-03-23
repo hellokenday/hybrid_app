@@ -272,6 +272,11 @@ function onDeviceReady () {
     initTimer();
     initSegmented();
     initNav();
+    initGesture();
+}
+
+function initGesture() {
+
 }
 
 function onGetCurrentLocationSuccess(position) {

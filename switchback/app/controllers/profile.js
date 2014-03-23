@@ -2,9 +2,29 @@
 //  loginText = document.querySelector("#login-text");
 //});
 
+// Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
+// vars
+var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
+editProfileView.preload();
+
+// Edit and Save buttons
+var editButton = new steroids.buttons.NavigationBarButton();
+editButton.title = "Edit";
+
+var saveButton = new steroids.buttons.NavigationBarButton();
+saveButton.title = "Save";
+
+var logOutButton = new steroids.buttons.NavigationBarButton();
+logOutButton.title = "Log Out";
+
 function onDeviceReady() {
+    initNavBar();
+    initGesture();
+} 
+
+function initNavBar() {
     steroids.view.navigationBar.show();
     steroids.view.navigationBar.update({
         title: "Profile",
@@ -14,18 +34,11 @@ function onDeviceReady() {
             right: [editButton],
         }
     });
-}    
-    
-// Edit and Save buttons
+}
 
-var editButton = new steroids.buttons.NavigationBarButton();
-editButton.title = "Edit";
-
-var saveButton = new steroids.buttons.NavigationBarButton();
-saveButton.title = "Save";
-
-var logOutButton = new steroids.buttons.NavigationBarButton();
-logOutButton.title = "Log Out";
+function initGesture() {
+    steroids.drawers.disableGesture();
+}
 
 editButton.onTap = function() {
     // open modal view
@@ -39,31 +52,16 @@ saveButton.onTap = function() {
     });
 }
 
-// Initially display buttons
-
-//steroids.view.navigationBar.setButtons({
-//    right: [editButton],
-//    left: [logOutButton]
-//    
-//});
-
-var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
-editProfileView.preload();
-
 function performAnimation() {
     var anim = new steroids.Animation({
         transition: "slideFromBottom",
-        duration: 0.3
-        
+        duration: 0.3 
     });
-  
     steroids.layers.push({
         view: editProfileView,
         animation: anim,
         tabBar: false 
-
     });
-  
 }
 
 /*
