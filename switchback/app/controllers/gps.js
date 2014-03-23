@@ -98,7 +98,6 @@ onTimerInterval()
 function initTimer() {
     
     console.log('initTimer');
-    alert('gjfkldjgkfdsgjklf');
     
     $('.socket').on('click', onTimerPlayClicked)
     $('.socket2').on('click', onTimerFinishClicked);

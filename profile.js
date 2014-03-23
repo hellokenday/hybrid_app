@@ -1,5 +1,6 @@
 steroids.view.navigationBar.show("Profile");
 
+
 //document.addEventListener("DOMContentLoaded", function() {
 //  loginText = document.querySelector("#login-text");
 //});
@@ -18,7 +19,7 @@ logOutButton.title = "Log Out";
 editButton.onTap = function() {
     
     // open modal view
-    performAnimation();
+    showPrivacy();
 };
 
 saveButton.onTap = function() {
@@ -36,55 +37,14 @@ steroids.view.navigationBar.setButtons({
     
 });
 
-    var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
-    editProfileView.preload();
-
-function performAnimation() {
-    var anim = new steroids.Animation({
-        transition: "slideFromBottom",
-        duration: 0.3,
-    
-    });
-
-
-  
-  steroids.layers.push( {
-    view: editProfileView,
-    animation: anim,
-    tabBar: false 
-    
-  } );
-  
-}
-
-/*
-var privacyView = new steroids.views.WebView("views/edit_profile/index.html");
+var privacyView = new steroids.views.WebView("views/privacy/index.html");
 privacyView.preload();
 
 function showPrivacy() {
     steroids.layers.push(privacyView);
 } 
 
-var animation = new steroids.Animation({
-    transition: "curlUp",
-    duration: 0.8,
-    curve: "easeIn"
-});
 
-function performAnimation() {
- animation.perform(
-   {}, 
-   { onSuccess: animationSuccess }
- );
-
-}
-
-function animationSuccess() {
- 
-    // do something
-    alert('animation success');
-}
-*/
 
 /*
 steroids.view.navigationBar.update({
