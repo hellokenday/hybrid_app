@@ -1,9 +1,21 @@
-steroids.view.navigationBar.show("Profile");
-
 //document.addEventListener("DOMContentLoaded", function() {
 //  loginText = document.querySelector("#login-text");
 //});
 
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+    steroids.view.navigationBar.show();
+    steroids.view.navigationBar.update({
+        title: "Profile",
+        overrideBackButton: false,
+        buttons: {
+            left: [logOutButton],
+            right: [editButton],
+        }
+    });
+}    
+    
 // Edit and Save buttons
 
 var editButton = new steroids.buttons.NavigationBarButton();
@@ -27,13 +39,13 @@ saveButton.onTap = function() {
     });
 }
 
-// Initially display the login button
+// Initially display buttons
 
-steroids.view.navigationBar.setButtons({
-    right: [editButton],
-    left: [logOutButton]
-    
-});
+//steroids.view.navigationBar.setButtons({
+//    right: [editButton],
+//    left: [logOutButton]
+//    
+//});
 
 var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
 editProfileView.preload();
@@ -55,50 +67,6 @@ function performAnimation() {
 }
 
 /*
-var privacyView = new steroids.views.WebView("views/edit_profile/index.html");
-privacyView.preload();
-
-function showPrivacy() {
-    steroids.layers.push(privacyView);
-} 
-
-var animation = new steroids.Animation({
-    transition: "curlUp",
-    duration: 0.8,
-    curve: "easeIn"
-});
-
-function performAnimation() {
- animation.perform(
-   {}, 
-   { onSuccess: animationSuccess }
- );
-
-}
-
-function animationSuccess() {
- 
-    // do something
-    alert('animation success');
-}
-*/
-
-/*
-steroids.view.navigationBar.update({
-  titleImagePath: "/icons/telescope@2x.png",
-  overrideBackButton: false,
-  buttons: {
-    left: [leftButton],
-    right: [rightButton, imageButton]
-  }
-}, {
-  onSuccess: function() {
-    alert("Navigation bar updated!");
-  },
-  onFailure: function() {
-    alert("Failed to update the navigation bar.");
-  }
-});
 checkForLocalhost();
 
 // nav bar vars
