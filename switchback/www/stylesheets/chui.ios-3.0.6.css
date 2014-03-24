@@ -1652,6 +1652,7 @@ article.current.blurred.removeBlurSlow {
 .sheet > section > .list > li::before {
   content: none;
 }
+/*
 div.handle {
   display: block;
   text-align: center;
@@ -1666,6 +1667,7 @@ div.handle {
   -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" width="76" height="27" viewBox="0 0 76 27" id="svg2"><defs id="defs8" /><g transform="translate(-283.79661,-123.77966)" id="Page-1" style="fill:none;stroke:none"><g transform="translate(254,108)" id="Artboard-1" style="stroke:#000;stroke-width:12;stroke-linecap:round;stroke-linejoin:round"><path d="m 36.25,26.242187 31.394531,7.972657 30.53125,-8.425782" id="Path-1" /></g></g></svg>');
   margin: 10px auto 0;
 }
+*/
 /* ==============================
    Icon Styles
    ============================== */
@@ -1756,4 +1758,17 @@ textarea {
   -webkit-appearance: none;
   box-shadow: none;
   border: none;
+}
+
+
+/* ==============================
+   Appgyver changes
+   ============================== */
+
+/* Log Out sheet */
+.sheet {
+    top: 0px;
+}
+.sheet > section {
+  top: 16px;
 }

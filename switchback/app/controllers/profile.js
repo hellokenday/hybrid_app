@@ -9,13 +9,12 @@ editProfileView.preload();
 var editButton = new steroids.buttons.NavigationBarButton();
 editButton.title = "Edit";
 
-var saveButton = new steroids.buttons.NavigationBarButton();
-saveButton.title = "Save";
-
 var logOutButton = new steroids.buttons.NavigationBarButton();
 logOutButton.title = "Log Out";
 
 function onDeviceReady() {
+    initChuiSheet();
+    initSheetButtons();
     initNavBar();
     initGesture();
 } 
@@ -32,8 +31,19 @@ function initNavBar() {
     });
 }
 
-function initGesture() {
+function initChuiSheet() {
+
+    $.UISheet();
+    $('.sheet').find('section').append("<ul class='list'></li>");
+    $('.sheet .list').append("<li><a class='button' href='javascript:void(null)'>Log Out</a></li><li><a class='button' href='javascript:void(null)'>Cancel</a></li>");
+}
+
+function initSheetButtons() {
     
+    $('.sheet .list').on('singletap', '.button', function() {
+        steroids.tabBar.show();
+        $.UIHideSheet();
+    });
 }
 
 editButton.onTap = function() {
@@ -41,11 +51,9 @@ editButton.onTap = function() {
     performAnimation();
 };
 
-saveButton.onTap = function() {
-//  loginText.textContent = "Please log in.";
-    steroids.view.navigationBar.setButtons({
-        right: [editButton]
-    });
+logOutButton.onTap = function() {
+    steroids.tabBar.hide();
+    $.UIShowSheet();
 }
 
 function performAnimation() {
