@@ -1,7 +1,3 @@
-//document.addEventListener("DOMContentLoaded", function() {
-//  loginText = document.querySelector("#login-text");
-//});
-
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -37,7 +33,7 @@ function initNavBar() {
 }
 
 function initGesture() {
-    steroids.drawers.disableGesture();
+    
 }
 
 editButton.onTap = function() {

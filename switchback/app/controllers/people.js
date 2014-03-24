@@ -70,10 +70,22 @@ function onSegmentSelected(e) {
  }
 
 notificationsButton.onTap = function() {
-    // open drawer
-    openDrawer();
+    // enable notifications button to open and close drawer when drawer gesture is disabled
+    
+    // https://moot.it/appgyver#!/?close drawer
+    if(stateDraw === "open"){
+        localStorage.setItem("drawerstate", "close");
+        stateDraw = localStorage.getItem("drawerstate");
+        steroids.drawers.hideAll();     
+    }
+    else if(stateDraw === "close"){
+        localStorage.setItem("drawerstate", "open"); 
+        stateDraw = localStorage.getItem("drawerstate"); 
+        steroids.drawers.show(notificationsDrawer);  
+    }
+    else{
+        localStorage.setItem("drawerstate", "open");
+        stateDraw = localStorage.getItem("drawerstate");
+        steroids.drawers.show(notificationsDrawer);
+    }
 };
-
-function openDrawer() {
-    steroids.drawers.show(notificationsDrawer);
-}
