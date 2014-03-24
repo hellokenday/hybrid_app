@@ -13,6 +13,7 @@ var logOutButton = new steroids.buttons.NavigationBarButton();
 logOutButton.title = "Log Out";
 
 function onDeviceReady() {
+    disableScrolling();
     initChuiSheet();
     initSheetButtons();
     initNavBar();
@@ -43,6 +44,14 @@ function initSheetButtons() {
     $('.sheet .list').on('singletap', '.button', function() {
         steroids.tabBar.show();
         $.UIHideSheet();
+    });
+}
+
+function disableScrolling() {
+    
+    // http://www.sitepoint.com/forums/showthread.php?673175-iphone-gt-safari-gt-Lock-viewport-scrolling
+    $('body').bind("touchmove", {}, function(event){
+        event.preventDefault();
     });
 }
 
