@@ -1,5 +1,3 @@
-steroids.navigationBar.show("People");
-
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
                           
@@ -8,12 +6,17 @@ var notificationsDrawer = new steroids.views.WebView("views/notifications/index.
 var notificationsButton = new steroids.buttons.NavigationBarButton();
 notificationsButton.imagePath = "/icons/pill@2x.png";
 
+// preload view vars
+var friendView = new steroids.views.WebView("views/friend/index.html");
+friendView.preload();
+
 
 function onDeviceReady () {
 
     initNavBar();
     initDrawer();
     initSegmented();
+    initButtons();
 }
 
 function initNavBar() {
@@ -89,3 +92,16 @@ notificationsButton.onTap = function() {
         steroids.drawers.show(notificationsDrawer);
     }
 };
+
+function initButtons() {
+    $('.friend_btn').on('singletap', showFriend);
+}
+
+function showFriend() {
+    
+    steroids.layers.push( {
+        view: friendView,
+        navigationBar: false,
+        tabBar: false
+    });
+} 
