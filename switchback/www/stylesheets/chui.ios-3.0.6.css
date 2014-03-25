@@ -1652,6 +1652,7 @@ article.current.blurred.removeBlurSlow {
 .sheet > section > .list > li::before {
   content: none;
 }
+
 /*
 div.handle {
   display: block;
@@ -1668,6 +1669,7 @@ div.handle {
   margin: 10px auto 0;
 }
 */
+
 /* ==============================
    Icon Styles
    ============================== */
