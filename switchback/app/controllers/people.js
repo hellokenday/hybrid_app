@@ -101,7 +101,32 @@ function showFriend() {
     
     steroids.layers.push( {
         view: friendView,
+        navigationBar: true,
+        tabBar: false
+    });
+} 
+
+
+
+/**
+* Eventlistener for navigation bar toggle
+*/
+
+/*
+function showFriend() {
+    
+    steroids.layers.push( {
+        view: friendView,
         navigationBar: false,
         tabBar: false
     });
 } 
+
+// An event that fires when the steroids.view.WebView visibility changes
+document.addEventListener("visibilitychange", onVisibilityChange, false);
+
+function onVisibilityChange() {
+   if(document.visible){
+       steroids.view.navigationBar.show();
+   }
+}*/

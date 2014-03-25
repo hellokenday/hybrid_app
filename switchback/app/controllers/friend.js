@@ -1,4 +1,3 @@
-    steroids.navigationBar.show();
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -60,21 +59,9 @@ function closeSettingsControls() {
     $.UIHideSheet();
 }
 
-function showFriend() {
-    
-    steroids.layers.push( {
-        view: friendView,
-        navigationBar: false,
-        tabBar: false
-    });
-} 
-
-
 function backToPeople() {
 
-    steroids.layers.pop( {
-        tabBar: true
-    }); 
+    steroids.layers.pop();
 }
 
 function disableScrolling() {
