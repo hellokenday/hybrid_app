@@ -968,17 +968,6 @@ fieldset {
     font-size: 14px;
     text-align: center; }
 
-.alert.closed {
-  -webkit-transform: scale(0);
-  transform: scale(0);
-}
-.alert.opened {
-  display: block;
-  opacity: 1;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-
 .alert-text-input {
   display: block;
   width: 100%;

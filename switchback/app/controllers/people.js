@@ -10,6 +10,9 @@ notificationsButton.imagePath = "/icons/pill@2x.png";
 var friendView = new steroids.views.WebView("views/friend/index.html");
 friendView.preload();
 
+var GroupView = new steroids.views.WebView("views/group/index.html");
+GroupView.preload();
+
 
 function onDeviceReady () {
 
@@ -95,6 +98,7 @@ notificationsButton.onTap = function() {
 
 function initButtons() {
     $('.friend_btn').on('singletap', showFriend);
+    $('.group_btn').on('singletap', showGroup);
 }
 
 function showFriend() {
@@ -106,6 +110,14 @@ function showFriend() {
     });
 } 
 
+function showGroup() {
+    
+    steroids.layers.push( {
+        view: GroupView,
+        navigationBar: true,
+        tabBar: false
+    });
+} 
 
 
 /**
