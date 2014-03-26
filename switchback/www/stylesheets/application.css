@@ -214,6 +214,10 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	left: 100px
 }
 
+.action-sheet-content a.log_out {
+    color: red;
+}
+
 .activity {display: none;}
 
 /* Camera */

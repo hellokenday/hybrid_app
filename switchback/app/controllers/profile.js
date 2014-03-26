@@ -13,10 +13,10 @@ var logOutButton = new steroids.buttons.NavigationBarButton();
 logOutButton.title = "Log Out";
 
 function onDeviceReady() {
-    disableScrolling();
-    initChuiSheet();
     initSheetButtons();
     initNavBar();
+    disableScrolling();
+    initChuiSheet();
     initGesture();
 } 
 
@@ -32,20 +32,16 @@ function initNavBar() {
     });
 }
 
-function initChuiSheet() {
-
-    $.UISheet();
-    $('.sheet').find('section').append("<ul class='list'></li>");
-    $('.sheet .list').append("<li><a class='button' href='javascript:void(null)'>Log Out</a></li><li><a class='button' href='javascript:void(null)'>Cancel</a></li>");
-}
-
 function initSheetButtons() {
-    $('.sheet .list').on('singletap', '.button', closeLogoutControls);
+    alert('initButtons');
+    $('.action-sheet-button').on('singletap', closeLogoutControls);
 }
 
 function closeLogoutControls() {
         steroids.tabBar.show();
-        $.UIHideSheet();
+//        $.UIHideSheet();
+    
+    $('.action-sheet').removeClass('in');
 }
 
 function disableScrolling() {
@@ -75,6 +71,7 @@ editButton.onTap = function() {
 };
 
 logOutButton.onTap = function() {
+    
+    $('.action-sheet').addClass('in');
     steroids.tabBar.hide();
-    $.UIShowSheet();
 }
