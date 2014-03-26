@@ -13,10 +13,11 @@ var backButton = new steroids.buttons.NavigationBarButton();
 backButton.imagePath = "/icons/back_btn@2x.png";
 
 function onDeviceReady() {
+    initSheetButtons();
+    initPopupButtons();
     initNavBar();
     disableScrolling();
     initChuiSheet();
-    initSheetButtons();
 } 
 
 function initNavBar() {
@@ -31,49 +32,47 @@ function initNavBar() {
     });
 }
 
-function initChuiSheet() {
-
-    $.UISheet();
-    $('.sheet').find('section').append("<ul class='list'></li>");
-    $('.sheet .list').append("<li><a class='button mute_btn' href='javascript:void(null)'>Mute friend_Name</a></li><li><a class='button block_btn' href='javascript:void(null)'>Block friend_Name</a></li><li><a class='button cancel' href='javascript:void(null)'>Cancel</a></li>");
-}
-
 function initSheetButtons() {
     
-    $('.mute_btn').on('singletap', closeShowMuteOptions);
-    $('.block_btn').on('singletap', closeShowBlockView);
-    $('.cancel').on('singletap', closeFlagControls);
+    $('.mute_btn').on('singletap', closeSheetandShowMuteOptions);
+    $('.block_btn').on('singletap', closeAndShowBlockView);
+    $('.cancel_btn').on('singletap', closeFlagControls);
+}
+
+function initPopupButtons() {
+    $('.left').on('singletap', closeMutePopup);
+    $('.right').on('singletap', closeMutePopupAndNotify);
 }
 
 function closeFlagControls() {
+    $('.action-sheet').removeClass('in');
+}
+
+function closeSheetandShowMuteOptions() {
+    $('.action-sheet').removeClass('in');
+    showMuteAlert();
+}
+
+function showMuteAlert() {
     
-    $.UIHideSheet();
+    $('.alert').addClass('in opened');
 }
 
-function closeShowMuteOptions() {
-    $.UIHideSheet();
-    showMuteOptions();
+function closeMutePopup() {
+    
+    $('.alert').removeClass('in');
 }
 
-function showMuteOptions() {
-    $.UIPopup({
-        id: "warning",
-        title: 'Mute Friend_Name', 
-        message: 'You will stop getting notifications from friend_name. You can still see posts in your stream or on their profile.', 
-        cancelButton: 'Cancel', 
-        continueButton: 'Mute', 
-        callback: function() {
-         // var popupMessageTarget = document.querySelector('#popupMessageTarget');
-         // popupMessageTarget.textContent = 'Thanks for staying with us a bit longer.';
-            popupMessageTarget.className = "";
-            popupMessageTarget.className = "animatePopupMessage";
-        }
-    });
+function closeMutePopupAndNotify() {
+    
+    
+    $('.alert').removeClass('in');
 }
 
-function closeShowBlockView() {
+function closeAndShowBlockView() {
+    $('.action-sheet').removeClass('in');
     alert('closeShowBlockView');
-    $.UIHideSheet();
+    // block view push here...
 }
 
 function backToPeople() {
@@ -96,5 +95,5 @@ backButton.onTap = function() {
 
 flagButton.onTap = function() {
 
-    $.UIShowSheet(); 
+    $('.action-sheet').addClass('in');
 };

@@ -2,7 +2,7 @@
 <script src="/vendor/chui/chui-3.0.6.js"></script>
 
 <article id='main'>
-    <section class='profile'>
+    <section class='profile friend'>
 <!--
         <nav>
             <ul>
@@ -37,6 +37,25 @@
         </section>
     </section>
 </article>
+<div class="friend action-sheet">
+  <div class="action-sheet-content">
+    <a class="action-sheet-button mute_btn">Mute</a>
+    <a class="action-sheet-button block_btn">Block</a>
+    <a class="action-sheet-button cancel_btn">Cancel</a>
+  </div>
+</div>
+    <div class="alert">
+      <!-- The top margin must be set to 50% of the alert's height using JavaScript. -->
+      <div class="alert-content" style="margin-top: -85px;">
+        <h3>Mute friend_name</h3>
+          <p>You will stop getting notifications from friend_name. You can still see posts in your stream or on their profile.</p>
+        <div class="alert-buttons">
+          <a class="alert-button right primary">Mute</a>
+          <a class="alert-button left">Cancel</a>
+        </div>
+      </div>
+    </div>
+
 <!--<div class="content-padded">
 
     <h1>Camera Example</h1>

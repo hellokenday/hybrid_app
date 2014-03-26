@@ -886,6 +886,43 @@ fieldset {
   .action-sheet-icon-link.icon-trash:before {
     content: "\e019"; }
 
+/* friend page action sheet button */
+
+.friend .action-sheet-content {
+    border-radius: 5px;
+}
+.friend .action-sheet-button {
+    border-radius: 0px;
+    display: block;
+    margin: 0 -15px;
+    line-height: 45px;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 0px;
+    background: rgba(0, 0, 0, 0.05);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(231, 240, 245, 0.95));
+}
+
+.friend .action-sheet-button:last-child {
+    margin-bottom: -12px;
+    margin-top: 10px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.friend .action-sheet-button:nth-child(1) {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.friend .action-sheet-button:nth-child(2) {
+    border-top: 1px solid lightgrey;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* alert */
+
 .alert {
   position: absolute;
   z-index: 10;
@@ -930,6 +967,17 @@ fieldset {
   .alert-content > p {
     font-size: 14px;
     text-align: center; }
+
+.alert.closed {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+.alert.opened {
+  display: block;
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
 
 .alert-text-input {
   display: block;

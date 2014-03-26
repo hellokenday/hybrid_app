@@ -33,14 +33,12 @@ function initNavBar() {
 }
 
 function initSheetButtons() {
-    alert('initButtons');
     $('.action-sheet-button').on('singletap', closeLogoutControls);
 }
 
 function closeLogoutControls() {
-        steroids.tabBar.show();
-//        $.UIHideSheet();
     
+    steroids.tabBar.show();
     $('.action-sheet').removeClass('in');
 }
 
