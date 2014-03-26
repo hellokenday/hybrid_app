@@ -17,7 +17,6 @@ function onDeviceReady() {
     initPopupButtons();
     initNavBar();
     disableScrolling();
-    initChuiSheet();
 } 
 
 function initNavBar() {

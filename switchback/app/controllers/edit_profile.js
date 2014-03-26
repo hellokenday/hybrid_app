@@ -8,7 +8,11 @@ cancelButton.title = "Cancel";
 saveButton.title = "Save";
 
 function onDeviceReady() {
-    initNavBar()
+    initNavBar();
+    initButtons();
+    initSheetButtons();
+    disableScrolling();
+    initCamera();
 }
 
 function initNavBar() {
@@ -20,6 +24,45 @@ function initNavBar() {
             left: [cancelButton],
             right: [saveButton],
         }
+    });
+}
+
+function initButtons() {
+    $('.profile_pic_btn').on('singletap', showCameraSheet);
+}
+
+function showCameraSheet() {
+    $('.action-sheet').addClass('in');
+}
+
+function initSheetButtons() {
+    
+    $('.take_photo_btn').on('singletap', closeSheetAndTakePhoto);
+    $('.choose_photo_btn').on('singletap', closeSheetAndChoosePhoto);
+    $('.cancel_btn').on('singletap', closeProfilePictureControls);
+}
+
+function closeSheetAndTakePhoto() {
+    
+    // take photo stuff
+    $('.action-sheet').removeClass('in');
+}
+
+function closeSheetAndChoosePhoto() {
+
+    // choose photo stuff
+    $('.action-sheet').removeClass('in');
+}
+
+function closeProfilePictureControls() {
+    $('.action-sheet').removeClass('in');
+}
+
+function disableScrolling() {
+    
+    // http://www.sitepoint.com/forums/showthread.php?673175-iphone-gt-safari-gt-Lock-viewport-scrolling
+    $('body').bind("touchmove", {}, function(event){
+        event.preventDefault();
     });
 }
 

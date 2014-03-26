@@ -224,6 +224,10 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 * edit_profile
 */
 
+.edit_profile .profile_pic {
+	margin: -20px 0 40px 0;
+} 
+
 .edit_profile .profile_pic li.comp > div {
     padding: 0 0 0 0;
     margin-left: 0;
@@ -243,7 +247,7 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 }
 
 .edit_profile .profile_pic li.comp > div > h3 {
-    padding-top: 10px;
+    padding-top: 7px;
 }
 
 /* Camera */
