@@ -250,6 +250,12 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
     padding-top: 7px;
 }
 
+fieldset {
+	border: none;
+	height: 140px;
+	margin-top: -19px;
+}
+
 /* Camera */
 img#photo {
     width:100%;

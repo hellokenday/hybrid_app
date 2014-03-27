@@ -83,8 +83,10 @@ label {
   text-align: center; }
 
 body {
+/*
   font: normal 16px/1.5 "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   color: black;
+*/
   /* Prevent text size adjust after orientation change, without disabling user zoom. */
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -900,7 +902,6 @@ fieldset {
     text-align: center;
     margin-bottom: 0px;
     background: rgba(0, 0, 0, 0.05);
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(231, 240, 245, 0.95));
 }
 
 .friend .action-sheet-button:last-child {
@@ -908,19 +909,21 @@ fieldset {
     margin-top: 10px;
     font-weight: bold;
     border-radius: 5px;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(231, 240, 245, 0.95));
 }
 
 .friend .action-sheet-button:nth-child(1) {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+	background-color: white;
 }
 
 .friend .action-sheet-button:nth-child(2) {
     border-top: 1px solid lightgrey;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+	background-color: white;
 }
-
 /* alert */
 
 .alert {

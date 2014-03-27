@@ -26,7 +26,9 @@ function onVisibilityChange() {
     
     if(!document.hidden) {
         // if document is visible... do this:
-          setTimeout(initTextAreaFocus, 500); 
+        
+        // delay prevents keyboard showing during view animation
+        setTimeout(initTextAreaFocus, 500); 
     }
 }
 
