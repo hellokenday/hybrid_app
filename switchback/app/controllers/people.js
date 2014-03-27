@@ -3,12 +3,19 @@ document.addEventListener("deviceready", onDeviceReady, false);
                           
 // nav bar vars
 var notificationsDrawer = new steroids.views.WebView("views/notifications/index.html");
+
 var notificationsButton = new steroids.buttons.NavigationBarButton();
-notificationsButton.imagePath = "/icons/pill@2x.png";
+notificationsButton.imagePath = "/icons/bell@2x.png";
+
+var searchButton = new steroids.buttons.NavigationBarButton();
+searchButton.imagePath = "/icons/search@2x.png";
 
 // preload view vars
 var friendView = new steroids.views.WebView("views/friend/index.html");
 friendView.preload();
+
+var searchView = new steroids.views.WebView("views/search/index.html");
+searchView.preload();
 
 var GroupView = new steroids.views.WebView("views/group/index.html");
 GroupView.preload();
@@ -20,15 +27,31 @@ function onDeviceReady () {
     initDrawer();
     initSegmented();
     initButtons();
+    initVisibilityChange();
+} 
+
+function initVisibilityChange() {
+    
+   document.addEventListener("visibilitychange", onVisibilityChange, false);
+}
+
+function onVisibilityChange() {
+    
+    if(!document.hidden) {
+        // if document is visible... do this:
+        
+        steroids.view.navigationBar.show();
+    }
 }
 
 function initNavBar() {
     steroids.view.navigationBar.show();
     steroids.view.navigationBar.update({
         title: "People",
-        overrideBackButton: false,
+        overrideBackButton: true,
         buttons: {
             left: [notificationsButton],
+            right: [searchButton]
         }
     });
 }
@@ -47,6 +70,11 @@ function initGesture() {
         view: notificationsDrawer,
         edge: steroids.screen.edges.RIGHT,
     });
+}
+
+function initButtons() {
+    $('.friend_btn').on('singletap', showFriend);
+    $('.group_btn').on('singletap', showGroup);
 }
 
 // Helper functions
@@ -96,9 +124,13 @@ notificationsButton.onTap = function() {
     }
 };
 
-function initButtons() {
-    $('.friend_btn').on('singletap', showFriend);
-    $('.group_btn').on('singletap', showGroup);
+searchButton.onTap = function() {
+    
+        steroids.layers.push( {
+        view: searchView,
+        navigationBar: false,
+        tabBar: false
+    });
 }
 
 function showFriend() {
@@ -118,27 +150,3 @@ function showGroup() {
         tabBar: false
     });
 } 
-
-
-/**
-* Eventlistener for navigation bar toggle
-*/
-
-/*
-function showFriend() {
-    
-    steroids.layers.push( {
-        view: friendView,
-        navigationBar: false,
-        tabBar: false
-    });
-} 
-
-// An event that fires when the steroids.view.WebView visibility changes
-document.addEventListener("visibilitychange", onVisibilityChange, false);
-
-function onVisibilityChange() {
-   if(document.visible){
-       steroids.view.navigationBar.show();
-   }
-}*/
