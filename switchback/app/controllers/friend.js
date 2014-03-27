@@ -49,13 +49,41 @@ function closeFlagControls() {
 
 function closeSheetandShowMuteOptions() {
     $('.action-sheet').removeClass('in');
-    showMuteAlert();
+    
+    // delay mute alert until action sheet has closed
+    setTimeout(showMuteAlert, 300);
 }
 
 function showMuteAlert() {
     
-    $('.alert').addClass('in opened');
+//    $('.alert').addClass('in opened');
+    
+    navigator.notification.confirm(
+        'You will stop getting notifications from friend_name. You can still see posts in your stream or on their profile.',                        // message
+         onConfirm,               // callback to invoke with index of button pressed
+        'Mute friend_name',       // title
+        ['Mute','Cancel']         // buttonLabels
+    );
 }
+
+function onConfirm(buttonIndex) {
+    
+        if(buttonIndex == 1) {
+            navigator.notification.alert(
+                'friend_name has been muted',  // message
+                alertDismissed,       // callback
+                'friend_name',        // title
+                'OK'                  // buttonName
+            );
+        }
+        else { // do nothing
+            
+        }
+}
+
+function alertDismissed() {
+        // do something
+    }
 
 function closeMutePopup() {
     
