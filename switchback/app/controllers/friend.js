@@ -2,8 +2,8 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 // preload views vars
-var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
-editProfileView.preload();
+var someView = new steroids.views.WebView("");
+someView.preload();
 
 // Edit and Save buttons
 var flagButton = new steroids.buttons.NavigationBarButton();
@@ -107,7 +107,7 @@ function backToPeople() {
     steroids.layers.pop();
 }
 
-function disableScrolling() {
+function editLocationViewdisableScrolling() {
     
     // http://www.sitepoint.com/forums/showthread.php?673175-iphone-gt-safari-gt-Lock-viewport-scrolling
     $('body').bind("touchmove", {}, function(event){

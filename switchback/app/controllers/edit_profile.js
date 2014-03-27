@@ -1,6 +1,23 @@
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
+// preload view vars
+var editFirstNameView = new steroids.views.WebView("views/edit_first_name/index.html");
+editFirstNameView.preload();
+
+var editLastNameView = new steroids.views.WebView("views/edit_last_name/index.html");
+editLastNameView.preload();
+
+var editUsernameView = new steroids.views.WebView("views/edit_username/index.html");
+editUsernameView.preload();
+
+var editRidingStylesView = new steroids.views.WebView("views/edit_riding_styles/index.html");
+editRidingStylesView.preload();
+
+var editLocationView = new steroids.views.WebView("views/edit_location/index.html");
+editLocationView.preload();
+
+// nav bar vars
 var cancelButton = new steroids.buttons.NavigationBarButton();
 var saveButton = new steroids.buttons.NavigationBarButton();
 
@@ -29,10 +46,12 @@ function initNavBar() {
 
 function initButtons() {
     $('.profile_pic_btn').on('singletap', showCameraSheet);
-}
-
-function showCameraSheet() {
-    $('.action-sheet').addClass('in');
+    $('.first_name_btn').on('singletap', showEditName);
+    $('.last_name_btn').on('singletap', showEditLastName);
+    $('.username_btn').on('singletap', showEditUsername);
+    $('.riding_styles_btn').on('singletap', showEditRidingStyles);
+    $('.location_btn').on('singletap', showEditLocation);
+    
 }
 
 function initSheetButtons() {
@@ -48,6 +67,10 @@ function closeSheetAndTakePhoto() {
     capturePhoto();
 }
 
+function showCameraSheet() {
+    $('.action-sheet').addClass('in');
+}
+
 function closeSheetAndChoosePhoto() {
 
     $('.action-sheet').removeClass('in');
@@ -56,6 +79,51 @@ function closeSheetAndChoosePhoto() {
 
 function closeProfilePictureControls() {
     $('.action-sheet').removeClass('in');
+}
+
+function showEditName() {
+
+    steroids.layers.push( {
+        view: editFirstNameView,
+        navigationBar: true,
+        tabBar: false
+    });
+}
+
+function showEditLastName() {
+    
+    steroids.layers.push( {
+        view: editLastNameView,
+        navigationBar: true,
+        tabBar: false
+    });
+}
+
+function showEditUsername() {
+    
+    steroids.layers.push( {
+        view: editUsernameView,
+        navigationBar: true,
+        tabBar: false
+    });
+}
+
+function showEditRidingStyles() {
+
+    steroids.layers.push( {
+        view: editRidingStylesView,
+        navigationBar: true,
+        tabBar: false
+    });
+}
+
+function showEditLocation() {
+
+    steroids.layers.push( {
+        view: editRidingStylesView,
+        navigationBar: true,
+        tabBar: false
+    });
 }
 
 function disableScrolling() {
