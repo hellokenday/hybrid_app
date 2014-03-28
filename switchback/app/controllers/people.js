@@ -27,7 +27,7 @@ function onDeviceReady () {
     initDrawer();
     initSegmented();
     initButtons();
-    initVisibilityChange();
+//    initVisibilityChange();
 } 
 
 function initVisibilityChange() {
