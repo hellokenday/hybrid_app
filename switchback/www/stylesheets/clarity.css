@@ -129,13 +129,13 @@ html, body {
 */
 
 .top-bar {
-  position: absolute;
+  position: relative;
   z-index: 5;
   top: 0;
   left: 0;
   right: 0;
-  height: 43px;
-  line-height: 43px;
+  height: ;
+  line-height: ;
   font-size: 18px;
   background: #f8f8f8;
   border-bottom: 1px solid #c8c8c8;
@@ -1370,7 +1370,6 @@ fieldset {
     text-align: center;
     margin-bottom: 0px;
     background: rgba(0, 0, 0, 0.05);
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(231, 240, 245, 0.95));
 }
 
 .friend .action-sheet-button:last-child {
@@ -1378,17 +1377,21 @@ fieldset {
     margin-top: 10px;
     font-weight: bold;
     border-radius: 5px;
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(231, 240, 245, 0.95));
 }
 
 .friend .action-sheet-button:nth-child(1) {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+	background-color: white;
+	
 }
 
 .friend .action-sheet-button:nth-child(2) {
     border-top: 1px solid lightgrey;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+	background-color: white;
 }
 
 /*

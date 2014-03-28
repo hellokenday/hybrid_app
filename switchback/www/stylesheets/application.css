@@ -21,6 +21,16 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+.segmented a.button {
+	padding: 0px 0 0px 0;
+	height: 26px;
+	z-index: 12;
+}
+
+.top-bar {
+	z-index: 11;
+}
+
 /**
  * GPS
  */
@@ -165,7 +175,12 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
  * People
  */
 
-
+.people .list {
+	border-top: none;
+	margin-top: 0px;
+	margin-bottom: 4px;
+	
+}
 
 /**
  * Search
@@ -181,7 +196,7 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 .search .cancel_btn {
 	position: relative;
 	float: right;
-	margin-top: -38px;
+	margin-top: -28px;
 	z-index: 100;
 }
 
