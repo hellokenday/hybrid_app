@@ -178,8 +178,8 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.search_cancel_btn {
-	position: absolute;
+.search .cancel_btn {
+	position: relative;
 	float: right;
 	margin-top: -38px;
 	z-index: 100;

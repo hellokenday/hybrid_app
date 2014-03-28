@@ -7,15 +7,10 @@ peopleView.preload();
 
 var searchView = new steroids.views.WebView("views/search/index.html");
 
-//function onDeviceReady() {
-////    initSheetButtons();
-////    initPopupButtons();
-////    initNavBar();
-////    disableScrolling();
-//} 
-
 function onDeviceReady() {
     initVisibilityChange();
+    initButtons();
+    initNavBar();
 } 
 
 function initVisibilityChange() {
@@ -35,23 +30,37 @@ function onVisibilityChange() {
     
     if (!document.hidden) {
         // if document is visible... do this:
-        
+                
         steroids.view.navigationBar.hide();
-        
-        searchView.unload();
+        setTimeout(initTextAreaFocus, 500);
+    //  searchView.unload();
     }
+}
+
+// strip nav bar incase it does show
+function initNavBar() {
+    steroids.view.navigationBar.update({
+        title: "",
+        overrideBackButton: true,
+        buttons: {
+            left: [],
+            right: []
+        }
+    });
+}
+
+function initButtons() {
+    
+    $('.cancel_btn').on('singletap', backToPeople);
+}
+
+function initTextAreaFocus() {
+
+    // focus on text area when view is visible
+    $(".search-bar-input").focus();
 }
 
 function backToPeople() {
     steroids.view.navigationBar.show();
     steroids.layers.pop();
 }
-
-
-
-//function initSheetButtons() {
-//    
-//    $('.mute_btn').on('singletap', closeSheetandShowMuteOptions);
-//    $('.block_btn').on('singletap', closeAndShowBlockView);
-//    $('.cancel_btn').on('singletap', closeFlagControls);
-//}
