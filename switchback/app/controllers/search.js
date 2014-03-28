@@ -25,10 +25,11 @@ function initVisibilityChange() {
 
 function onVisibilityChange() {
     
+    // fallback if navigationBar.show fails in backToPeople
+    
     if(document.hidden) {
         // if document is hidden... do this:
         
-        // delay prevents keyboard showing during view animation
         steroids.view.navigationBar.show();
     }
     
@@ -37,13 +38,12 @@ function onVisibilityChange() {
         
         steroids.view.navigationBar.hide();
         
-        // unload search view from memory to bring back nav bar on layer pop
         searchView.unload();
     }
 }
 
 function backToPeople() {
-
+    steroids.view.navigationBar.show();
     steroids.layers.pop();
 }
 

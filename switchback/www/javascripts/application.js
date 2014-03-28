@@ -1,4 +1,4 @@
 // disable drawer gesture globally
 steroids.drawers.disableGesture();
 
-steroids.view.navigationBar.show();
+//steroids.view.navigationBar.show();
