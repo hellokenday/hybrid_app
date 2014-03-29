@@ -15,6 +15,8 @@ var watchID;
 var trackMap;
 var trackMarkers = [];
 var trackPath;
+var distanceTravelled = 0;
+var totalSpeed = 0;
 
 var rideOneView;
 
@@ -52,49 +54,6 @@ function initSegmented () {
      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
 }
 
-
-/* 
-var timerInterval;
-var secondsCount = 0;
-
-play()
-{
-    stop(true);
-    intervalId = setInterval(onTimerInterval, 1000);
-}
-
-stop(hardReset)
-{
-    clearInterval(timerInterval);
-    if(hardReset !== false) secondsCount = 0;
-}
-
-getTimeString()
-{
-    var timeString = "";
-    
-    // http://stackoverflow.com/questions/6312993/javascript-seconds-to-time-with-format-hhmmss
-    var sec_num = parseInt(this, 10); // don't forget the second param
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-    if (hours < 10) hours = "0" + hours;
-    if (minutes < 10) minutes = "0" + minutes;
-    if (seconds < 10) seconds = "0" + seconds;
-    timeString = hours + ':' + minutes + ':' + seconds;
-    
-    var minutes = secondsCount%60;
-
-    return timeString;
-}
-
-onTimerInterval()
-{
-    secondsCount++;
-}
-*/
-
 function initTimer() {
     
     console.log('initTimer');
@@ -112,7 +71,8 @@ function initMap () {
     console.log('initMap');
     
     trackMap = createMap("map_canvas");
-    setCurrentLocation();
+    if(tracking === false) setCurrentLocation();
+    else addMarker(latLngPositions[0]);
 
     tab2Inited = true;
 }
@@ -138,12 +98,9 @@ function createMap (divID) {
 
 function addMarker (latlng) {
 
-    if(positions.length > 1) removeLastMarker();
-
     var marker = new google.maps.Marker({
         position: latlng,
-        map: trackMap,
-        title: "Current location"
+        map: trackMap
     });
 
     trackMarkers.push(marker);
@@ -204,6 +161,11 @@ function setCurrentLocation () {
     navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
 }
 
+// in KM/h
+function getAverageSpeed() {
+    return (((totalSpeed/positions.length)*60)*60)*0.001;
+}
+
 function playTimer(){
     clearInterval(intervalId);
     intervalId = setInterval(onTimerTick, 1000);
@@ -231,7 +193,11 @@ function resetTimer() {
 
 function updateStats () {
 
-    // nothing to do...
+    var avgKmh = getAverageSpeed();
+    // set html
+    
+    
+    //distanceTravelled
 }
 
 function updatePath () {
@@ -263,6 +229,11 @@ function resetMarkers () {
     }
 }
 
+function resetStats() {
+    totalSpeed = 0;
+    distanceTravelled = 0;
+}
+
 /**
  * Event handling
  */
@@ -272,38 +243,40 @@ function onDeviceReady () {
     initTimer();
     initSegmented();
     initNav();
-    initGesture();
-}
-
-function initGesture() {
-
 }
 
 function onGetCurrentLocationSuccess(position) {
 
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: trackMap,
-        title: "Start"
-    });
-    trackMarkers.push(marker);
-
+    addMarker(latlng);
     trackMap.panTo(latlng);
 }
 function onGetCurrentLocationError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
 function onLocationUpdatedSuccess(position) {
-
-    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    trackMap.panTo(latlng)
     
-    addMarker(latlng);
-
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    
     positions.push(position);
     latLngPositions.push(latlng);
-
-    updatePath();
+    totalSpeed += position.coords.speed;
+    
+    if(trackMap !== undefined) 
+    {
+        if(latLngPositions.length > 2)
+        {
+            var distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, latLngPositions[latLngPositions.length-2]);
+            distanceTravelled += distance;
+        }
+        
+        if(trackMarkers.length > 1) removeLastMarker();
+        
+        addMarker(latlng);
+        updatePath();
+        trackMap.panTo(latlng);
+    }
+    
+    updateStats();
 }
 function onLocationUpdatedError(e) { console.log('onGetCurrentLocationError: '    + e.code    + ': ' + 'message: ' + e.message); }
 
@@ -336,7 +309,7 @@ function onSegmentSelected(e) {
 
 function onTimerPlayClicked(){
     
-    console.log('play');
+    console.log('onTimerPlayClicked');
     $('.timer_btn').toggleClass('active');
     var active = $('.timer_btn').hasClass('active');
     (active) ? playTimer() : pauseTimer();
@@ -344,7 +317,9 @@ function onTimerPlayClicked(){
 }
 
 function onTimerFinishClicked(){
-    console.log('fin');
+    console.log('onTimerFinishClicked');
+    
+    resetStats();
     stopTracking();
     resetTimer();
 }
