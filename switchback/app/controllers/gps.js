@@ -198,15 +198,18 @@ function resetTimer() {
     hour = 00;
 }
 
-function updateStats () {
+function updateStats() {
 
     var avgKmh = getAverageSpeed();
-    var km = distanceTravelled / 1000;
+    var km = distanceTravelled / 1000; // convert to km
     
-    // set html
+    // round to 2 decimal places
+    avgKmh = Math.round(avgKmh * 100) / 100;
+    km = Math.round(km * 100) / 100;
     
-    $("#avg_speed").html(Math.round(avgKmh * 100) / 100);
-    $("#distance").html(Math.round(km * 100) / 100);
+    // set html    
+    $("#avg_speed").html(avgKmh);
+    $("#distance").html(km);
 }
 
 function updatePath () {
@@ -239,6 +242,7 @@ function resetMarkers () {
 }
 
 function resetStats() {
+    
     totalSpeed = 0;
     distanceTravelled = 0;
 }
