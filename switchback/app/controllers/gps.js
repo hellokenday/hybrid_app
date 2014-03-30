@@ -205,11 +205,30 @@ function updateStats() {
     
     // round to 2 decimal places
     avgKmh = Math.round(avgKmh * 100) / 100;
-    km = Math.round(km * 100) / 100;
+    km = Math.round(km * 100) / 10;
     
-    // set html    
-    $("#avg_speed").html(avgKmh);
-    $("#distance").html(km);
+    // set html
+    
+    
+    // metrics set to 0.00 if < 0.1 or equal to 0
+    if (distanceTravelled == 0 && totalSpeed == 0) 
+    {
+        $("#avg_speed").html("0.00");
+        $("#distance").html("0.0");
+    }
+    if (km < 0.1) 
+    {
+        $("#distance").html("0.0");
+    }
+    if (avgKmh < 0.1) 
+    {
+        $("#avg_speed").html("0.00");
+    }
+    else
+    {
+        $("#avg_speed").html(avgKmh);
+        $("#distance").html(km);
+    }
 }
 
 function updatePath () {
