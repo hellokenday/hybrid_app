@@ -163,7 +163,14 @@ function setCurrentLocation () {
 
 // in KM/h
 function getAverageSpeed() {
-    return (((totalSpeed/positions.length)*60)*60)*0.001;
+    
+    // prevent negative value for avg speed
+    if ((totalSpeed/positions.length) < 0) {
+        return 0;
+    }
+    else {
+        return (((totalSpeed/positions.length)*60)*60)*0.001;
+    }
 }
 
 function playTimer(){
@@ -196,8 +203,8 @@ function updateStats () {
     var avgKmh = getAverageSpeed();
     // set html
     
-    
-    //distanceTravelled
+    $("#avg_speed").html(avgKmh);
+    $("#distance").html(distanceTravelled);
 }
 
 function updatePath () {
@@ -321,6 +328,7 @@ function onTimerFinishClicked(){
     
     resetStats();
     stopTracking();
+    updateStats();
     resetTimer();
 }
 

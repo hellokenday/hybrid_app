@@ -51,6 +51,26 @@ body {
 	border-bottom: solid 1px #c8c8c8;
 }
 
+#avg_speed,
+#distance,
+.timer-ui span {
+    color: #27404d;
+}
+
+.timer-ui span {
+	position: absolute;
+	display: inline-block;
+	margin: 0 0 0 20px;
+}
+
+.timer-ui span:nth-child(2) {
+
+}
+
+.timer-ui span:nth-child(4) {
+
+}
+
 /* Timer GUI */
 
 .timer-ui {
