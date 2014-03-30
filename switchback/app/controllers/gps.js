@@ -201,10 +201,12 @@ function resetTimer() {
 function updateStats () {
 
     var avgKmh = getAverageSpeed();
+    var km = distanceTravelled / 1000;
+    
     // set html
     
-    $("#avg_speed").html(avgKmh);
-    $("#distance").html(distanceTravelled);
+    $("#avg_speed").html(Math.round(avgKmh * 100) / 100);
+    $("#distance").html(Math.round(km * 100) / 100);
 }
 
 function updatePath () {
