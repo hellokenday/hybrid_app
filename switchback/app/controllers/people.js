@@ -20,12 +20,19 @@ searchView.preload();
 var GroupView = new steroids.views.WebView("views/group/index.html");
 GroupView.preload();
 
+// tab vars
+var tab1Inited = false;
+var tab2Inited = false;
+
+// iscroll vars
+var myScroll;
+
 
 function onDeviceReady () {
 
     initNavBar();
-    initDrawer();
     initSegmented();
+    initDrawer();
     initButtons();
 //  initVisibilityChange();
 } 
@@ -33,6 +40,15 @@ function onDeviceReady () {
 function initVisibilityChange() {
     
    document.addEventListener("visibilitychange", onVisibilityChange, false);
+}
+
+function initScroll () {
+    alert('initScroll');
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    
+	myScroll = new IScroll('#wrapper');
+    
+    tab2Inited = true;
 }
 
 function onVisibilityChange() {
@@ -102,6 +118,21 @@ function onSegmentSelected(e) {
     //call onTabClicked, we'll decide what to do from there
     onTabClicked($('.segmented').find('.selected').index());
  }
+
+ function onTabClicked(tabIndex) {
+        
+    switch(tabIndex) {
+
+        case 0:
+//            if(!tab1Inited) doSomething();
+            break;
+        case 1:
+            if(!tab2Inited) initScroll();
+            break;
+        default:
+            console.log('onTabClicked: unknown tab index: ' + tabIndex);
+    }
+}
 
 notificationsButton.onTap = function() {
     // enable notifications button to open and close drawer when drawer gesture is disabled

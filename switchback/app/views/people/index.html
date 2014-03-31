@@ -1,13 +1,13 @@
 <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
 <script src="/vendor/chui/chui-3.0.6.js"></script>
 
+<nav class="top-bar">
+    <div id='segmentedPanel' class='horizontal centered'></div>
+</nav>
 <section class="people">
-    <nav class="top-bar">
-        <div id='segmentedPanel' class='horizontal centered'></div>
-    </nav>
-    <div id="toggle-panels">
+    <div id="toggle-panels" id="wrapper">
         <!-- Friends -->
-        <div class="">
+        <div class="">  
             <ul class='list'>
                 <li class='comp friend_btn' data-goto>
                    <aside>
@@ -45,25 +45,55 @@
                       <span class='show-detail'></span>
                    </aside>
                 </li>
-             </ul>     
+             </ul>  
         </div>
         <!-- Groups -->
-        <div data-role="content" class="">
-            <ul class='list'>
-                <li class='comp group_btn' data-goto>
-                   <aside>
-                      <img title='Willy Moon' src="/images/music/Willy Moon.png" height="80px">
-                   </aside>
-                   <div>
-                      <h3>10</h3>
-                      <h4>Yeah Yeah</h4>
-                   </div>
-                   <aside>
-                      <span class='show-detail'></span>
-                   </aside>
-                </li>
-             </ul>
-            <div class="topcoat-button full center" ontouchend="createGroup()">Create New Group</div>
+        <div data-role="content">
+            <div id="wrapper">
+                <div id="scroller">
+                    <div class="card">
+                        <div class="item item-avatar">
+                            <img src="/images/music/Willy Moon.png">
+                            <h2>Marty McFly</h2>
+                            <p>November 05, 1955</p>
+                        </div>
+                    </div>
+                    <div class="ion-list card">
+                    <div class="item item-avatar">
+                        <img src="/images/music/Willy Moon.png">
+                        <h2>Marty McFly</h2>
+                        <p>November 05, 1955</p>
+                        </div>
+                        <div class="item item-body">
+                            <img class="full-image" src="/images/music/Willy Moon.png">
+                            <p>
+                            This is a "Facebook" styled Card.
+                            </p>
+                            <p>
+                                <a href="#" class="subdued">1 Like</a>
+                                <a href="#" class="subdued">5 Comments</a>
+                            </p>
+                        </div>
+                        <div class="item tabs tabs-secondary tabs-icon-left">
+                            <a class="tab-item" href="#">
+                                <i class="icon ion-thumbsup"></i>
+                                Like
+                            </a>
+                                <a class="tab-item" href="#">
+                                <i class="icon ion-chatbox"></i>
+                                Comment
+                            </a>
+                                <a class="tab-item" href="#">
+                                <i class="icon ion-share"></i>
+                                Share
+                            </a>
+                        </div>
+                    </div>
+                    <button class="ion-button button-block button-light">Create new group</button>
+                    <div class="ion-button phantom"></div>
+                </div>
+            </div>
         </div>
+        <div id="footer"></div>
     </div>
 </section>

@@ -7,6 +7,9 @@ steroids.navigationBar.show("GPS");
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
+// iscroll vars
+//var myScroll;
+
 // gps vars
 var track_count = "track_count";
 var positions = [];
@@ -53,6 +56,11 @@ function initSegmented () {
      $('.segmented').UISegmented({callback:onSegmentSelected});
      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
 }
+
+//function initScroll () {
+//    
+//	myScroll = new IScroll('#wrapper', { mouseWheel: false });
+//}
 
 function initTimer() {
     
@@ -205,10 +213,10 @@ function updateStats() {
     
     // round to 2 decimal places
     avgKmh = Math.round(avgKmh * 100) / 100;
+    // round to 1 decimal places
     km = Math.round(km * 100) / 10;
     
     // set html
-    
     
     // metrics set to 0.00 if < 0.1 or equal to 0
     if (distanceTravelled == 0 && totalSpeed == 0) 
@@ -275,6 +283,7 @@ function onDeviceReady () {
     initTimer();
     initSegmented();
     initNav();
+    initScroll();
 }
 
 function onGetCurrentLocationSuccess(position) {

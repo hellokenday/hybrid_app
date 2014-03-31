@@ -61,10 +61,12 @@ function performAnimation() {
         tabBar: false 
     });
 }
-
 // navigation bar button listeners 
 editButton.onTap = function() {
     // open modal view
+    // steroids.modal.show(editProfileView);
+    
+    steroids.tabBar.hide();
     performAnimation();
 };
 
