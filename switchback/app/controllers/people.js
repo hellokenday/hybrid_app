@@ -34,6 +34,7 @@ function onDeviceReady () {
     initSegmented();
     initDrawer();
     initButtons();
+    initFriends();
 //  initVisibilityChange();
 } 
 
@@ -42,11 +43,22 @@ function initVisibilityChange() {
    document.addEventListener("visibilitychange", onVisibilityChange, false);
 }
 
-function initScroll () {
-    alert('initScroll');
+function initFriends () {
+    
+    console.log('initScroll');
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
     
 	myScroll = new IScroll('#wrapper');
+    
+    tab1Inited = true;
+}
+
+function initGroup () {
+    
+    console.log('initScroll2');
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    
+	myScroll2 = new IScroll('#wrapper2');
     
     tab2Inited = true;
 }
@@ -57,6 +69,14 @@ function onVisibilityChange() {
         // if document is visible... do this:
         
         steroids.view.navigationBar.show();
+        initFriends();
+    }
+    
+    if(document.hidden) {
+        // if document is hidden... do this:
+        
+        tab1Inited = false;
+        tab2Inited = false;
     }
 }
 
@@ -124,10 +144,10 @@ function onSegmentSelected(e) {
     switch(tabIndex) {
 
         case 0:
-//            if(!tab1Inited) doSomething();
+            if(!tab1Inited) initFriends();
             break;
         case 1:
-            if(!tab2Inited) initScroll();
+            if(!tab2Inited) initGroup();
             break;
         default:
             console.log('onTabClicked: unknown tab index: ' + tabIndex);

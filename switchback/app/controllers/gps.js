@@ -87,7 +87,11 @@ function initMap () {
 
 function initHistory() {
 
-    // do nothing...
+    // iscroll
+    console.log('initScroll');
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    
+	myScroll = new IScroll('#wrapper');
     
     tab3Inited = true;
 }
@@ -283,7 +287,6 @@ function onDeviceReady () {
     initTimer();
     initSegmented();
     initNav();
-    initScroll();
 }
 
 function onGetCurrentLocationSuccess(position) {

@@ -50,24 +50,35 @@ function disableScrolling() {
     });
 }
 
-function performAnimation() {
-    var anim = new steroids.Animation({
-        transition: "slideFromBottom",
-        duration: 0.3 
-    });
-    steroids.layers.push({
+function showeditProfile() {
+    
+    steroids.layers.push( {
         view: editProfileView,
-        animation: anim,
-        tabBar: false 
+        navigationBar: true,
+        tabBar: false
     });
-}
+} 
+
+//function performAnimation() {
+//    var anim = new steroids.Animation({
+//        transition: "slideFromBottom",
+//        duration: 0.3 
+//    });
+//    steroids.layers.push({
+//        view: editProfileView,
+//        animation: anim,
+//        tabBar: false 
+//    });
+//}
+
 // navigation bar button listeners 
 editButton.onTap = function() {
     // open modal view
     // steroids.modal.show(editProfileView);
     
-    steroids.tabBar.hide();
-    performAnimation();
+    // steroids.tabBar.hide();
+    showeditProfile();
+    // performAnimation();
 };
 
 logOutButton.onTap = function() {

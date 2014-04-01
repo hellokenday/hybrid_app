@@ -18,11 +18,15 @@ var editLocationView = new steroids.views.WebView("views/edit_location/index.htm
 editLocationView.preload();
 
 // nav bar vars
-var cancelButton = new steroids.buttons.NavigationBarButton();
-var saveButton = new steroids.buttons.NavigationBarButton();
+var backButton = new steroids.buttons.NavigationBarButton();
+backButton.imagePath = "/icons/back_btn@2x.png";
 
-cancelButton.title = "Cancel";
+//var cancelButton = new steroids.buttons.NavigationBarButton();
+// cancelButton.title = "Cancel";
+
+var saveButton = new steroids.buttons.NavigationBarButton();
 saveButton.title = "Save";
+
 
 function onDeviceReady() {
     initNavBar();
@@ -38,7 +42,7 @@ function initNavBar() {
         title: "Edit Profile",
         overrideBackButton: true,
         buttons: {
-            left: [cancelButton],
+            left: [backButton],
             right: [saveButton],
         }
     });
@@ -134,7 +138,7 @@ function disableScrolling() {
     });
 }
 
-cancelButton.onTap = function() {
+backButton.onTap = function() {
     //  cancel stuff
     steroids.layers.pop(); 
 };
