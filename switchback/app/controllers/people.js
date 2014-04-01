@@ -202,7 +202,8 @@ function showGroup() {
     
     steroids.layers.push( {
         view: GroupView,
-        navigationBar: true,
+        navigationBar: false,
+        statusBar: false,
         tabBar: false
     });
 } 

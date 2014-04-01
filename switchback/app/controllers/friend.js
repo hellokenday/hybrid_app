@@ -13,9 +13,9 @@ var backButton = new steroids.buttons.NavigationBarButton();
 backButton.imagePath = "/icons/back_btn@2x.png";
 
 function onDeviceReady() {
+    initNavBar();
     initSheetButtons();
     initPopupButtons();
-    initNavBar();
     disableScrolling();
 } 
 
@@ -36,11 +36,6 @@ function initSheetButtons() {
     $('.mute_btn').on('singletap', closeSheetandShowMuteOptions);
     $('.block_btn').on('singletap', closeAndShowBlockView);
     $('.cancel_btn').on('singletap', closeFlagControls);
-}
-
-function initPopupButtons() {
-    $('.left').on('singletap', closeMutePopup);
-    $('.right').on('singletap', closeMutePopupAndNotify);
 }
 
 function closeFlagControls() {
@@ -85,21 +80,16 @@ function alertDismissed() {
         // do something
     }
 
-function closeMutePopup() {
-    
-    $('.alert').removeClass('in');
-}
-
-function closeMutePopupAndNotify() {
-    
-    
-    $('.alert').removeClass('in');
-}
-
 function closeAndShowBlockView() {
     $('.action-sheet').removeClass('in');
-    alert('closeShowBlockView');
+    
+    setTimeout(showBlockView, 300);
     // block view push here...
+}
+
+function showBlockView() {
+    
+    alert('closeShowBlockView');
 }
 
 function backToPeople() {
@@ -107,7 +97,7 @@ function backToPeople() {
     steroids.layers.pop();
 }
 
-function editLocationViewdisableScrolling() {
+function disableScrolling() {
     
     // http://www.sitepoint.com/forums/showthread.php?673175-iphone-gt-safari-gt-Lock-viewport-scrolling
     $('body').bind("touchmove", {}, function(event){

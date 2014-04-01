@@ -2,8 +2,8 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 // preload views vars
-var editProfileView = new steroids.views.WebView("views/edit_profile/index.html");
-editProfileView.preload();
+var someView = new steroids.views.WebView("");
+someView.preload();
 
 // Edit and Save buttons
 var flagButton = new steroids.buttons.NavigationBarButton();
@@ -13,23 +13,51 @@ var backButton = new steroids.buttons.NavigationBarButton();
 backButton.imagePath = "/icons/back_btn@2x.png";
 
 function onDeviceReady() {
-    initSheetButtons();
-    initPopupButtons();
     initNavBar();
+    initSheetButtons();
+    initButtons();
     disableScrolling();
-    initChuiSheet();
+    initVisibilityChange();
 } 
 
+function initVisibilityChange() {
+    
+   document.addEventListener("visibilitychange", onVisibilityChange, false);
+}
+
+function onVisibilityChange() {
+    
+    // fallback if navigationBar.show fails in backToPeople
+    
+    if(document.hidden) {
+        // if document is hidden... do this:
+        
+        steroids.view.navigationBar.show();
+        steroids.statusBar.show();
+    }
+    
+    if (!document.hidden) {
+        // if document is visible... do this:
+                
+        steroids.view.navigationBar.hide();
+        steroids.statusBar.hide();
+    }
+}
+
 function initNavBar() {
-    steroids.view.navigationBar.show();
     steroids.view.navigationBar.update({
-        title: "Friend",
+        title: "",
         overrideBackButton: true,
         buttons: {
-            left: [backButton],
-            right: [flagButton]
+            left: [],
+            right: []
         }
     });
+}
+
+function initButtons() {
+    $('.back_btn').on('singletap', backToPeople);
+    $('.settings_btn').on('singletap', showSettings);
 }
 
 function initSheetButtons() {
@@ -39,45 +67,58 @@ function initSheetButtons() {
     $('.cancel_btn').on('singletap', closeFlagControls);
 }
 
-function initPopupButtons() {
-    $('.left').on('singletap', closeMutePopup);
-    $('.right').on('singletap', closeMutePopupAndNotify);
-}
-
 function closeFlagControls() {
     $('.action-sheet').removeClass('in');
 }
 
 function closeSheetandShowMuteOptions() {
     $('.action-sheet').removeClass('in');
-    showMuteAlert();
+    
+    // delay mute alert until action sheet has closed
+    setTimeout(showMuteAlert, 300);
 }
 
 function showMuteAlert() {
     
-    $('.alert').addClass('in opened');
+//    $('.alert').addClass('in opened');
+    
+    navigator.notification.confirm(
+        'You will stop getting notifications from friend_name. You can still see posts in your stream or on their profile.',                        // message
+         onConfirm,               // callback to invoke with index of button pressed
+        'Mute friend_name',       // title
+        ['Mute','Cancel']         // buttonLabels
+    );
 }
 
-function closeMutePopup() {
+function onConfirm(buttonIndex) {
     
-    $('.alert').removeClass('in');
+        if(buttonIndex == 1) {
+            navigator.notification.alert(
+                'friend_name has been muted',  // message
+                alertDismissed,       // callback
+                'friend_name',        // title
+                'OK'                  // buttonName
+            );
+        }
+        else { // do nothing
+            
+        }
 }
 
-function closeMutePopupAndNotify() {
-    
-    
-    $('.alert').removeClass('in');
-}
+function alertDismissed() {
+        // do something
+    }
 
 function closeAndShowBlockView() {
     $('.action-sheet').removeClass('in');
-    alert('closeShowBlockView');
+    
+    setTimeout(showBlockView, 300);
     // block view push here...
 }
 
-function backToPeople() {
-
-    steroids.layers.pop();
+function showBlockView() {
+    
+    alert('closeShowBlockView');
 }
 
 function disableScrolling() {
@@ -88,12 +129,14 @@ function disableScrolling() {
     });
 }
 
-backButton.onTap = function() {
+function backToPeople () {
 
+    steroids.view.navigationBar.show();
+    steroids.statusBar.show();
     steroids.layers.pop(); 
 };
 
-flagButton.onTap = function() {
+function showSettings() {
 
     $('.action-sheet').addClass('in');
 };

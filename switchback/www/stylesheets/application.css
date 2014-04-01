@@ -258,6 +258,16 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	
 }
 
+.ion-ios7-arrow-back {
+	width: 12% !important;
+	height: 100% !important;
+}
+
+.ion-ios7-gear {
+	height: 85% !important;
+/* 	width: 16%; */
+}
+
 /**
  * Search
  */
