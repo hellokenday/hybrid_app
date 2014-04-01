@@ -34,8 +34,8 @@ function onDeviceReady () {
     initSegmented();
     initDrawer();
     initButtons();
+    initVisibilityChange();
     initFriends();
-//  initVisibilityChange();
 } 
 
 function initVisibilityChange() {
@@ -45,7 +45,7 @@ function initVisibilityChange() {
 
 function initFriends () {
     
-    console.log('initScroll');
+    console.log('initFriends');
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
     
 	myScroll = new IScroll('#wrapper');
@@ -55,7 +55,7 @@ function initFriends () {
 
 function initGroup () {
     
-    console.log('initScroll2');
+    console.log('initGroup');
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
     
 	myScroll2 = new IScroll('#wrapper2');
@@ -64,12 +64,14 @@ function initGroup () {
 }
 
 function onVisibilityChange() {
+
+    console.log("document.visibilityState: " + document.visibilityState);
+    console.log("document.hidden: " + document.hidden);
     
     if(!document.hidden) {
         // if document is visible... do this:
         
         steroids.view.navigationBar.show();
-        initFriends();
     }
     
     if(document.hidden) {
@@ -77,6 +79,9 @@ function onVisibilityChange() {
         
         tab1Inited = false;
         tab2Inited = false;
+        
+        console.log('tab1Inited: ' + tab1Inited);
+        console.log('tab2Inited: ' + tab2Inited);
     }
 }
 
