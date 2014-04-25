@@ -13,51 +13,85 @@ var backButton = new steroids.buttons.NavigationBarButton();
 backButton.imagePath = "/icons/back_btn@2x.png";
 
 function onDeviceReady() {
-    initNavBar();
+    initSegmented();
+    initSlinky();
+//  initNavBar();
+//  initScrollToFixed();
     initSheetButtons();
-    initButtons();
-    disableScrolling();
-    initVisibilityChange();
+
 } 
 
-function initVisibilityChange() {
-    
-   document.addEventListener("visibilitychange", onVisibilityChange, false);
-}
-
-function onVisibilityChange() {
-    
-    // fallback if navigationBar.show fails in backToPeople
-    
-    if(document.hidden) {
-        // if document is hidden... do this:
-        
-        steroids.view.navigationBar.show();
-        steroids.statusBar.show();
-    }
-    
-    if (!document.hidden) {
-        // if document is visible... do this:
-                
-        steroids.view.navigationBar.hide();
-        steroids.statusBar.hide();
-    }
+function initSlinky() {
+    $('.nav').slinky();
 }
 
 function initNavBar() {
+    steroids.view.navigationBar.show();
     steroids.view.navigationBar.update({
-        title: "",
+        title: "Group",
         overrideBackButton: true,
         buttons: {
-            left: [],
-            right: []
+            left: [backButton],
+            right: [flagButton]
         }
     });
 }
 
 function initButtons() {
-    $('.back_btn').on('singletap', backToPeople);
-    $('.settings_btn').on('singletap', showSettings);
+    $('.friend_btn').on('singletap', showFriend);
+    $('.group_btn').on('singletap', showGroup);
+}
+
+// Helper functions
+function initSegmented () {
+
+    // chocloate-chip UI - segmented list
+    var segmentedOptions = {
+
+        id: 'mySegmented',
+        labels : ['1','2','3','4'],
+        selected: 0
+     };
+     var segmentedComponent = $.UICreateSegmented(segmentedOptions);
+
+     $('#segmentedPanel').append(segmentedComponent);
+     $('.segmented').UISegmented({callback:onSegmentSelected});
+     $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
+}
+
+function onSegmentSelected(e) {
+
+    // stop any events/weird stuff happening
+    e.stopPropagation();
+
+    //call onTabClicked, we'll decide what to do from there
+    onTabClicked($('.segmented').find('.selected').index());
+ }
+
+ function onTabClicked(tabIndex) {
+        
+    switch(tabIndex) {
+
+        case 0:
+          // if(!tab1Inited) doSomething();
+            break;
+        case 1:
+          // if(!tab2Inited) doSomething();
+            break;
+        case 2:
+          // if(!tab3Inited) doSomething();
+            break;
+        case 3:
+          // if(!tab4Inited) doSomething();
+            break; 
+        default:
+            console.log('onTabClicked: unknown tab index: ' + tabIndex);
+    }
+}
+
+function initScrollToFixed() {
+
+    $('.header').scrollToFixed();
 }
 
 function initSheetButtons() {
@@ -121,22 +155,12 @@ function showBlockView() {
     alert('closeShowBlockView');
 }
 
-function disableScrolling() {
-    
-    // http://www.sitepoint.com/forums/showthread.php?673175-iphone-gt-safari-gt-Lock-viewport-scrolling
-    $('body').bind("touchmove", {}, function(event){
-        event.preventDefault();
-    });
-}
+backButton.onTap = function() {
 
-function backToPeople () {
-
-    steroids.view.navigationBar.show();
-    steroids.statusBar.show();
     steroids.layers.pop(); 
 };
 
-function showSettings() {
+flagButton.onTap = function() {
 
     $('.action-sheet').addClass('in');
 };

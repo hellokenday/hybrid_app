@@ -19,7 +19,7 @@ editLocationView.preload();
 
 // nav bar vars
 var backButton = new steroids.buttons.NavigationBarButton();
-backButton.imagePath = "/icons/back_btn@2x.png";
+backButton.title = "Cancel";
 
 //var cancelButton = new steroids.buttons.NavigationBarButton();
 // cancelButton.title = "Cancel";
@@ -51,10 +51,10 @@ function initNavBar() {
 function initButtons() {
     $('.profile_pic_btn').on('singletap', showCameraSheet);
     $('.first_name_btn').on('singletap', showEditName);
-    $('.last_name_btn').on('singletap', showEditLastName);
-    $('.username_btn').on('singletap', showEditUsername);
-    $('.riding_styles_btn').on('singletap', showEditRidingStyles);
-    $('.location_btn').on('singletap', showEditLocation);
+//  $('.last_name_btn').on('singletap', showEditLastName);
+//  $('.username_btn').on('singletap', showEditUsername);
+//  $('.riding_styles_btn').on('singletap', showEditRidingStyles);
+//  $('.location_btn').on('singletap', showEditLocation);
     
 }
 

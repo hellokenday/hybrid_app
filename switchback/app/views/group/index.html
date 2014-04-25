@@ -1,44 +1,52 @@
 <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
 <script src="/vendor/chui/chui-3.0.6.js"></script>
 
-<nav>
-    <div class="bar bar-clear bar-header">
-        <button class="ion-button button-icon icon ion-ios7-arrow-back back_btn"></button>
-        <button class="ion-button button-icon ion-ios7-gear settings_btn"></button>
-    </div>
-</nav>
-<article id='main'>
-    <section class='profile group'>
-        <section class='body'>
-            <header>
-                <img src='/images/profile/profile_placeholder.png'/>
-            </header>
+<style type="text/css">
+    
+.nav {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroller {
+  height: 100%;
+  overflow: auto;
+}
+
+</style>
+
+<section class='group nav'>
+    <div class='scroller'>
+        <header class="header">
             <h3>Name</h3>
-            <aside>
-                <span class='location'></span>
-            </aside>
-            <h4>Location</h4>
-            <ul class='riding-styles'>
-                <li>Downhill</li>
-                <li>Freeride</li>
-                <li>Enduro</li>
-            </ul>
-            <ul class='riding-stats'>
-                <li>2<span>RIDES</span></li>
-                <li>23<span>KM</span></li>
-                <li>0:53<span>TIME</span></li>
-                <li>23<small>km/h</small><span>AVG SPEED</span></li>
-            </ul>
+        </header>
+        <section class="top-bar">
+            <div id='segmentedPanel' class='horizontal centered'></div>
         </section>
-        <section class='activity'>
-            <h3>LATEST ACTIVITY</h3>
-        </section>
-    </section>
-</article>
+        <div id="toggle-panels">
+            <!-- 1 -->
+            <div data-role="content" class="content">
+                <h1>Lorem ipsum dolor</h1><h2>Sit amet justo</h2><p>Leo sed sed pulvinar et magna id eget condimentum laborum vel suspendisse. Porttitor mattis aenean. Accumsan sed adipiscing. Amet penatibus rutrum vitae vehicula viverra amet nibh semper nunc libero tincidunt massa vitae sagittis urna consectetuer magna a diam parturient. Nec nec dolor. Venenatis purus quis. In turpis in. Officiis hic mauris lorem wisi maecenas.</p><h2>Velit sed eget donec placerat vestibulum</h2><p>Orci id gravida per neque nibh. Nullam sit commodo tincidunt et diam vitae pharetra sed. Tempus sit sodales. Voluptatem wisi mattis inceptos tellus dolor rhoncus sed et eu turpis torquent ligula eu dui lorem nec accumsan platea lacinia ac. Non faucibus per sit in vehicula magna lacus deleniti. Tincidunt per aliquam. Vestibulum adipiscing laoreet eget eros commodo. Laoreet molestie a eros in nec sed justo venenatis. Eu lorem gravida. Nisl non a sociis convallis leo. Est nunc nisl porta dignissim turpis. Sapien sed nulla. Amet mi diam. Sem risus accumsan. Posuere viverra convallis. Est at netus. Tortor eget quam. Wisi nulla erat vestibulum tempor eu hendrerit vel dolor. Aliquam magnis sed etiam felis eros.</p><h2>Scelerisque in justo neque ultricies vel eget libero quam vitae metus ante nonummy amet augue</h2><p>Velit tellus enim. Vitae et ultrices. Odio torquent ligula. Quam in a scelerisque malesuada non. Sem enim congue sed odio libero. Lacinia commodo feugiat sed nonummy lobortis erat maecenas vivamus. Lectus diam pede. Eget risus mauris. In dapibus libero suspendisse pellentesque urna. Id metus libero. Metus id accumsan curabitur id congue. Elementum diam placerat posuere vivamus felis. Arcu ante vestibulum. Orci ut ut magna nibh eu aliquam mi qui vel pretium nullam. Tellus ligula malesuada. Consequat id nulla. Feugiat suscipit ligula dolor amet congue urna etiam amet accumsan consequat distinctio natoque placerat nec. Eget lectus mauris molestie fusce dui. Vel consectetuer imperdiet tempus at sed. Proin aliquam nec. Ligula sit elit eget faucibus cras arcu in rhoncus. Lorem id integer. Vestibulum nec cum. Ligula aliquam tellus elit nisl lectus in diam tortor wisi mauris tempus.</p><p>Fermentum ipsum augue. Lectus in nunc vulputate tellus neque tortor erat cursus. Congue wisi enim. Nam eget dui auctor amet quis donec ipsum nibh. Nisl leo magna officia leo nibh.</p><h2>Mollis in ornare</h2><p>Nec a ut. Ut nullam urna. Quis tortor mauris blandit non corrupti. Rutrum in at id dignissim dictum. Duis ac ornare parturient ultrices amet odio feugiat aenean cras mus pede. Praesent egestas netus. Urna esse pharetra commodi commodo curabitur. A lacinia sed etiam ut vel maxime platea porta odio mollis non nisl nulla nullam. Vitae impedit pulvinar.</p><h2>Sem velit maiores</h2><p>Accumsan blandit ut. Varius velit ante. Leo tincidunt nulla lorem gravida nulla tempus volutpat donec phasellus aliquet nec. Sapien tempor id pharetra magna mi. Nunc fusce venenatis nam mi nam. Eget senectus convallis donec urna suscipit donec natoque lacinia rutrum lorem est adipiscing sed lectus. Dictumst faucibus ut. Vulputate sodales ipsum. Purus vehicula sed vestibulum eget integer.</p><h2>Ut turpis tempor integer fusce bibendum sem ipsum rutrum</h2><p>Nec in nibh. A amet condimentum. Commodo fringilla amet sit ut quis. Facilisi ac a ut id morbi. Aut pretium orci donec dui vel risus eros amet quis ut molestiae. Molestie nulla sem vestibulum urna aptent aliquam etiam auctor. Erat eu duis. Imperdiet vestibulum ut. Nibh risus fusce viverra wisi lectus.</p><h2>Sed curabitur ut vel condimentum fermentum a felis suspendisse</h2><p>Neque lacus lorem ut massa lacinia. Amet nulla est. Vitae in vel turpis diam elit lacinia amet quis. Sem a in. Architecto magna sit vel vehicula elit ullam consectetuer non. Vel vulputate elit facilisis accumsan justo. Ridiculus pharetra fusce. A volutpat curabitur. Senectus amet in elementum ipsum ut sit eros tellus.</p><h2>Phasellus enim metus vestibulum scelerisque mauris</h2><p>Donec nisl massa. Hendrerit suscipit turpis sed eget quis. Mauris wisi aenean amet semper morbi. Orci hendrerit vestibulum dolor a semper nullam nesciunt amet.</p>
+            </div>
+            <!-- 2 -->
+            <div data-role="content" class="content">
+                 2
+            </div>
+            <!-- 3 -->
+            <div data-role="content" class="content">
+                 3
+            </div>
+            <!-- 4  -->
+            <div data-role="content" class="content">
+                 4
+            </div>
+        </div>
+    </div>
+</section>
 <div class="friend action-sheet">
   <div class="action-sheet-content">
     <a class="action-sheet-button mute_btn">Mute</a>
-    <a class="action-sheet-button block_btn">Delete</a>
+    <a class="action-sheet-button block_btn">Block</a>
     <a class="action-sheet-button cancel_btn">Cancel</a>
   </div>
 </div>

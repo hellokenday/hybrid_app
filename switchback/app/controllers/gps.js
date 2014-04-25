@@ -2,7 +2,7 @@
  * The map panel
  */
 
-steroids.navigationBar.show("GPS");
+steroids.navigationBar.show("Ride");
 
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);

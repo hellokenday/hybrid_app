@@ -47,7 +47,7 @@ body,ul,li {
 }
 
 body {
-	overflow: hidden !important; /* this is important to prevent the whole page to bounce */
+	/* overflow: hidden !important; this is important to prevent the whole page to bounce */
 }
 
 #wrapper,

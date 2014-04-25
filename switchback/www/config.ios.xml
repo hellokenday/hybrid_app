@@ -15,8 +15,9 @@
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <preference name="KeyboardShrinksView" value="false" />
     <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="DisableTabBarUnselectedIconTintColor" value="true" />
 
-
+    
     <preference name="PaginationMode" value="unpaginated"/>
     <preference name="PageLength" value="0"/>
     <preference name="PaginationBreakingMode" value="page"/>

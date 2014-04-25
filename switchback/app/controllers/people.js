@@ -115,7 +115,7 @@ function initGesture() {
 
 function initButtons() {
     $('.friend_btn').on('singletap', showFriend);
-    $('.group_btn').on('singletap', showGroup);
+//  $('.group_btn').on('singletap', showGroup);
 }
 
 // Helper functions
@@ -203,7 +203,6 @@ function showGroup() {
     steroids.layers.push( {
         view: GroupView,
         navigationBar: false,
-        statusBar: false,
         tabBar: false
     });
 } 

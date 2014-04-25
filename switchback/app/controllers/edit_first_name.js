@@ -10,7 +10,7 @@ var doneButton = new steroids.buttons.NavigationBarButton();
 doneButton.title = "Done";
 
 var backButton = new steroids.buttons.NavigationBarButton();
-backButton.imagePath = "/icons/back_btn@2x.png";
+backButton.imagePath = "/icons/back@2x.png";
 
 function onDeviceReady() {
     initNavBar();

@@ -5,11 +5,15 @@ document.addEventListener("deviceready", onDeviceReady, false);
 var saveButton = new steroids.buttons.NavigationBarButton();
 saveButton.title = "Save";
 
+var settingsView = new steroids.views.WebView("views/settings/index.html");
+settingsView.preload();
+
 function onDeviceReady() {
     initNavBar();
 }
 
 function initNavBar() {
+
     steroids.view.navigationBar.show();
     steroids.view.navigationBar.update({
         title: "Feedback",
@@ -21,6 +25,6 @@ function initNavBar() {
 }
 
 saveButton.onTap = function() {
-    //  save stuff
+    
     steroids.layers.pop(); 
 };

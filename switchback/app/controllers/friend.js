@@ -92,10 +92,10 @@ function showBlockView() {
     alert('closeShowBlockView');
 }
 
-function backToPeople() {
-
-    steroids.layers.pop();
-}
+//function backToPeople() {
+//
+//    steroids.layers.pop();
+//}
 
 function disableScrolling() {
     
