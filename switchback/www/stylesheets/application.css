@@ -239,7 +239,7 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
     bottom:0;
     left:0;
     width:100%;
-    height:408px;
+    height:412px;
     z-index: 10;
 }
 
@@ -286,6 +286,21 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	z-index: 100;
 }
 
+.clear-bar {
+  position: relative;
+  z-index: 5;
+  top: 0px;
+  left: 0;
+  right: 0;
+  height: 43px;;
+  line-height: ;
+  font-size: 18px;
+  background: #fafafb;
+  border-bottom: 1px solid #c8c8c8;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); 
+
+}
+
 
 /**
  * Profile
@@ -317,13 +332,17 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	font-size: 12px;
 }
 
-.profile .body img:first-child {
-	margin-top: 30px;
-	height: 100px;
-	width:100px;
-	border-radius: 100%;
+
+.profile .body header {
+    background-image: url('/images/profile/header@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+	top: 0px;
+	height: 225px;
+	width: 320px;
 }
 
+/*
 .profile .location {
 	background-image: url('/images/icons/location.svg');
 	background-size: contain;
@@ -333,6 +352,7 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	position: absolute;
 	left: 100px
 }
+*/
 
 .action-sheet-content a.log_out {
     color: red;

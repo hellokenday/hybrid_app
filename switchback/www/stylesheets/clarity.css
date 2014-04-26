@@ -137,10 +137,10 @@ html, body {
   height: 43px;;
   line-height: ;
   font-size: 18px;
-  background: #fafafb;
+/*  background: #fafafb;*/
   background: #eb6f65;
-  border-bottom: 1px solid #c8c8c8;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); 
+/*  border-bottom: 1px solid #c8c8c8;*/
+/*  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); */
 
 }
 

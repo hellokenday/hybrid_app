@@ -180,6 +180,7 @@ notificationsButton.onTap = function() {
     }
 };
 
+/*
 searchButton.onTap = function() {
     
         steroids.layers.push( {
@@ -188,6 +189,7 @@ searchButton.onTap = function() {
         tabBar: false
     });
 }
+*/
 
 function showFriend() {
     
