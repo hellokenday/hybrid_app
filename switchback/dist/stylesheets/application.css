@@ -1,0 +1,545 @@
+/**
+ * Global
+ */
+
+* {
+  -webkit-user-select: none;  /* Disable selection/copy of elements when tapping for a long time */
+  -webkit-touch-callout: none; /* Disable touch callouts */
+}
+
+input, textarea, [contenteditable] * {
+  -webkit-user-select: auto;  /* Allow selection for input elements and those with contenteditable attribute */
+}
+
+.content-padded {
+  padding: 10px;
+}
+
+/* Quote me */
+body {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.segmented a.button {
+	padding: 0px 0 0px 0;
+	height: 26px;
+	z-index: 12;
+}
+
+
+/* iScroll */
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	-ms-touch-action: none;
+}
+
+body,ul,li {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+body {
+	/* overflow: hidden !important; this is important to prevent the whole page to bounce */
+}
+
+#wrapper,
+#wrapper2 {
+	position: absolute;
+	z-index: 1;
+	top: 45px;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+}
+
+#scroller,
+#scroller2 {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
+.phantom {
+	visibility: hidden;
+}
+
+/**
+ * GPS
+ */
+
+.people .list img {
+	height: 50px;
+	border-radius: 5px;
+}
+
+.people div li.comp > aside,
+.people div li.comp > div,
+.people div li.comp:last-child {
+	border-bottom: 0px;
+}
+
+.people div > ul > li {
+	-webkit-box-flex: 1;
+	border-bottom: solid 1px #c8c8c8;
+}
+
+#avg_speed,
+#distance,
+.timer-ui span {
+    color: #27404d;
+}
+
+.timer-ui span {
+	position: absolute;
+	display: inline-block;
+	margin: 0 0 0 20px;
+}
+
+.timer-ui span:nth-child(2) {
+
+}
+
+.timer-ui span:nth-child(4) {
+
+}
+
+/* Timer GUI */
+
+.timer-ui {
+    margin: 50px 0px; 
+    padding: 0px;
+    text-align: center;
+    z-index: 100;
+}
+.socket {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+	/* border: 4px solid #f3f3f3; */
+	border: 2px solid #27404d;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 84%;
+    margin-top: -60px;
+}
+
+.socket2 {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+	/* border: 4px solid #f3f3f3; */
+	border: 2px solid #27404d;
+    position: absolute;
+    left: 75%;
+	bottom: 10.5%;
+}
+
+.timer_btn {
+    width: 25%;
+    height: 25%;
+    background: red;
+    border-radius: 100%;
+    position: absolute;
+    left: 1px;
+    right: 0;
+    margin: 0 auto;
+    top: 39%;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    transition-timing-function: cubic-bezier(.05,.58,.32,1.35);
+    -webkit-transition-timing-function: cubic-bezier(.05,.58,.32,1.35);  
+} 
+
+.fin_btn {
+    left: 0;
+    right: 0.
+    margin: 0 auto;
+}
+
+.active {
+    width: 23%;
+    height: 23%;
+    border-radius: 3px;
+    vertical-align: middle;
+	margin: 0px auto;
+}
+
+.timer-ui {
+    padding: 2em;
+    font-family: sans-serif;
+    color: #fff;
+    margin: 1em auto;
+}
+
+.timer-ui p {
+    display: inline;
+}
+
+#timer {
+    font-size: 60px;
+    margin: 0px auto;
+    padding-bottom: 20px;
+	color: #27404d;
+}
+
+.hide {display:none;}
+
+.fin_txt {
+	color: #27404d;
+	position: absolute;
+	top: 35px;
+	right: -6px;
+}
+
+/*-- Map Styling --*/
+
+/* Remove Google maps api terms-0f-use
+
+Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-premier-terms-of-use-logo-etc-links
+
+*/
+.gmnoprint a, .gmnoprint span {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
+#GMapsID div div a div img{
+    display:none;
+}
+
+.map {
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:412px;
+    z-index: 10;
+}
+
+#track_info_info {
+    z-index: 100;
+}
+
+/**
+ * People
+ */
+
+.people .list {
+	border-top: none;
+	margin-top: 0px;
+	margin-bottom: 4px;
+	
+}
+
+.ion-ios7-arrow-back {
+	width: 12% !important;
+	height: 100% !important;
+}
+
+.ion-ios7-gear {
+	height: 85% !important;
+/* 	width: 16%; */
+}
+
+/**
+ * Search
+ */
+
+.blue {
+  color: #2087fc;
+  text-decoration: none;
+  /* Remove the default gray highlight. */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.search .cancel_btn {
+	position: relative;
+	float: right;
+	margin-top: -28px;
+	z-index: 100;
+}
+
+.clear-bar {
+  position: relative;
+  z-index: 5;
+  top: 0px;
+  left: 0;
+  right: 0;
+  height: 43px;;
+  line-height: ;
+  font-size: 18px;
+  background: #fafafb;
+  border-bottom: 1px solid #c8c8c8;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); 
+
+}
+
+/**
+ * Profile
+ */
+
+/* .profile .main {
+	background: url(/images/profile/background.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+} */
+
+.profile .clear-bar {
+	top: 185px;
+	border-bottom: none;
+	background: none;
+	box-shadow: none;
+}
+
+.profile section {
+	top: 215px;
+}
+
+/*  Segmented Control */
+
+
+.profile .segmented > .button {
+    border: solid 1px grey;
+    background-color: rgba(0, 0, 0, 0);
+    color: grey;
+}
+
+.profile .segmented > .button:first-of-type {
+    border-left: solid 1px grey;
+}
+
+
+.profile .segmented > .button:hover,
+.profile .segmented > .button.selected {
+    color: #fff;
+    background-color: grey;
+    opacity: 1 !important;
+}
+
+/* Segmented Paging Control */
+
+.profile .segmented.paging > .button {
+    border: none;
+    background: none;
+    color: grey;
+}
+
+.profile .segmented.paging > .button:hover,
+.profile .segmented.paging > .button.selected,
+.profile .segmented.paging > .button.touched {
+    opacity: .5 !important;
+    color: grey;
+}
+
+.profile .segmented.paging > .button::before {
+    background-color: grey;
+}
+
+
+.header {
+    background-image: url('/images/profile/header@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+	top: 0px;
+	height: 225px;
+	width: 320px;
+}
+
+/*
+.profile .location {
+	background-image: url('/images/icons/location.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: 25px;
+	width: 25px;
+	position: absolute;
+	left: 100px
+}
+*/
+
+.action-sheet-content a.log_out {
+    color: red;
+}
+
+.action-sheet-content {
+	margin: 0px auto !important;
+	width: 95% !important;
+	margin-bottom: 10px !important;
+}
+
+.activity {display: none;}
+
+/**
+* edit_profile
+*/
+
+.edit_profile .profile_pic {
+	margin: -20px 0 40px 0;
+} 
+
+.edit_profile .profile_pic li.comp > div {
+    padding: 0 0 0 0;
+    margin-left: 0;
+}
+
+.edit_profile .profile_pic .comp {
+    padding: 5px 0px 0px 5px;
+
+}
+
+.edit_profile .profile_pic li.comp > aside {
+    padding: 0 0 0 0;
+}
+
+.edit_profile .profile_pic li.comp > aside img {
+    border-radius: 5px;
+	margin: 0 0 3px 0;
+}
+
+.edit_profile .profile_pic li.comp > div > h3 {
+    padding-top: 7px;
+}
+
+fieldset {
+	border: none;
+	height: 140px;
+	margin-top: -19px;
+}
+
+/* Camera */
+img#photo {
+    width:100%;
+}
+
+/* Spinner styles */
+@-webkit-keyframes rotate {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+img#spinner {
+    width:36px;
+    -webkit-animation-name:            rotate;
+    -webkit-animation-duration:        1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    margin: auto;
+    display: none;
+}
+
+ #response {
+     color: #0099e3;
+     font-weight: bold;
+     text-transform: capitalize;
+}
+
+.icon-search {
+    padding-left: 27px;
+}
+
+/**
+* settings
+*/
+
+.settings .cogs {
+    background-image: url('/icons/cogs@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 60px;
+	width: 60px;
+    position: relative;
+	margin: 0px auto;
+	margin-top: 20px;
+}
+
+.settings .list {
+	margin-top: 23px;
+}
+
+.lock {
+    background-image: url('/icons/lock@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 27px;
+	width: 19px;
+    position: relative;
+	top: 0px;
+    left: -8px;
+	margin-right: -8px;
+	vertical-align: middle;
+}
+
+.megaphone {
+    background-image: url('/icons/megaphone@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 18px;
+	width: 20px;
+    position: relative;
+	top: 0px;
+    left: -8px;
+	margin-right: -8px;
+	vertical-align: middle;
+}
+
+.alert {
+    background-image: url('/icons/alert@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 17.5px;
+	width: 19px;
+    position: relative;
+	top: 0px;
+    left: -8px;
+	margin-right: -8px;
+	vertical-align: middle;
+}
+
+
+/**
+* privacy / feedback / notifications
+*/
+
+.privacy, 
+.feedback, 
+.notifications {
+    margin-top: 40px;
+}
+
+.feedback li .switch,
+.notifications li .switch {
+	margin-top: -3px;
+	padding-bottom: -100px;
+}
+
+.feedback li h3,
+.notifications li h3 {
+	margin: 0;
+	padding-top: 2px;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>Boilerplate App</title>
+
+  <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/stylesheets/application.css" />
+  <link rel="stylesheet" href="/stylesheets/chui.ios-3.0.6.css" />
+  <link rel="stylesheet" href="/stylesheets/clarity.css" />
+  <link rel="stylesheet" href="/stylesheets/ionic.min.css" />
+  <link rel="stylesheet" href="/stylesheets/ionic.css" />
+  <link rel="stylesheet" href="/stylesheets/friend.css" />   
+
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/steroids-addons/dist/steroids.addons.js"></script>
+  <script src="/cordova.js"></script>
+
+  <!-- ui -->
+  <script src="/vendor/hammerjs/hammer.min.js"></script>
+  <script src="/vendor/jquery/jquery-1.7.2.min.js"></script>
+  <script src="/vendor/jquery/jquery-2.1.0.min.js"></script>
+  <script src="/vendor/jquery/jquery-1.11.min.js"></script>
+  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+  <script src="/vendor/chui/chui-3.0.6.js"></script>
+  <script src="/vendor/iscroll/iscroll-lite.js"></script>
+<!--
+  <script src="/vendor/scrolltofixed/jquery-scrolltofixed.js"></script>
+  <script src="/vendor/slinkyjs/slinky.js"></script>
+-->
+
+  <!-- firebase -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>  
+  <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+
+  <script src="/models/models.js"></script>
+
+  <script src="/controllers/friend.js"></script>
+  <script src="/javascripts/application.js"></script>
+   
+  <!-- gps -->
+  <!-- google maps API Key -->
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCWlZRqKkOvGp_R55n1ab9CP_isr0yz7Ro&sensor=false&libraries=geometry"></script>
+<script src="/vendor/jquery/jquery.ui.map.full.min.js" type="text/javascript"></script>
+    
+  
+</head>
+<body>
+
+  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+<script src="/vendor/chui/chui-3.0.6.js"></script>
+
+<article id='main'>
+    <section class='profile friend'>
+<!--
+        <nav>
+            <ul>
+                <li class='back_btn topcoat-button'>Back_btn</li>
+                <li class='settings_btn topcoat-button'>Settings_btn</li>
+            </ul>
+        </nav>
+-->
+        <section class='body'>
+            <header>
+                <img src='/images/profile/profile_placeholder.png'/>
+            </header>
+            <h3>Name</h3>
+            <aside>
+                <span class='location'></span>
+            </aside>
+            <h4>Location</h4>
+            <ul class='riding-styles'>
+                <li>Downhill</li>
+                <li>Freeride</li>
+                <li>Enduro</li>
+            </ul>
+            <ul class='riding-stats'>
+                <li>2<span>RIDES</span></li>
+                <li>23<span>KM</span></li>
+                <li>0:53<span>TIME</span></li>
+                <li>23<small>km/h</small><span>AVG SPEED</span></li>
+            </ul>
+        </section>
+        <section class='activity'>
+            <h3>LATEST ACTIVITY</h3>
+        </section>
+    </section>
+</article>
+<div class="friend action-sheet">
+  <div class="action-sheet-content">
+    <a class="action-sheet-button mute_btn">Mute</a>
+    <a class="action-sheet-button block_btn">Block</a>
+    <a class="action-sheet-button cancel_btn">Cancel</a>
+  </div>
+</div>
+<!--
+    <div class="alert">
+      <div class="alert-content" style="margin-top: -85px;">
+        <h3>Mute friend_name</h3>
+          <p>You will stop getting notifications from friend_name. You can still see posts in your stream or on their profile.</p>
+        <div class="alert-buttons">
+          <a class="alert-button right primary">Mute</a>
+          <a class="alert-button left">Cancel</a>
+        </div>
+      </div>
+    </div>
+-->
+
+</body>
+</html>

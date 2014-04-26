@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>Boilerplate App</title>
+
+  <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/stylesheets/application.css" />
+  <link rel="stylesheet" href="/stylesheets/chui.ios-3.0.6.css" />
+  <link rel="stylesheet" href="/stylesheets/feedback.css" />   
+
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/steroids-addons/dist/steroids.addons.js"></script>
+  <script src="/cordova.js"></script>
+
+  <!-- ui -->
+  <script src="/vendor/hammerjs/hammer.min.js"></script>
+  <script src="/vendor/jquery/jquery-1.7.2.min.js"></script>
+  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+  <script src="/vendor/chui/chui-3.0.6.js"></script>
+
+  <!-- firebase -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>  
+  <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+
+  <script src="/models/models.js"></script>
+
+  <script src="/controllers/feedback.js"></script>
+  <script src="/javascripts/application.js"></script>
+   
+  <!-- gps -->
+  <!-- google maps API Key -->
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCWlZRqKkOvGp_R55n1ab9CP_isr0yz7Ro&sensor=false"></script>
+  <script src="/javascripts/json2.js"></script>
+    
+  
+</head>
+<body>
+
+   <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+ <script src="/vendor/chui/chui-3.0.6.js"></script>
+ <script>
+    // chui switches
+    $(function() {
+         // Set response to last checked switch:
+         $('.switch').each(function(ctx, idx) {
+            if (window && window.jQuery) ctx = idx;
+            if (ctx.classList.contains('on')) {
+               $('#response').html($(ctx).find('input').val());
+            }
+         });
+
+         $('.switch').on('singletap swipeleft swiperight', function() {
+            if (this.classList.contains('on')) {
+               $('#response').html($(this).find('input').val());
+            } else {
+               $('#response').empty();
+            }
+         });
+      });
+ </script>s
+ <script>
+ // chui selectable list
+   $(function() {
+      $('.tick').UISelectList({
+         selected: 2,
+         callback: function() {
+            $("#response").html($(this).text());
+         }
+      });
+      if (window.jQuery) {
+        $('.select').each(function(idx, ctx) {
+           if ($(ctx).hasClass('selected')) {
+              $("#response").html($(ctx).text());
+           }
+        });
+      } else {
+        $("#response").html($('li').hasClass('selected').text());
+      }
+  });
+ </script>
+
+ <section>
+    <ul class='list'>
+        <li class='comp'>
+           <div>
+              <h3>Audio Feedback</h3>
+           </div>
+           <aside>
+              <span class="switch on" id="beepSwitch">
+                  <input type="checkbox" value="Beep" name="beepSwitch">
+              </span>
+           </aside>
+        </li>
+    </u>
+ </section>
+ <section>
+     <ul class='list tick select'>
+        <li>
+           <h3>Male</h3>
+        </li>
+        <li>
+           <h3>Female</h3>
+        </li>
+     </ul>
+ </section>
+ <section>
+    <ul class='list'>
+        <li class='comp'>
+           <div>
+              <h3>Beep</h3>
+           </div>
+           <aside>
+              <span class="switch on" id="beepSwitch">
+                  <input type="checkbox" value="Beep" name="beepSwitch">
+              </span>
+           </aside>
+        </li>
+        <li class='comp'>
+           <div>
+              <h3>High Tone</h3>
+           </div>
+           <aside>
+              <span class="switch" id="toneSwitch">
+                 <input type="checkbox" value="High Tone" name="toneSwitch">
+              </span>
+           </aside>
+        </li>
+     </ul>
+ <!--<p><span><strong>Interval feedback is set to: </strong></span><span id="response"></span></p>-->
+ </section>
+
+</body>
+</html>

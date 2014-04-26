@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>Boilerplate App</title>
+
+  <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/stylesheets/application.css" />
+  <link rel="stylesheet" href="/stylesheets/chui.ios-3.0.6.css" />
+  <link rel="stylesheet" href="/stylesheets/firebase.css" />   
+
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/steroids-addons/dist/steroids.addons.js"></script>
+  <script src="/cordova.js"></script>
+
+  <!-- ui -->
+  <script src="/vendor/hammerjs/hammer.min.js"></script>
+  <script src="/vendor/jquery/jquery-1.7.2.min.js"></script>
+  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+  <script src="/vendor/chui/chui-3.0.6.js"></script>
+
+  <!-- firebase -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>  
+  <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+
+  <script src="/models/models.js"></script>
+
+  <script src="/controllers/firebase.js"></script>
+  <script src="/javascripts/application.js"></script>
+   
+  <!-- gps -->
+  <!-- google maps API Key -->
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCWlZRqKkOvGp_R55n1ab9CP_isr0yz7Ro&sensor=false"></script>
+  <script src="/javascripts/json2.js"></script>
+    
+  
+</head>
+<body>
+
+  <div class="content-padded">
+
+  <h2>Welcome to the firebase index!</h2>
+    
+    <!-- message box-->
+    <div id='messagesDiv'></div>
+    <input type='text' id='nameInput' placeholder='Name'>
+    <input type='text' id='messageInput' placeholder='Message'>
+
+</div>
+
+<script>
+    // reference to access data inside firebase.
+ var myDataRef = new Firebase('https://brilliant-fire-4984.firebaseio.com/');
+  $('#messageInput').keypress(function (e) {
+    if (e.keyCode == 13) {
+      var name = $('#nameInput').val();
+      var text = $('#messageInput').val();
+      // pushes (object) message and name entered into list
+      myDataRef.push({name: name, text: text});
+      $('#messageInput').val('');
+    }
+  });
+  // notify when chat messages arrive
+  myDataRef.on('child_added', function(snapshot) {
+    //val function extracts message from snapshot | assigned to message variable
+    var message = snapshot.val();
+    displayChatMessage(message.name, message.text);
+  });
+  // display chat message
+  function displayChatMessage(name, text) {
+    $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+    $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+  };
+</script>
+
+</body>
+</html>

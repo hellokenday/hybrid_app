@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>Boilerplate App</title>
+
+  <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
+  <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/stylesheets/application.css" />
+  <link rel="stylesheet" href="/stylesheets/chui.ios-3.0.6.css" />
+  <link rel="stylesheet" href="/stylesheets/clarity.css" />
+  <link rel="stylesheet" href="/stylesheets/ionic.min.css" />
+  <link rel="stylesheet" href="/stylesheets/ionic.css" />
+  <link rel="stylesheet" href="/stylesheets/people.css" />   
+
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/steroids-addons/dist/steroids.addons.js"></script>
+  <script src="/cordova.js"></script>
+
+  <!-- ui -->
+  <script src="/vendor/hammerjs/hammer.min.js"></script>
+  <script src="/vendor/jquery/jquery-1.7.2.min.js"></script>
+  <script src="/vendor/jquery/jquery-2.1.0.min.js"></script>
+  <script src="/vendor/jquery/jquery-1.11.min.js"></script>
+  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+  <script src="/vendor/chui/chui-3.0.6.js"></script>
+  <script src="/vendor/iscroll/iscroll-lite.js"></script>
+<!--
+  <script src="/vendor/scrolltofixed/jquery-scrolltofixed.js"></script>
+  <script src="/vendor/slinkyjs/slinky.js"></script>
+-->
+
+  <!-- firebase -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>  
+  <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+
+  <script src="/models/models.js"></script>
+
+  <script src="/controllers/people.js"></script>
+  <script src="/javascripts/application.js"></script>
+   
+  <!-- gps -->
+  <!-- google maps API Key -->
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCWlZRqKkOvGp_R55n1ab9CP_isr0yz7Ro&sensor=false&libraries=geometry"></script>
+<script src="/vendor/jquery/jquery.ui.map.full.min.js" type="text/javascript"></script>
+    
+  
+</head>
+<body>
+
+  <script src="/vendor/chui/chocolatechip-3.0.6.js"></script>
+<script src="/vendor/chui/chui-3.0.6.js"></script>
+
+<nav class="top-bar">
+    <div id='segmentedPanel' class='horizontal centered'></div>
+</nav>
+<section class="people">
+    <div id="toggle-panels" id="wrapper">
+        <!-- Friends -->
+        <div class="">  
+            <div class="ion-list">
+                <div id="wrapper">
+                    <div id="scroller">
+                        <div class="item item-divider">
+                            A
+                        </div>
+                        <a class="item item-avatar friend_btn" href="#">
+                            <img src="/images/avatars/chris.png">
+                            <h2>Chris Adams</h2>
+                            <p>Outdoor enthusiast</p>
+                        </a>                 
+                        <a class="item item-avatar" href="#">
+                            <img src="/images/avatars/graham.png">
+                            <h2>Graham Agassiz</h2>
+                            <p>Never not killing it</p>
+                        </a>                
+                        <div class="item item-divider">
+                            C
+                        </div>
+                        <a class="item item-avatar" href="#">
+                            <img src="/images/avatars/ben.png">
+                            <h2>Ben Camm</h2>
+                            <p>Coffee is for closers</p>
+                        </a>        
+                        <a class="item item-avatar" href="#">
+                            <img src="/images/avatars/christian.png">
+                            <h2>Christian Cotton</h2>
+                            <p>Clipped in</p>
+                        </a>    
+                        <div class="item item-divider">
+                            E
+                        </div>
+                        <a class="item item-avatar" href="#">
+                            <img src="/images/avatars/jordan.png">
+                            <h2>Jordan Earnshaw</h2>
+                            <p>Life Behind bars</p>
+                        </a>
+                        <a class="item item-avatar" href="#">
+                            <img src="/images/avatars/callum.png">
+                            <h2>Callum Enticknap</h2>
+                            <p>Freeride and XC</p>
+                        </a>                
+                        <a class="item item-avatar" href="#">
+                            <img src="/images/avatars/james.png">
+                            <h2>James Erskine</h2>
+                            <p>I'm a rock star, baby</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Groups -->
+        <div data-role="content">
+            <div id="wrapper2">
+                <div id="scroller2">
+                    <div class="card group_btn">
+                        <div class="item item-avatar">
+                            <img src="/images/music/Willy Moon.png">
+                            <h2>Marty McFly</h2>
+                            <p>November 05, 1955</p>
+                        </div>
+                    </div>
+                    <div class="ion-list card">
+                    <div class="item item-avatar">
+                        <img src="/images/music/Willy Moon.png">
+                        <h2>Marty McFly</h2>
+                        <p>November 05, 1955</p>
+                        </div>
+                        <div class="item item-body">
+                            <img class="full-image" src="/images/music/Willy Moon.png">
+                            <p>
+                            This is a "Facebook" styled Card.
+                            </p>
+                            <p>
+                                <a href="#" class="subdued">1 Like</a>
+                                <a href="#" class="subdued">5 Comments</a>
+                            </p>
+                        </div>
+                        <div class="item tabs tabs-secondary tabs-icon-left">
+                            <a class="tab-item" href="#">
+                                <i class="icon ion-thumbsup"></i>
+                                Like
+                            </a>
+                                <a class="tab-item" href="#">
+                                <i class="icon ion-chatbox"></i>
+                                Comment
+                            </a>
+                                <a class="tab-item" href="#">
+                                <i class="icon ion-share"></i>
+                                Share
+                            </a>
+                        </div>
+                    </div>
+                    <button class="ion-button button-block button-light">Create new group</button>
+               <div class="ion-button phantom"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>
