@@ -301,7 +301,6 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 
 }
 
-
 /**
  * Profile
  */
@@ -311,29 +310,59 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	-webkit-background-size: cover;
 } */
 
-.profile .body {
-	text-align: center;
-	margin: 0px auto;
+.profile .clear-bar {
+	top: 185px;
+	border-bottom: none;
+	background: none;
+	box-shadow: none;
 }
 
-.profile ul {
-	padding: 0;
+.profile section {
+	top: 215px;
 }
 
-.profile .body li {
-	text-align: left;
-	list-style: none;
-	display: inline-block;
-	margin-left: 4px;
+/*  Segmented Control */
+
+
+.profile .segmented > .button {
+    border: solid 1px grey;
+    background-color: rgba(0, 0, 0, 0);
+    color: grey;
 }
 
-.profile span {
-	display: block;
-	font-size: 12px;
+.profile .segmented > .button:first-of-type {
+    border-left: solid 1px grey;
 }
 
 
-.profile .body header {
+.profile .segmented > .button:hover,
+.profile .segmented > .button.selected {
+    color: #fff;
+    background-color: grey;
+    opacity: 1 !important;
+}
+
+/* Segmented Paging Control */
+
+.profile .segmented.paging > .button {
+    border: none;
+    background: none;
+    color: grey;
+}
+
+.profile .segmented.paging > .button:hover,
+.profile .segmented.paging > .button.selected,
+.profile .segmented.paging > .button.touched {
+    opacity: .5 !important;
+    color: grey;
+}
+
+.profile .segmented.paging > .button::before {
+    background-color: grey;
+}
+
+
+.header {
     background-image: url('/images/profile/header@2x.png');
     background-size: contain;
 	background-repeat: no-repeat;
@@ -431,5 +460,86 @@ img#spinner {
 }
 
 .icon-search {
-    padding-left: 27px; }
+    padding-left: 27px;
+}
+
+/**
+* settings
+*/
+
+.settings .cogs {
+    background-image: url('/icons/cogs@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 60px;
+	width: 60px;
+    position: relative;
+	margin: 0px auto;
+	margin-top: 20px;
+}
+
+.settings .list {
+	margin-top: 23px;
+}
+
+.lock {
+    background-image: url('/icons/lock@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 27px;
+	width: 19px;
+    position: relative;
+	top: 0px;
+    left: -8px;
+	margin-right: -8px;
+	vertical-align: middle;
+}
+
+.megaphone {
+    background-image: url('/icons/megaphone@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 18px;
+	width: 20px;
+    position: relative;
+	top: 0px;
+    left: -8px;
+	margin-right: -8px;
+	vertical-align: middle;
+}
+
+.alert {
+    background-image: url('/icons/alert@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 17.5px;
+	width: 19px;
+    position: relative;
+	top: 0px;
+    left: -8px;
+	margin-right: -8px;
+	vertical-align: middle;
+}
+
+
+/**
+* privacy / feedback / notifications
+*/
+
+.privacy, 
+.feedback, 
+.notifications {
+    margin-top: 40px;
+}
+
+.feedback li .switch,
+.notifications li .switch {
+	margin-top: -3px;
+	padding-bottom: -100px;
+}
+
+.feedback li h3,
+.notifications li h3 {
+	margin: 0;
+	padding-top: 2px;
 }

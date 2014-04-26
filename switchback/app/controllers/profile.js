@@ -16,8 +16,7 @@ function onDeviceReady() {
     initSheetButtons();
     initNavBar();
     disableScrolling();
-    initChuiSheet();
-    initGesture();
+    initSegmented();
 } 
 
 function initNavBar() {
@@ -48,6 +47,55 @@ function disableScrolling() {
     $('body').bind("touchmove", {}, function(event){
         event.preventDefault();
     });
+}
+
+// Helper functions
+function initSegmented () {
+
+    // chocloate-chip UI - segmented list
+    var segmentedOptions = {
+
+        id: 'mySegmented',
+        labels : ['Recent','All'],
+        selected: 0
+     };
+     var segmentedComponent = $.UICreateSegmented(segmentedOptions);
+
+     $('#segmentedPanel').append(segmentedComponent);
+     $('.segmented').UISegmented({callback:onSegmentSelected});
+     $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});     
+}
+
+function onSegmentSelected(e) {
+
+    // stop any events/weird stuff happening
+    e.stopPropagation();
+
+    //call onTabClicked, we'll decide what to do from there
+    onTabClicked($('.segmented').find('.selected').index());
+ }
+
+ function onTabClicked(tabIndex) {
+        
+    switch(tabIndex) {
+
+        case 0:
+            if(!tab1Inited) initRecent();
+            break;
+        case 1:
+            if(!tab2Inited) initAll();
+            break;
+        default:
+            console.log('onTabClicked: unknown tab index: ' + tabIndex);
+    }
+}
+
+function initRecent() {
+    // do something
+}
+
+function initAll() {
+    // do something
 }
 
 function showeditProfile() {

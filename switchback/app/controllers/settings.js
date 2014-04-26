@@ -8,8 +8,12 @@ privacyView.preload();
 var feedbackView = new steroids.views.WebView("views/feedback/index.html");
 feedbackView.preload();
 
+var notificationsView = new steroids.views.WebView("views/notifications/index.html");
+notificationsView.preload();
+
 function onDeviceReady() {
     
+    initButtons();
     initVisibilityChange();
 }
 
@@ -47,8 +51,15 @@ function onVisibilityChange() {
     }
 }
 
+function initButtons() {
+
+    $('.privacy_btn').on('singletap', showPrivacy);
+    $('.feedback_btn').on('singletap', showFeedback);
+    $('.notifications_btn').on('singletap', showNotifications);
+}
+
 function showPrivacy() {
-    
+
     steroids.layers.push( {
         view: privacyView,
         navigationBar: true,
@@ -60,6 +71,15 @@ function showFeedback() {
     
     steroids.layers.push( {
         view: feedbackView,
+        navigationBar: true,
+        tabBar: false
+    });
+}
+
+function showNotifications() {
+
+    steroids.layers.push( {
+        view: notificationsView,
         navigationBar: true,
         tabBar: false
     });

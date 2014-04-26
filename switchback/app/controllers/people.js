@@ -2,7 +2,7 @@
 document.addEventListener("deviceready", onDeviceReady, false);
                           
 // nav bar vars
-var notificationsDrawer = new steroids.views.WebView("views/notifications/index.html");
+var notificationsDrawer = new steroids.views.WebView("views/notifications_drawer/index.html");
 
 var notificationsButton = new steroids.buttons.NavigationBarButton();
 notificationsButton.imagePath = "/icons/bell@2x.png";
