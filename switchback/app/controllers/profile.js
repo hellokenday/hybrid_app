@@ -12,10 +12,16 @@ editButton.title = "Edit";
 var logOutButton = new steroids.buttons.NavigationBarButton();
 logOutButton.title = "Log Out";
 
+// tab vars
+var tab1Inited = false;
+var tab2Inited = false;
+
+// iscroll vars
+var myScroll;
+
 function onDeviceReady() {
     initSheetButtons();
     initNavBar();
-    disableScrolling();
     initSegmented();
 } 
 
@@ -91,11 +97,16 @@ function onSegmentSelected(e) {
 }
 
 function initRecent() {
-    // do something
+    
+    disableScrolling();
+    tab2Inited = true;
 }
 
 function initAll() {
-    // do something
+    
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	myScroll = new IScroll('#wrapper');
+    tab1Inited = true;
 }
 
 function showeditProfile() {

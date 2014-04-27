@@ -49,7 +49,8 @@ function initNavBar() {
 }
 
 function initButtons() {
-    $('.profile_pic_btn').on('singletap', showCameraSheet);
+    $('.photo_btn').on('singletap', showCameraSheet);
+    $('.header_btn').on('singletap', showCameraSheet);
     $('.first_name_btn').on('singletap', showEditName);
 //  $('.last_name_btn').on('singletap', showEditLastName);
 //  $('.username_btn').on('singletap', showEditUsername);

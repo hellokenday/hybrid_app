@@ -19,12 +19,21 @@ input, textarea, [contenteditable] * {
 body {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+/*	background-color: #eeeeee !important;*/
 }
 
 .segmented a.button {
 	padding: 0px 0 0px 0;
 	height: 26px;
 	z-index: 12;
+}
+
+/* segmented menu navbar */
+.top-bar {
+  background: #eb6f65;
+  border-bottom: 1px solid #c8c8c8;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+
 }
 
 
@@ -46,9 +55,6 @@ body,ul,li {
 	border: 0;
 }
 
-body {
-	/* overflow: hidden !important; this is important to prevent the whole page to bounce */
-}
 
 #wrapper,
 #wrapper2 {
@@ -292,7 +298,7 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
   top: 0px;
   left: 0;
   right: 0;
-  height: 43px;;
+  height: 49px;;
   line-height: ;
   font-size: 18px;
   background: #fafafb;
@@ -311,10 +317,11 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 } */
 
 .profile .clear-bar {
-	top: 185px;
-	border-bottom: none;
-	background: none;
+	top: 180px;
+	border-bottom: solid 1px #c8c8c8;
+	background: #eeeeee;
 	box-shadow: none;
+	opacity: 0.9;
 }
 
 .profile section {
@@ -328,6 +335,7 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
     border: solid 1px grey;
     background-color: rgba(0, 0, 0, 0);
     color: grey;
+	top: 4px;
 }
 
 .profile .segmented > .button:first-of-type {
@@ -346,7 +354,7 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 
 .profile .segmented.paging > .button {
     border: none;
-    background: none;
+    background: #eeeeee;
     color: grey;
 }
 
@@ -369,6 +377,17 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	top: 0px;
 	height: 225px;
 	width: 320px;
+	z-index: 10;
+	position: relative;
+}
+
+.profile .recent {
+	margin-top: -7px; 
+}
+
+.profile .all {
+	margin-top: -51px;
+	z-index: 1;
 }
 
 /*
@@ -399,31 +418,41 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 * edit_profile
 */
 
-.edit_profile .profile_pic {
-	margin: -20px 0 40px 0;
+.edit_profile .profile_pic,
+.edit_profile .header_photo {
+	margin: -20px 0 30px 0;
 } 
 
-.edit_profile .profile_pic li.comp > div {
+.edit_profile .profile_pic li.comp > div,
+.edit_profile .header_photo li.comp > div {
     padding: 0 0 0 0;
     margin-left: 0;
 }
 
-.edit_profile .profile_pic .comp {
+.edit_profile .profile_pic .comp,
+.edit_profile .header_photo .comp {
     padding: 5px 0px 0px 5px;
 
 }
 
-.edit_profile .profile_pic li.comp > aside {
+.edit_profile .profile_pic li.comp > aside,
+.edit_profile .header_photo li.comp > aside {
     padding: 0 0 0 0;
 }
 
-.edit_profile .profile_pic li.comp > aside img {
-    border-radius: 5px;
+.edit_profile .profile_pic li.comp > aside img,
+.edit_profile .header_photo li.comp > aside img {
+    border-radius: 3px;
 	margin: 0 0 3px 0;
 }
 
-.edit_profile .profile_pic li.comp > div > h3 {
+.edit_profile .profile_pic li.comp > div > h3,
+.edit_profile .header_photo li.comp > div > h3 {
     padding-top: 7px;
+}
+
+.edit_profile .header_photo {
+	margin-bottom: 40px; 
 }
 
 fieldset {
