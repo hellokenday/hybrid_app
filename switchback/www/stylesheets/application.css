@@ -253,6 +253,10 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
     z-index: 100;
 }
 
+.history .ion-list  {
+	padding: 10px;
+}
+
 /**
  * People
  */
@@ -310,11 +314,6 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 /**
  * Profile
  */
-
-/* .profile .main {
-	background: url(/images/profile/background.jpg) no-repeat center center fixed; 
-	-webkit-background-size: cover;
-} */
 
 .profile .clear-bar {
 	top: 180px;
@@ -388,6 +387,63 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 .profile .all {
 	margin-top: -51px;
 	z-index: 1;
+}
+
+.profile a *:nth-child(n+3) {
+	display: inline-block;
+	margin: 0;
+}
+
+.profile h2,
+.people h2,
+.profile p {
+	line-height: 20px;
+	color: #393836;
+}
+
+.profile h2 {
+	font-size: 14px !important;
+}
+
+.profile p {
+	font-size: 12px !important;
+	padding-right: 3px;
+}
+
+.profile .map_path {
+    background-image: url('/icons/map_path@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 15px;
+	width: 13px;
+	right: -2px;
+    position: relative;
+	vertical-align: middle;
+}
+
+.profile .speedo {
+    background-image: url('/icons/speedometer@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 15px;
+	width: 13px;
+	top: 1px;
+	right: -2px;
+    position: relative;
+	vertical-align: middle;
+
+}
+
+.profile .stopwatch {
+    background-image: url('/icons/stopwatch@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 13px;
+	width: 12px;
+	top: -1px;
+		right: -2px;
+    position: relative;
+	vertical-align: middle;
 }
 
 /*
