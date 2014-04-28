@@ -257,6 +257,18 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	padding: 10px;
 }
 
+.ride .today {
+	padding-top: 20px;
+}
+
+.ride h2:nth-child(odd) {
+	margin: -10px 0 -18px 10px;
+}
+
+.ride .card:nth-last-child(3) {
+	margin: -15px 10px -15px 10px;
+}
+
 /**
  * People
  */
@@ -389,28 +401,35 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	z-index: 1;
 }
 
-.profile a *:nth-child(n+3) {
+.profile a *:nth-child(n+3),
+.history a *:nth-child(n+3) {
 	display: inline-block;
 	margin: 0;
 }
 
 .profile h2,
+.history h2,
 .people h2,
-.profile p {
+.profile p,
+.profile p,
+.history p {
 	line-height: 20px;
 	color: #393836;
 }
 
-.profile h2 {
+.profile h2,
+.history h2 {
 	font-size: 14px !important;
 }
 
-.profile p {
+.profile p,
+.history p {
 	font-size: 12px !important;
 	padding-right: 3px;
 }
 
-.profile .map_path {
+.profile .map_path,
+.history .map_path {
     background-image: url('/icons/map_path@2x.png');
     background-size: contain;
 	background-repeat: no-repeat;
@@ -421,7 +440,8 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 	vertical-align: middle;
 }
 
-.profile .speedo {
+.profile .speedo,
+.history .speedo {
     background-image: url('/icons/speedometer@2x.png');
     background-size: contain;
 	background-repeat: no-repeat;
@@ -434,14 +454,15 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 
 }
 
-.profile .stopwatch {
+.profile .stopwatch,
+.history .stopwatch {
     background-image: url('/icons/stopwatch@2x.png');
     background-size: contain;
 	background-repeat: no-repeat;
     height: 13px;
 	width: 12px;
 	top: -1px;
-		right: -2px;
+	right: -2px;
     position: relative;
 	vertical-align: middle;
 }
