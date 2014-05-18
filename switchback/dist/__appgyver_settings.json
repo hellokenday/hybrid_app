@@ -1,0 +1,21 @@
+{
+  "appearance": {
+    "nav_bar_portrait_background_image": "icons/nav_bar@2x.png",
+    "nav_bar_landscape_background_image": "",
+    "nav_bar_tint_color": "",
+    "nav_bar_title_text_color": "#ffffff",
+    "nav_bar_title_shadow_color": "",
+    "nav_bar_button_tint_color": "#ffffff",
+    "nav_bar_button_title_text_color": "#ffffff",
+    "nav_bar_button_title_shadow_color": "",
+    "tab_bar_background_image": "",
+    "tab_bar_tint_color": "#ffffff",
+    "tab_bar_button_title_text_color": "#14b29b",
+    "tab_bar_button_title_shadow_color": "",
+    "tab_bar_selected_icon_tint_color": "#ffffff",
+    "tab_bar_selected_indicator_background_image": "icons/selected@2x.png",
+    "loading_screen_color": "#262626"
+  },
+  "preloads": [],
+  "drawers": {}
+}

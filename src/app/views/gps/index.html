@@ -2,21 +2,18 @@
  <script src="/vendor/chui/chui-3.0.6.js"></script>
 
   <section>
-    <header>
-        <div id='segmentedPanel' class='horizontal centered'></div>
-    </header>
+     <div id='segmentedPanel' class='horizontal centered'></div>
      <div id="toggle-panels">
+        <!-- Stats Tab -->
         <div data-role="content" class="content-padded content">
             <div class="buttonContainer">
-                <button class="topcoat-button start">Start Tracking</button>
-                <button class="topcoat-button stop">Stop Tracking</button>  
+                <button class="topcoat-button start">Start Run</button>
+                <button class="topcoat-button stop">Stop Run</button>  
             </div>
         </div>
-         <div data-role="content" class="content">
-             <div id="map_canvas" class="map"></div>
-        </div>
+        <!-- Stats Map -->
         <div data-role="content" class="content">
-             <div id="map_canvas2" class="map"></div>
+             <div id="map_canvas" class="map"></div>
         </div>
      </div>
   </section>

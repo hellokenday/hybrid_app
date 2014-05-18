@@ -2,7 +2,7 @@
  * The map panel
  */
 
-steroids.navigationBar.show("GPS");
+steroids.navigationBar.show("Run");
 
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -18,7 +18,6 @@ var trackPath;
 
 var tab1Inited = false;
 var tab2Inited = false;
-var tab3Inited = false;
 var tracking = false;
 
 var defaultLocationOptions = { 
@@ -32,7 +31,7 @@ function initSegmented () {
     var segmentedOptions = {
 
         id: 'mySegmented',
-        labels : ['Stats','Map','History'],
+        labels : ['Stats','Map'],
         selected: 0
      };
      var segmentedComponent = $.UICreateSegmented(segmentedOptions);
@@ -56,11 +55,6 @@ function initMap () {
     setCurrentLocation();
 
     tab2Inited = true;
-}
-
-function initHistory() {
-
-    // do nothing...
 }
 
 function createMap (divID) {
@@ -235,10 +229,8 @@ function onSegmentSelected(e) {
         case 1:
             if(!tab2Inited) initMap();
             break;
-        case 2:
-            initHistory();
-            break;
         default:
             console.log('onTabClicked: unknown tab index: ' + tabIndex);
     }
 }
+

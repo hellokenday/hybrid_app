@@ -7,17 +7,27 @@ steroids.config.name = "App"
 steroids.config.location = "http://localhost/views/gps/index.html"
 
 # -- Tab Bar --
-# steroids.config.tabBar.enabled = true
+steroids.config.tabBar.enabled = false
 # steroids.config.tabBar.tabs = [
 #   {
-#     title: "Index"
+#     title: "Profile"
 #     icon: "icons/pill@2x.png"
-#     location: "http://localhost/index.html"
+#     location: "http://localhost/views/camera/index.html"
 #   },
 #   {
-#     title: "Internet"
+#     title: "Chat"
 #     icon: "icons/telescope@2x.png"
-#     location: "http://www.google.com"
+#     location: "http://localhost/views/firebase/index.html"
+#   },
+#   {
+#     title: "GPS"
+#     icon: "icons/pill@2x.png"
+#     location: "http://localhost/views/gps/index.html"
+#   },
+#   {
+#     title: "Settings"
+#     icon: "icons/telescope@2x.png"
+#     location: "http://localhost/views/settings/index.html"
 #   }
 # ]
 
