@@ -42,13 +42,41 @@ var defaultLocationOptions = {
     timeout           : 20000
 };
 
-function initSegmented () {
+function initVisibilityChange() {
+    
+   document.addEventListener("visibilitychange", onVisibilityChange, false);
+}
 
+function onVisibilityChange() {
+
+    console.log("document.visibilityState: " + document.visibilityState);
+    console.log("document.hidden: " + document.hidden);
+    
+    if(!document.hidden) {
+        // if document is visible... do this:
+        
+        steroids.view.navigationBar.show();
+    }
+    
+    if(document.hidden) {
+        // if document is hidden... do this:
+        
+        tab1Inited = false;
+        tab2Inited = false;
+        
+        console.log('tab1Inited: ' + tab1Inited);
+        console.log('tab2Inited: ' + tab2Inited);
+    }
+}
+
+function initSegmented() {
+
+    // chocolate chip segmented list
     var segmentedOptions = {
 
         id: 'mySegmented',
-        labels : ['Stats','Map','History'],
-        selected: 0
+        labels : ['Map','Stats','History'],
+        selected: 1
      };
      var segmentedComponent = $.UICreateSegmented(segmentedOptions);
 
@@ -66,7 +94,7 @@ function initTimer() {
     
     console.log('initTimer');
     
-    $('.socket').on('click', onTimerPlayClicked)
+    $('.socket').on('click', onTimerPlayClicked);
     $('.socket2').on('click', onTimerFinishClicked);
     
     theTime = document.getElementById("timer");
@@ -74,12 +102,12 @@ function initTimer() {
     tab1Inited = true;
 }
 
-function initMap () {
+function initMap() {
 
     console.log('initMap');
     
     trackMap = createMap("map_canvas");
-    if(tracking === false) setCurrentLocation();
+    if(tracking === false) setCurrentLocation(); // if start recording not clicked keep 1 pin
     else addMarker(latLngPositions[0]);
 
     tab2Inited = true;
@@ -96,7 +124,7 @@ function initHistory() {
     tab3Inited = true;
 }
 
-function createMap (divID) {
+function createMap(divID) {
 
     var defaultMapOptions = {
 
@@ -108,7 +136,7 @@ function createMap (divID) {
     return new google.maps.Map(document.getElementById(divID), defaultMapOptions);
 }
 
-function addMarker (latlng) {
+function addMarker(latlng) {
 
     var marker = new google.maps.Marker({
         position: latlng,
@@ -118,7 +146,7 @@ function addMarker (latlng) {
     trackMarkers.push(marker);
 }
 
-function removeLastMarker () {
+function removeLastMarker() {
 
     removeMarkerAtIndex(trackMarkers.length-1);
 }
@@ -128,21 +156,21 @@ function removeMarkerAtIndex (index) {
     trackMarkers[index].setMap(null);
 }
 
-function startTracking () {
+function startTracking() {
 
-    if(tracking === true) return;
+    if(tracking === true) return; // record button clicked
 
-    resetMarkers();
+    resetMarkers(); // 
 
     positions = [];
-    latLngPositions = [];
+    latLngPositions = []; // new track 
 
-    tracking = true;
+    tracking = true; 
 
     watchID = navigator.geolocation.watchPosition(onLocationUpdatedSuccess, onLocationUpdatedError, defaultLocationOptions);
 }
 
-function stopTracking () {
+function stopTracking() {
 
     if(tracking === false) return;
 
@@ -154,7 +182,7 @@ function stopTracking () {
     saveTrackData();
 }
 
-function saveTrackData () {
+function saveTrackData() {
 
     var trackCount = parseInt(window.localStorage.getItem(track_count));
     var trackID = (!isNaN(trackCount)) ? trackCount+1 : 1;
@@ -167,7 +195,7 @@ function saveTrackData () {
  * Note: getCurrentPosition() tries to answer as fast as 
  * possible with a low accuracy result
  */
-function setCurrentLocation () {
+function setCurrentLocation() {
         
     console.log('setCurrentLocation');
     navigator.geolocation.getCurrentPosition(onGetCurrentLocationSuccess, onGetCurrentLocationError, defaultLocationOptions);
@@ -186,8 +214,8 @@ function getAverageSpeed() {
 }
 
 function playTimer(){
-    clearInterval(intervalId);
-    intervalId = setInterval(onTimerTick, 1000);
+    clearInterval(intervalId); // stops timer
+    intervalId = setInterval(onTimerTick, 1000); // starts timer - onTimerTick callback every 1000ms
     startTracking();
 }
 
@@ -216,7 +244,7 @@ function updateStats() {
     var km = distanceTravelled / 1000; // convert to km
     
     // round to 2 decimal places
-    avgKmh = Math.round(avgKmh * 100) / 100;
+    avgKmh = Math.round((avgKmh * 1000) / 1000) / 1;
     // round to 1 decimal places
     km = Math.round(km * 100) / 10;
     
@@ -225,16 +253,16 @@ function updateStats() {
     // metrics set to 0.00 if < 0.1 or equal to 0
     if (distanceTravelled == 0 && totalSpeed == 0) 
     {
-        $("#avg_speed").html("0.00");
-        $("#distance").html("0.0");
+        $("#avg_speed").html("0");
+        $("#distance").html("0");
     }
     if (km < 0.1) 
     {
-        $("#distance").html("0.0");
+        $("#distance").html("0");
     }
     if (avgKmh < 0.1) 
     {
-        $("#avg_speed").html("0.00");
+        $("#avg_speed").html("0");
     }
     else
     {
@@ -243,7 +271,7 @@ function updateStats() {
     }
 }
 
-function updatePath () {
+function updatePath() {
 
     // no point carrying on if...
     if(positions.length < 2) return;
@@ -259,16 +287,16 @@ function updatePath () {
     trackPath.setMap(trackMap);
 }
 
-function resetMarkers () {
+function resetMarkers() {
 
     if(trackMarkers.length > 0) {
 
         for (var i = 0; i < trackMarkers.length; i++) {
 
-            trackMarkers[i].setMap(null);
+            trackMarkers[i].setMap(null); // google API removes markers from map
         }
 
-        trackMarkers = [];
+        trackMarkers = []; // empties the marker positions
     }
 }
 
@@ -282,11 +310,12 @@ function resetStats() {
  * Event handling
  */
 
-function onDeviceReady () {
+function onDeviceReady() {
     
     initTimer();
     initSegmented();
     initNav();
+    initVisibilityChange();
 }
 
 function onGetCurrentLocationSuccess(position) {
@@ -305,8 +334,7 @@ function onLocationUpdatedSuccess(position) {
     latLngPositions.push(latlng);
     totalSpeed += position.coords.speed;
     
-    if(trackMap !== undefined) 
-    {
+    if(trackMap !== undefined) {
         if(latLngPositions.length > 2)
         {
             var distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, latLngPositions[latLngPositions.length-2]);
@@ -329,7 +357,7 @@ function onSegmentSelected(e) {
     // stop any events/weird stuff happening
     e.stopPropagation();
 
-    //call onTabClicked, we'll decide what to do from there
+    // jQuery finds which tab was selected in .segmented class that contains the tabs
     onTabClicked($('.segmented').find('.selected').index());
  }
 
@@ -338,10 +366,10 @@ function onSegmentSelected(e) {
     switch(tabIndex) {
 
         case 0:
-//            if(!tab1Inited) initTimer();
+            if(!tab2Inited) initMap();
             break;
         case 1:
-            if(!tab2Inited) initMap();
+//            if(!tab1Inited) initTimer();
             break;
         case 2:
             if(!tab3Inited) initHistory();
@@ -380,5 +408,5 @@ function onTimerTick() {
         hour++;
     }
     totalTime = ((hour < 10) ? "0" + hour : hour) + ":" + ((min < 10) ? "0" + min : min) + ":" + ((sec < 10) ? "0" + sec : sec);
-    theTime.innerHTML = ( totalTime );
+    theTime.innerHTML = (totalTime);
 }

@@ -56,21 +56,30 @@
         <div id='segmentedPanel' class='horizontal centered'></div>
     </nav>
     <div id="toggle-panels">
+        <!-- Map -->
+        <div data-role="content" class="content">
+             <div id="map_canvas" class="map"></div>
+        </div>
         <!-- Stats -->
         <div class="timer-ui">
-            <div id="timer"><span class='timer-icon'></span>00:00:00</div>
-            <span>km/h</span><div id="avg_speed">0.00</div>
-            <span>km</span><div id="distance">0.0</div>
+            <div>
+                <img src='/images/icons/gps@2x.png'><aside>Gps</aside>
+            </div>
+            <div>
+                <span>km</span><div id="distance">0</div><aside>Distance</aside>
+            </div>
+            <div>
+                <span>km/h</span><div id="avg_speed">0</div><aside>Avg Speed</aside>
+            </div>
+            <div>
+                <div id="timer">00:00:00</div><aside>Time</aside>
+            </div>
             <div class="socket">
               <div class="timer_btn"></div>
             </div>
             <div class="socket2 hide">
               <span class="fin_txt">Finish</span>
             </div>
-        </div>
-        <!-- Map -->
-        <div data-role="content" class="content">
-             <div id="map_canvas" class="map"></div>
         </div>
         <!-- History  -->
         <div data-role="content" class="content history">

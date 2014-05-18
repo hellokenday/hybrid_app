@@ -91,8 +91,8 @@ function initNavBar() {
         title: "People",
         overrideBackButton: true,
         buttons: {
-            left: [notificationsButton],
-            right: [searchButton]
+            left: [searchButton],
+            right: [notificationsButton]
         }
     });
 }
@@ -114,7 +114,7 @@ function initGesture() {
 }
 
 function initButtons() {
-    $('.friend_btn').on('singletap', showFriend);
+//  $('.friend_btn').on('singletap', showFriend);
 //  $('.group_btn').on('singletap', showGroup);
 }
 

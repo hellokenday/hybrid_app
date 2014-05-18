@@ -2,6 +2,18 @@
  * Global
  */
 
+@font-face {
+    font-family: 'texgyreadventorregular';
+    src: url('../fonts/texgyreadventor-regular-webfont.eot');
+    src: url('../fonts/texgyreadventor-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/texgyreadventor-regular-webfont.woff') format('woff'),
+         url('../fonts/texgyreadventor-regular-webfont.ttf') format('truetype'),
+         url('../fonts/texgyreadventor-regular-webfont.svg#texgyreadventorregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 * {
   -webkit-user-select: none;  /* Disable selection/copy of elements when tapping for a long time */
   -webkit-touch-callout: none; /* Disable touch callouts */
@@ -113,10 +125,34 @@ body,ul,li {
 	border-bottom: solid 1px #c8c8c8;
 }
 
+.ride .top-bar {
+	margin-bottom: -12px;
+}
+
+.ride .timer-ui div,
+.ride .timer-ui span,
+.ride .timer-ui aside {
+    font-family: 'texgyreadventorregular';
+}
+
+.timer-ui img {
+	width: 34px;
+	height: 15px;
+}
+
+#timer,
 #avg_speed,
 #distance,
 .timer-ui span {
-    color: #27404d;
+    color: #393836;
+}
+
+#timer {
+	font-size: 65px !important;
+}
+
+.timer-ui aside {
+	color: #888787;
 }
 
 .timer-ui span {
@@ -125,12 +161,57 @@ body,ul,li {
 	margin: 0 0 0 20px;
 }
 
-.timer-ui span:nth-child(2) {
-
+.timer-ui > div:nth-child(-n+3) {
+	display: inline-block;
 }
 
-.timer-ui span:nth-child(4) {
+.timer-ui > div:nth-child(-n+3) > div,
+.timer-ui > div:nth-child(-n+3) > span {
+	font-size: 19px;
+}
 
+.timer-ui > div:nth-child(-n+3) > aside {
+	font-size: 13px;
+}
+
+.timer-ui > div:nth-child(2) > span {
+	margin-left: 23px;
+}
+
+.timer-ui > div:nth-child(3) > span {
+	margin-left: 15px;
+}
+
+.timer-ui > div > aside:nth-child(-n+3) {
+	margin: 10px 0 20px 30px;
+}
+
+.timer-ui > div:nth-child(n+4) > aside {
+	margin: -10px 0 0 0;
+}
+
+.timer-ui > div:nth-child(1) {
+	margin-right: 10px;
+}
+
+.timer-ui > div:nth-child(1) > aside {
+	margin-left: 0;
+}
+
+.timer-ui > div:nth-child(2) {
+	margin-right: -5px;
+}
+
+.timer-ui > div:nth-child(2) > aside {
+	margin-left: 40px;
+}
+
+.timer-ui > div:nth-child(3) {
+	margin-right: 5px;
+}
+
+.timer-ui > div:nth-child(3) > aside {
+	margin-right: -22px;
 }
 
 /* Timer GUI */
@@ -142,8 +223,8 @@ body,ul,li {
     z-index: 100;
 }
 .socket {
-    width: 100px;
-    height: 100px;
+    width: 95px;
+    height: 95px;
     border-radius: 100%;
 	/* border: 4px solid #f3f3f3; */
 	border: 2px solid #27404d;
@@ -167,15 +248,15 @@ body,ul,li {
 }
 
 .timer_btn {
-    width: 25%;
-    height: 25%;
-    background: red;
+    width: 28%;
+    height: 28%;
+    background: #eb6f65;
     border-radius: 100%;
     position: absolute;
     left: 1px;
     right: 0;
     margin: 0 auto;
-    top: 39%;
+    top: 37%;
     -webkit-transition: all .3s;
     transition: all .3s;
     transition-timing-function: cubic-bezier(.05,.58,.32,1.35);
@@ -189,8 +270,8 @@ body,ul,li {
 }
 
 .active {
-    width: 23%;
-    height: 23%;
+    width: 26%;
+    height: 26%;
     border-radius: 3px;
     vertical-align: middle;
 	margin: 0px auto;
@@ -211,13 +292,13 @@ body,ul,li {
     font-size: 60px;
     margin: 0px auto;
     padding-bottom: 20px;
-	color: #27404d;
+	color: #393836;
 }
 
 .hide {display:none;}
 
 .fin_txt {
-	color: #27404d;
+	color: #393836;
 	position: absolute;
 	top: 35px;
 	right: -6px;
@@ -272,6 +353,24 @@ Source: http://stackoverflow.com/questions/2553904/removing-the-google-maps-api-
 /**
  * People
  */
+
+.people .ion-button {
+	width: 308px !important;
+	top: 5px;
+}
+
+.people .group {
+    background-image: url('/images/profile/group@2x.png');
+    background-size: contain;
+	background-repeat: no-repeat;
+    height: 163px;
+	width: 308px;
+	top: 13px;
+	margin: 0px auto;
+    position: relative;
+	vertical-align: middle;
+}
+
 
 .people .list {
 	border-top: none;
